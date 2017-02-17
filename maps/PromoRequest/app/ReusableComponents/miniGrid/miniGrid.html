@@ -1,0 +1,47 @@
+<!--Edit Header + lookup boxes-->
+<article Id="mainConfigPage" >
+    <section id="dataGridBody" *ngFor="#set of headersAndDataSets">
+        <section Id="dataGridHeader" >
+                <div class="row"  >
+                    <div *ngFor="#headerRow of set.headerSet" >
+                        <div *ngIf="headerRow.visibility" class="{{headerRow.columnCss}}">
+                            {{headerRow.val}}<span class="{{headerRow.sortCss}}"></span>
+                        </div>
+                    </div>
+                </div>
+        </section>
+        <section Id="dataGrid-spreadSheet" >
+            <div *ngFor="#row of set.dataSet"  class="row" >
+                <div *ngFor="#col of row.cells" >
+                    <div *ngIf="col.allowGridLevelEdit" >
+                        <div *ngIf="!(col.htmlControlType ==='select' || col.htmlControlType === 'checkbox')">
+                            <div *ngIf="col.visibility" class="{{col.columnCss}} flex-container">
+                                <ec-trigger *ngIf="col.togglable" [collapsed]="row.collapsed" [owner]="row" class="toggledItem"></ec-trigger>
+                                <input class="toggledItem" #name="ngForm" [attr.Id]="col.sequence" type={{col.htmlControlType}} [(ngModel)]="col.val"  (click)="inputClicked(col)">
+                            </div>
+                        </div>
+                        <div *ngIf="col.htmlControlType ==='checkbox'">
+                            <div *ngIf="col.visibility" class="{{col.columnCss}} flex-container">
+                                <ec-trigger *ngIf="col.togglable" [collapsed]="row.collapsed" [owner]="row" class="toggleItem"></ec-trigger>
+                                <input class="toggledItem" #name="ngForm" [attr.Id]="col.sequence" type='checkbox' [(ngModel)]="col.val"  (click)="inputClicked(col)">
+                            </div>
+                        </div>
+                        <div *ngIf="col.htmlControlType === 'select'" class="{{col.columnCss}} flex-container">
+                            <ec-trfigger *ngIf="col.togglable" [collapsed]="row.collapsed" [owner]="row"></ec-trfigger>
+                            <select #name="ngForm" [(ngModel)]="col.val" [attr.Id]="col.sequence" class="tdam-select">
+                                <option *ngFor="#itemOption of col.dataSource" value="{{itemOption}}">{{itemOption}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div *ngIf="!col.allowGridLevelEdit">
+                        <div *ngIf="col.visibility" class="{{col.columnCss}} flex-container">
+                            <ec-trigger *ngIf="col.togglable" [collapsed]="row.collapsed" [owner]="row" class="toggleItem"></ec-trigger>
+                            <div *ngIf="col.visibility" class="toggledItem">{{col.val}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+</article>
+

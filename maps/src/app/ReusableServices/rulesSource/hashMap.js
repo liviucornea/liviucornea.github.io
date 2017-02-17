@@ -80,7 +80,7 @@ var HashMap = (function () {
                 for (var i = 0; i < key.length; i++)
                     hashes[i] = this.hash(key[i]);
                 return '[' + hashes.join('|');
-            case 'object':
+            // case 'object': commented out for lint, 'object' will fall through to default anyway
             default:
                 // TODO: Don't use expandos when Object.defineProperty is not available?
                 if (!key._hmuid_) {

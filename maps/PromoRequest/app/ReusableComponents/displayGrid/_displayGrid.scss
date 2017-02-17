@@ -1,0 +1,479 @@
+//----- Mixins
+
+
+@mixin flex-dimensions ($flex-grow, $flex-shrink, $flex-basis, $box-sizing, $padding) {
+  flex: $flex-grow, $flex-shrink, $flex-basis;
+  box-sizing: $box-sizing;
+  padding: $padding;
+}
+
+@mixin form-elements {
+
+  input,
+  select {
+    margin: 5px;
+    padding: 5px;
+    width: 100%;
+
+    &[type="radio"] {
+      width: 10%;
+      float: left;
+    }
+
+    &[type="checkbox"] {
+      height: 15px;
+      width: 15px;
+      margin: auto;
+    }
+  }
+}
+
+@mixin dynamic-grid-size ($total-columns) {
+
+  @for $i from 1 through $total-columns {
+    $width: percentage($i / $total-columns);
+
+    .col-#{$i}-#{$total-columns} {
+      width: $width;
+    }
+  }
+}
+// Deprecated
+/*@mixin column-width ($scalar, $current-column, $total-columns) {
+  width: (100% / $scalar) - ($grid-spacing * ($total-columns - $current-column) / $total-columns);
+}*/
+
+// Creates the width properties of a display grid of any size
+
+@mixin header-gradient-background {
+  background: url(../../../app/ReusableComponents/displayGrid/gradient-heading-top.gif) bottom left repeat-x !important;
+}
+
+
+.flex-container {
+  -ms-box-orient: horizontal;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+}
+
+.flex-container-header {
+  @extend .flex-container;
+}
+
+.flex-container-main {
+  @extend .flex-container;
+
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 30px;
+}
+
+.flex-container .item {
+  /*flex: 0 0 auto;*/
+  box-sizing: border-box;
+  padding: 5px;
+  align-self: center;
+  align-content: center;
+}
+
+.flex-container-header .headerItem {
+  /*flex: 1 0 auto%;*/
+  box-sizing: border-box;
+  padding: 5px;
+  font-weight: bold;
+  background-color: $flex-container-header-bg-color;
+  color: $flex-container-header-item-text-color;
+}
+
+.flex-container .formItemLabel {
+  @include flex-dimensions (1, 0, 30%, border-box, 5px);
+}
+
+.flex-container .formItemControl {
+  @include flex-dimensions (1, 0, 70%, border-box, 5px);
+}
+
+.flex-container .formItem {
+  @include flex-dimensions (1, 0, 70%, border-box, 2px);
+}
+
+.flex-container .formSideMenu {
+  @include flex-dimensions (1, 0, 30%, border-box, 25px);
+}
+
+.flex-container .toggleItem {
+  @include flex-dimensions (0, 1, auto, border-box, 2px);
+}
+
+.flex-container .toggledItem {
+  flex: 1 0 auto;
+  margin-left: 0;
+  box-sizing: border-box;
+  margin-top: auto;
+  margin-bottom: auto;
+
+}
+
+.ng-valid[required] {
+  border-left: 5px solid $ng-valid-border-color; /* green */
+}
+
+.ng-invalid {
+  border-left: 5px solid $ng-invalid-border-color; /* red */
+}
+
+//----- Extends
+%clearfix:after {
+  display: block;
+  clear: both;
+  content: '';
+}
+
+//----- Grid System
+$grid-spacing-top: 0px;
+
+.row {
+  @extend %clearfix;
+
+  /* bootstrap override to fix indented table */
+  margin-left: 0;
+  margin-right: 0;
+
+  & + & {
+    margin-top: $grid-spacing-top;
+  }
+
+  width: 100%
+}
+
+.head {
+  @extend %clearfix;
+
+  & + & {
+    margin-top: $grid-spacing-top;
+  }
+}
+
+[class^="col-"] {
+  float: left;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  min-height: 40px;
+
+  &:last-child {
+    margin-right: 0%;
+  }
+
+  /* gutter */
+  padding: 5px;
+}
+
+/* STATIC GRID - 24 */
+.col-1   { width:(100% / 24);  }
+.col-2   { width:(100% / 24) * 2;  }
+.col-3   { width:(100% / 24) * 3;  }
+.col-4   { width:(100% / 24) * 4;  }
+.col-5   { width:(100% / 24) * 5;  }
+.col-6   { width:(100% / 24) * 6;  }
+.col-7   { width:(100% / 24) * 7;  }
+.col-8   { width:(100% / 24) * 8;  }
+.col-9   { width:(100% / 24) * 9;  }
+.col-10  { width:(100% / 24) * 10;  }
+.col-11  { width:(100% / 24) * 11;  }
+.col-12  { width:(100% / 24) * 12;  }
+.col-13  { width:(100% / 24) * 13;  }
+.col-14  { width:(100% / 24) * 14;  }
+.col-15  { width:(100% / 24) * 15;  }
+.col-16  { width:(100% / 24) * 16;  }
+.col-17  { width:(100% / 24) * 17;  }
+.col-18  { width:(100% / 24) * 18;  }
+.col-19  { width:(100% / 24) * 19;  }
+.col-20  { width:(100% / 24) * 20;  }
+.col-21  { width:(100% / 24) * 21;  }
+.col-22  { width:(100% / 24) * 22;  }
+.col-23  { width:(100% / 24) * 23;  }
+.col-24  { width:100%  }
+
+/* Dynamic grid - 24 */
+@include dynamic-grid-size(24);
+
+/* Dynamic grid - 4 */
+@include dynamic-grid-size(4);
+
+/* Dynamic grid - 2 */
+@include dynamic-grid-size(2);
+
+
+//----- Data Grid Styling
+
+#dataGridBody {
+  border: 1px solid $datagrid-body-border-color;
+  margin-bottom: 10px;
+}
+
+#dataGridFilters {
+  border: 1px solid $datagrid-filters-border-color;
+
+  #dataGridFilterControls {
+
+    .row {
+      background: $datagrid-filters-bg-color;
+
+      // overrides bootstrap
+      margin-right: 0;
+      margin-left: 0;
+
+      div > div {
+
+        // buttons in cells
+        button {
+          margin-top: auto;
+          margin-bottom: auto;
+        }
+      }
+    }
+
+    [class^="col-"] {
+      min-height: 25px;
+      padding: 5px;
+    }
+
+    #filter-field-labels {
+      font-weight: bold;
+    }
+
+    select,
+    input[type="date"] {
+      width: 100%;
+    }
+
+  }
+}
+
+#dataGridDynamicHeader {
+
+  >.row {
+    @include header-gradient-background;
+  }
+
+  font-weight: bold;
+  text-align: center;
+
+  [class^="col-"] {
+    border-right: 1px solid $datagrid-header-border-color;
+  }
+}
+
+
+#dataGridHeader {
+
+  font-size: 15px;
+
+  > .row {
+
+    @include header-gradient-background;
+
+    border-bottom: 1px solid $datagrid-header-border-color;
+    font-weight: bold;
+    text-align: center;
+
+    // cells in the header row
+    > div > div {
+      border-right: 1px solid $datagrid-header-border-color;
+    }
+
+
+    [class^="col-"] {
+      border-top: 1px solid $datagrid-header-border-color;
+      min-height: 35px;
+    }
+
+  }
+}
+
+#dataGridLookups {
+
+  > .row {
+
+    @include header-gradient-background;
+
+    // cells in the lookup row
+    > div > div {
+      border-bottom: 1px solid $datagrid-cell-border-color;
+      border-right: 1px solid $datagrid-cell-border-color;
+      text-align: center;
+    }
+
+    // add button
+    > button {
+      margin-left: 5px;
+      margin-top: 10px;
+    }
+
+    @include form-elements;
+
+    select {
+      margin: 5px;
+    }
+  }
+}
+
+#dataGrid,
+#dataGrid-spreadsheet,
+#editForm {
+
+  /* Hover coloring */
+  > .row:hover {
+    background-color: $datagrid-row-bg-hover-color;
+  }
+
+  > .row:hover > div > div > [class^="col-"] {
+    background-color: $datagrid-row-bg-hover-color;
+  }
+
+  /* Zebra striping */
+  .row:nth-child(even) {
+    background-color: $datagrid-row-alt-bg-color;
+  }
+
+  .row:nth-child(odd) {
+    background-color: $datagrid-row-bg-color;
+  }
+
+  >.flex-container:nth-child(even) {
+    background-color: $datagrid-row-alt-bg-color;
+  }
+
+  >.flex-container:nth-child(odd) {
+    background-color: $datagrid-row-bg-color;
+  }
+
+  @include form-elements
+}
+
+#dataGrid {
+  border-spacing: 0;
+  *border-collapse: collapse;
+  margin: 0 0 1.5em 0;
+
+  > .row {
+    border-right: 1px solid $datagrid-row-border-color;
+    border-bottom: 1px solid $datagrid-row-border-color;
+
+    // cells in each row of the data grid
+    div > div {
+      border-right: 1px solid $datagrid-row-border-color;
+    }
+
+    div > button {
+      margin-left: 5px;
+      margin-top: 10px;
+    }
+  }
+
+  .toggleditem {
+    padding: 10px;
+  }
+}
+
+#dataGrid-spreadSheet {
+
+  > .row {
+    border-right: 1px solid $datagrid-row-border-color;
+
+    > article {
+      background-color: $datagridspreadsheet-inlineedit-bg-color;
+      border-top: 1px solid $datagrid-row-border-color;
+    }
+
+    /* individual cells */
+    > div > div {
+      border-right: 1px solid $datagrid-cell-border-color;
+    }
+  }
+
+  /* individual cells */
+  > .row:nth-child(even) div div [class^="col-"] {
+    background-color: $datagrid-row-alt-bg-color;
+  }
+
+  @include form-elements;
+
+  .toggledItem, .toggleItem input, select {
+    flex: 1 1 auto;
+    padding-left: 5px;
+  }
+}
+
+#mainConfigPage {
+  font-family: $font-family-sans-serif;
+}
+
+#editConfigPage {
+  font-family: $font-family-sans-serif;
+}
+
+#buttons {
+  padding: 5px;
+  float: none;
+  display: inline-block;
+}
+
+/* Expand and collapse icons */
+.toggleItem {
+  color: $datagrid-toggleitem-color;
+  margin: auto;
+}
+
+#editInlinePage {
+
+  .row {
+    background-color: $datagridspreadsheet-inlineedit-bg-color !important;
+  }
+
+  form {
+    margin-bottom: 0;
+    background-color: $datagridspreadsheet-inlineedit-bg-color;
+
+    [class^="col-"] {
+      background-color: $datagridspreadsheet-inlineedit-bg-color;
+    }
+
+  }
+
+  .flex-container {
+    background-color: $datagridspreadsheet-inlineedit-bg-color;
+  }
+
+  @include form-elements;
+}
+
+.formItemControl {
+  width: 100%;
+  text-align: center;
+}
+
+//----- Expanded content
+.expand-content {
+  background-color: $datagrid-expandcontent-bg-color;
+
+  #expand-content-header {
+    text-align: center;
+    padding: 5px;
+  }
+
+  table {
+    margin-bottom: 0;
+  }
+
+
+}
+

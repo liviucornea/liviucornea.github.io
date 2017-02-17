@@ -99,9 +99,9 @@ var CompositeDotObject = (function () {
         }
         else {
             var children = component.getChildren();
-            var parent = obj[component.getName()] = component;
+            var parent_1 = obj[component.getName()] = component;
             for (var comp in children) {
-                CompositeDotObject.Transform(children[comp], parent);
+                CompositeDotObject.Transform(children[comp], parent_1);
             }
         }
         return obj;

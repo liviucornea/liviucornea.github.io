@@ -1,7 +1,16 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var core_1 = require('@angular/core');
 var Observable_1 = require('rxjs/Observable');
-var _Score_1 = require("./rulesSource/_Score");
+var _Score_1 = require('./rulesSource/_Score');
 (function (SlimLoadingBarEventType) {
     SlimLoadingBarEventType[SlimLoadingBarEventType["PROGRESS"] = 0] = "PROGRESS";
     SlimLoadingBarEventType[SlimLoadingBarEventType["HEIGHT"] = 1] = "HEIGHT";
@@ -23,12 +32,12 @@ exports.SlimLoadingBarEvent = SlimLoadingBarEvent;
 var SlimLoadingBarService = (function () {
     function SlimLoadingBarService() {
         var _this = this;
+        this.interval = 500; // in milliseconds
         this._progress = 0;
         this._height = '2px';
         this._color = 'firebrick';
         this._visible = true;
         this._intervalCounterId = 0;
-        this.interval = 500; // in milliseconds
         this.observable = new Observable_1.Observable(function (subscriber) {
             _this.subscriber = subscriber;
         });
@@ -88,12 +97,6 @@ var SlimLoadingBarService = (function () {
         enumerable: true,
         configurable: true
     });
-    SlimLoadingBarService.prototype.emitEvent = function (event) {
-        if (this.subscriber) {
-            // Push up a new event
-            this.subscriber.next(event);
-        }
-    };
     SlimLoadingBarService.prototype.start = function (onCompleted) {
         var _this = this;
         if (onCompleted === void 0) { onCompleted = null; }
@@ -133,6 +136,12 @@ var SlimLoadingBarService = (function () {
                 _this.progress = 0;
             }, 250);
         }, 250);
+    };
+    SlimLoadingBarService.prototype.emitEvent = function (event) {
+        if (this.subscriber) {
+            // Push up a new event
+            this.subscriber.next(event);
+        }
     };
     SlimLoadingBarService = __decorate([
         core_1.Injectable(), 

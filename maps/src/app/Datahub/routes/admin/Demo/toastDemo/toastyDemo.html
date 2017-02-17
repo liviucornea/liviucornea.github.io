@@ -1,6 +1,6 @@
 <ng2-toasty [position]="position"></ng2-toasty>
 
-<div class="col-md-8 offset-md-2">
+<div class="col-md-12 col-lg-8 offset-lg-2">
     <form class="form-inline">
         <div class="form-group">
             <label for="title">Title</label>
@@ -16,13 +16,15 @@
                 <option *ngFor="let type of types" [value]="type.code">{{type.name}}</option>
             </select>
             <label for="position">Position</label>
-            <select class="form-control-sm" id="position" [ngModel]="position" (ngModelChange)="changePosition($event)" name="position">
+            <select class="form-control-sm" id="position" [ngModel]="position" (ngModelChange)="changePosition($event)"
+                    name="position">
                 <option *ngFor="let pos of positions" [value]="pos.code">{{pos.name}}</option>
             </select>
         </div>
         <div class="form-group">
             <label for="timeout">Timeout</label>
-            <input type="text" class="form-control-sm" id="timeout" [(ngModel)]="options.timeout" placeholder="5000" name="timeout"/>
+            <input type="text" class="form-control-sm" id="timeout" [(ngModel)]="options.timeout" placeholder="5000"
+                   name="timeout"/>
             <label for="showclose">Show Close Icon</label>
             <input type="checkbox" id="showclose" [(ngModel)]="options.showClose" name="showClose"/>
         </div>
@@ -44,8 +46,8 @@
         </pre>
     </div>
     <div class="form-group">
-        <button class="button-standard" (click)="clearToasties()">Clear All</button>
-        <button class="button-standard" (click)="newCountdownToast()">Countdown</button>
-        <button class="button-standard" (click)="newToast()">Add</button>
+        <button class="btn btn-td" (click)="clearToasties()">Clear All</button>
+        <button class="btn btn-td" (click)="newCountdownToast()">Countdown</button>
+        <button class="btn btn-td" (click)="newToast()">Add</button>
     </div>
 </div>

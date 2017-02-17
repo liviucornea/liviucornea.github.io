@@ -1,0 +1,167 @@
+// bellow color is used for form background and as well for selected tab (#F4F7F4)
+$primary-color: #F4F7F4;
+$inputSize: 24px;
+$fontSize: 12px;
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: $fontSize;
+  border-style: solid;
+  border-width: 0.5px;
+}
+table tr {
+  height:5px;
+}
+ #qaEntry th, #promosSearchResultList th {
+  border-style: solid;
+  border-width: 0.5px;
+}
+//make table with active or searched promos) promos scrollable
+#promosList, #promosSearchResultList {
+  height: 300px;
+  border-collapse: collapse;
+}
+table.scroll thead th:first-child {
+  width: 40%;
+  border-right: 0.5px solid;
+}
+
+table.scroll tbody,
+table.scroll thead tr { display: block; }
+table.scroll tbody {
+  border-top: 0.5px solid;
+  max-height: 290px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+table.scroll tbody td:first-child{
+  width:22px;
+}
+table.scroll tbody td:nth-child(2){
+  width:68px;
+}
+
+table.scroll tbody td:last-child {
+  border-right: none !important;
+}
+/// end for scroll
+#mainTbl{
+  background-color: $primary-color;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#qaEntry td:nth-child(1){
+  text-align: right; width:50%
+}
+#searchPromo td {
+  background-color: $primary-color;
+}
+
+.nestedTbl {
+ border-collapse: collapse;
+ width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 2px;
+}
+tr:nth-child(even){background-color: #f2f2f2}
+
+.topTbl td:nth-child(2){
+  text-align: left;
+}
+.topTbl td:nth-child(1){
+  text-align: right;
+}
+.processList{
+  width: 95%;
+  height: 75px;
+  border: 2px solid #73AD21;
+  overflow-y: auto;
+  background: white;
+}
+.itemList:hover {
+  background-color: greenyellow;
+}
+.promoStatus{
+  font-weight: bold;
+  border-radius: 4px;
+  background: #73AD21;
+  padding: 2px;
+  height: 6px;
+}
+.moveAll {
+  background-color: #4CAF50; /* Green */
+  border-radius: 10px;;
+  color: white;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+}
+.hideIt{
+  visibility:hidden;
+}
+.tabSelected {
+  background-color: $primary-color;
+  border-radius: 3px;
+  height:5px;
+}
+.openWindow{
+  height:2px;
+  width:2px;
+}
+.readyToBeCompleted{
+  color:orange;
+}
+input[type="text"] {
+  height: $inputSize;
+}
+input[type="date"] {
+  height: $inputSize;
+}
+input[type="select"] {
+  height: $inputSize;
+}
+select {
+  height: $inputSize;
+}
+
+/* style all input elements with a required attribute
+input:required {
+  box-shadow: 4px 4px 20px rgba(200, 0, 0, 0.85);
+}
+*/
+/**
+ * style input elements that have a required
+ * attribute and a focus state
+
+input:required:focus {
+  border: 1px solid red;
+  outline: none;
+}
+*/
+/**
+ * style input elements that have a required
+ * attribute and a hover state
+*/
+input:required:hover {
+  opacity: 1;
+}
+
+
+input:required {
+  border-color: red !important;
+}
+input:required + label {
+  color: red;
+}
+input[type=text]
+{
+  border: 1px solid #999;
+  padding: 3px;
+}

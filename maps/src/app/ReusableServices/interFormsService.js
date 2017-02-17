@@ -1,6 +1,15 @@
 "use strict";
-var core_1 = require("@angular/core");
-var Subject_1 = require("rxjs/Subject");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = require('@angular/core');
+var Subject_1 = require('rxjs/Subject');
 var InterFormsService = (function () {
     function InterFormsService() {
         this.treeViewAddedFields = new Array();
@@ -16,25 +25,27 @@ var InterFormsService = (function () {
         this.notifyUploadOptionsChange = new Subject_1.Subject();
         this.notifyUploadInit = new Subject_1.Subject();
         this.spinnerEmitter = new Subject_1.Subject();
+        this.themeEmitter = new Subject_1.Subject();
+        this.fontSizeEmitter = new Subject_1.Subject();
         this.buildTreeViewCleanupList();
     }
     InterFormsService.prototype.buildTreeViewCleanupList = function () {
-        this.treeViewAddedFields.push("blockSequence");
-        this.treeViewAddedFields.push("mainPageObject");
-        this.treeViewAddedFields.push("config");
-        this.treeViewAddedFields.push("model");
-        this.treeViewAddedFields.push("nodeClass");
-        this.treeViewAddedFields.push("indent");
-        this.treeViewAddedFields.push("elementList");
-        this.treeViewAddedFields.push("blankModel");
-        this.treeViewAddedFields.push("blankModelConfig");
-        this.treeViewAddedFields.push("modelName");
-        this.treeViewAddedFields.push("level");
-        this.treeViewAddedFields.push("expanded");
-        this.treeViewAddedFields.push("summaryObject");
-        this.treeViewAddedFields.push("viewDetail");
-        this.treeViewAddedFields.push("editDetail");
-        this.treeViewAddedFields.push("addDetail");
+        this.treeViewAddedFields.push('blockSequence');
+        this.treeViewAddedFields.push('mainPageObject');
+        this.treeViewAddedFields.push('config');
+        this.treeViewAddedFields.push('model');
+        this.treeViewAddedFields.push('nodeClass');
+        this.treeViewAddedFields.push('indent');
+        this.treeViewAddedFields.push('elementList');
+        this.treeViewAddedFields.push('blankModel');
+        this.treeViewAddedFields.push('blankModelConfig');
+        this.treeViewAddedFields.push('modelName');
+        this.treeViewAddedFields.push('level');
+        this.treeViewAddedFields.push('expanded');
+        this.treeViewAddedFields.push('summaryObject');
+        this.treeViewAddedFields.push('viewDetail');
+        this.treeViewAddedFields.push('editDetail');
+        this.treeViewAddedFields.push('addDetail');
         for (var key in this.treeViewAddedFields) {
             this.treeViewSummarySkipFields.push(this.treeViewAddedFields[key]);
         }
@@ -151,6 +162,13 @@ var InterFormsService = (function () {
     };
     InterFormsService.prototype.setCurrentTreeLeve = function (level) {
         this.currentThreeLevelChange.emit(level);
+    };
+    InterFormsService.prototype.toggleTheme = function () {
+        // emits when navbar toggles theme
+        this.themeEmitter.next(true);
+    };
+    InterFormsService.prototype.adjustFontSize = function (change) {
+        this.fontSizeEmitter.next(change);
     };
     InterFormsService = __decorate([
         core_1.Injectable(), 

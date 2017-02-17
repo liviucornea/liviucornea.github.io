@@ -1,0 +1,25 @@
+<nav id="tdam-nav-left">
+    <ul>
+        <li *ngFor="#item of items"
+            (click)="activate(item)">
+            <span class="tdam-nav-left-label">
+                <a [routerLink]="item.RouteLink">
+                    {{item.Name}}
+                </a>
+            </span>
+            <div *ngIf="item.active">
+                <div>
+                    <ul class="nav nav-stacked"
+                        (click)="activate(item)">
+                        <li *ngFor="#subItem of item.Children">
+                            <a [routerLink]="subItem.RouteLink">
+                                <span class="glyphicon glyphicon-menu-right"></span>
+                                {{subItem.Name}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+    </ul>
+</nav>

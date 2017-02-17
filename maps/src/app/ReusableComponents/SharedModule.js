@@ -1,4 +1,13 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var core_1 = require('@angular/core');
 var httpAbstract_1 = require("../ReusableServices/httpAbstract");
 var alertService_1 = require("../ReusableServices/alertService");
@@ -51,6 +60,10 @@ var accordionHeaderContent_directive_1 = require("./accordion/accordionHeaderCon
 var assignableListItems_1 = require("./assignableListItems/assignableListItems");
 var checkBoxList_1 = require("./checkBoxList/checkBoxList");
 var searchFilterPipe_1 = require("../Datahub/pipes/searchFilterPipe");
+var multiSelectSearchFilterPipe_1 = require("../Datahub/pipes/multiSelectSearchFilterPipe");
+var matInput_component_1 = require("./matInput/matInput.component");
+var focusForwarder_directive_1 = require("../ReusableDirectives/focusForwarder/focusForwarder.directive");
+var excelService_1 = require("../ReusableServices/excelService");
 var SharedModule = (function () {
     function SharedModule() {
     }
@@ -63,18 +76,18 @@ var SharedModule = (function () {
                 accordion_component_1.Accordion, accordionBodyContent_directive_1.AccordionBodyContent, accordionHeaderContent_directive_1.AccordionHeaderContent, spinner_component_1.SpinnerComponent, sqlQueryBuilder_1.sqlQueryBuilder, navbar_1.navBar, navbarVert_1.NavBarVert, CustomDropDown_1.CustomDropDown, formBuilder_1.FormBuilder, formBuilderInline_1.FormBuilderInline,
                 inlineEditForm_1.inlineEditForm, lastItem_component_1.LastItem, json_edit_component_1.JsonEdit, notification_1.Notification, tableEdit_1.TableEditConfig, expandCollapseTrigger_1.ExpandCollapseTrigger, miniGrid_1.MiniGridComponenet,
                 typeahead_1.TypeAhead, pagination_1.Pagination, displayGrid_1.DisplayGridComponent, ng_uploader_1.UPLOAD_DIRECTIVES, uploader_1.CustomUploader, breadcrumb_1.BreadCrumb, tabBuilder_1.TabBuilder, tileView_1.TileView,
-                formatGridColumn_1.FormatGridColumnPipe, tokenFilter_1.TokenFilterPipe, localizationTranslatePipe_1.LocalizationTranslatePipe, assignableListItems_1.AssignableListItems, checkBoxList_1.CheckBoxListComponent, searchFilterPipe_1.MultiSelectSearchFilter
+                formatGridColumn_1.FormatGridColumnPipe, tokenFilter_1.TokenFilterPipe, localizationTranslatePipe_1.LocalizationTranslatePipe, assignableListItems_1.AssignableListItems, checkBoxList_1.CheckBoxListComponent, searchFilterPipe_1.SearchFilterPipe, multiSelectSearchFilterPipe_1.MultiSelectSearchFilterPipe, matInput_component_1.MatInputComponent, focusForwarder_directive_1.FocusForwarder
             ],
             declarations: [
                 accordion_component_1.Accordion, accordionBodyContent_directive_1.AccordionBodyContent, accordionHeaderContent_directive_1.AccordionHeaderContent, spinner_component_1.SpinnerComponent, sqlQueryBuilder_1.sqlQueryBuilder, navbar_1.navBar, navbarVert_1.NavBarVert, CustomDropDown_1.CustomDropDown, formBuilder_1.FormBuilder, formBuilderInline_1.FormBuilderInline,
                 inlineEditForm_1.inlineEditForm, lastItem_component_1.LastItem, json_edit_component_1.JsonEdit, notification_1.Notification, tableEdit_1.TableEditConfig, expandCollapseTrigger_1.ExpandCollapseTrigger, miniGrid_1.MiniGridComponenet,
                 typeahead_1.TypeAhead, pagination_1.Pagination, displayGrid_1.DisplayGridComponent, ng_uploader_1.UPLOAD_DIRECTIVES, uploader_1.CustomUploader, breadcrumb_1.BreadCrumb, tabBuilder_1.TabBuilder, tileView_1.TileView,
-                formatGridColumn_1.FormatGridColumnPipe, tokenFilter_1.TokenFilterPipe, localizationTranslatePipe_1.LocalizationTranslatePipe, assignableListItems_1.AssignableListItems, checkBoxList_1.CheckBoxListComponent, searchFilterPipe_1.MultiSelectSearchFilter
+                formatGridColumn_1.FormatGridColumnPipe, tokenFilter_1.TokenFilterPipe, localizationTranslatePipe_1.LocalizationTranslatePipe, assignableListItems_1.AssignableListItems, checkBoxList_1.CheckBoxListComponent, searchFilterPipe_1.SearchFilterPipe, multiSelectSearchFilterPipe_1.MultiSelectSearchFilterPipe, matInput_component_1.MatInputComponent, focusForwarder_directive_1.FocusForwarder
             ],
             entryComponents: [sqlQueryBuilder_1.sqlQueryBuilder, displayGrid_1.DisplayGridComponent, formBuilder_1.FormBuilder],
             providers: [httpAbstract_1.HttpAbstract, sampleService_1.SampleService, navigationService_1.NavigationService, notification_1.Notification, appSettingsService_1.AppSettingsService, httpAbstract_1.HttpAbstract, alertService_1.AlertService, apiService_1.ApiService, AuthGuard_1.AuthGuard,
                 ruleService_1.RuleService, crudService_1.crudService, matrixService_1.matrixService, miniMatrixService_1.MiniMatrixService,
-                interFormsService_1.InterFormsService, uploadService_1.Ng2Uploader, localizationService_1.LocalizationService, displayGridFilterService_1.DisplayGridFilterService, importExportService_1.ImportExportService
+                interFormsService_1.InterFormsService, uploadService_1.Ng2Uploader, localizationService_1.LocalizationService, displayGridFilterService_1.DisplayGridFilterService, importExportService_1.ImportExportService, excelService_1.ExcelService
             ],
         }), 
         __metadata('design:paramtypes', [])

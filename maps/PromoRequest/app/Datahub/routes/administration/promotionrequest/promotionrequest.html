@@ -1,0 +1,293 @@
+<table id="mainTbl">
+    <tr>
+        <td style="vertical-align: top; width:25%">
+            <promotionList [promosActiveList]="promosList" [user]="user" [qaEntry]="qaEntry" [promotersList]="promoters" [implementersList]="implementers"></promotionList>
+        </td>
+        <td style="vertical-align: top">
+            <form>
+            <div style="width:100%">
+                <table class="nestedTbl">
+                    <tr style="height:30px">
+                        <td><span>Promotion Request</span></td>
+                        <td style="text-align: right !important"><span *ngFor="#status of promoStatuses;  #i = index">
+                            <span [ngClass]="{promoStatus: i == currentPromo.status}">{{status}}</span>
+                            <span *ngIf="i < promoStatuses.length - 1">{{' | '}}</span>
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+                <table class="nestedTbl">
+                    <tr>
+                        <td>
+                            <lable for="promoId" *ngIf="!currentPromo?.isNew" style="font-weight: bold; color:blue">Promotion ID:{{currentPromo?.promotionID}}</lable>
+                        </td>
+                        <td>
+                            <div *ngIf="!currentPromo?.isNew">
+                            <span style="font-weight: bold;">Preapproval</span>
+                            <a href="#">
+                                <span class="glyphicon glyphicon-new-window" (click)="doPreApproval()"></span>
+                            </a>
+                            </div>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td colspan="2">
+                            <lable for="promoType">Promotion Type</lable>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="implementationType" value="1" [(ngModel)]="currentPromo.implementationType" [required]="utilService.reqForNew">&nbsp;Business
+                            &nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="implementationType" value="0" [(ngModel)]="currentPromo.implementationType" [required]="utilService.reqForNew">&nbsp;Core
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="projectType" value="0" [(ngModel)]="currentPromo.projectType" [required]="utilService.reqForNew">&nbsp;New
+                            Project
+                            <input type="radio" name="projectType" value="1" [(ngModel)]="currentPromo.projectType" [required]="utilService.reqForNew">&nbsp;Enhancement
+                            <input type="radio" name="projectType" value="2"
+                                   [(ngModel)]="currentPromo.projectType" required>&nbsp;Emergency Change
+                            <input type="radio" name="projectType" value="3" [(ngModel)]="currentPromo.projectType" [required]="utilService.reqForNew">&nbsp;Bug
+                            Fix
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="projectName">Project Name</label>
+                        </td>
+                        <td>
+                            <input type="text" id="projectName" [(ngModel)]="currentPromo.projectName" [required]="utilService.reqForNew">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Project Number</label>
+                        </td>
+                        <td><input type="text" [(ngModel)]="currentPromo.projectNbr" [required]="utilService.reqForNew"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Promotion Path</label>
+                        </td>
+                        <td><input type="text" [(ngModel)]="currentPromo.promotionPath" [required]="utilService.reqForNew">&nbsp;
+                            <button (click)="promoPath()">Copy path to clipboard</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Promotion Ref</label>
+                        </td>
+                        <td>
+                         <!--   <typeahead-input [search]="autocompleteInput.searchAllPromos" (onSelected)="typeAheadSelected($event)"></typeahead-input> -->
+                            <input type="text" [(ngModel)]="currentPromo.promotionRefNbr">
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td>
+                            <label>Implemented by:</label>
+                            <span  style="font-weight: bold; color:blue">
+                            {{currentPromoImplementer?.id}}:{{currentPromoImplementer?.name}}</span>
+
+                        </td>
+                        <td><label>Implemented Date:</label>
+                            <input type="datetime-local" [(ngModel)]="currentPromo.implementedDate"></td>
+                    </tr>
+                    <tr *ngIf="user.isPromoter">
+                        <td>Risck Impact:
+                            <select [(ngModel)]="currentPromo.riskFactor">
+                                <option value="-1"></option>
+                                <option value="1">Low</option>
+                                <option value="2">Medium</option>
+                                <option value="3">High</option>
+                            </select>
+                        </td>
+                        <td></td>
+
+                    </tr>
+
+
+                </table>
+                <table id="middleTbl">
+                    <tr>
+                        <td style="width:45%">
+                            <span>Workflow ID:</span>
+                            <div class="processList">
+                                <div *ngFor="#item of workflowsDisplayList">
+                                    <span class="itemList" (dblclick)="moveWorkflowToImplemented(item)">{{item.id +' : '+ item.description }}</span>
+                                </div>
+                            </div>
+
+                        </td>
+                        <td style="text-align:center;width:10px"><span>&nbsp;<button class="moveAll"
+                                                                                     (click)="allWorkflowReset()"
+                                                                                     [ngClass]="{hideIt:!currentPromo?.workflows.length}"> << </button></span>
+                        </td>
+                        <td style="text-align:left;width:45%">
+                            <span>Implemented:</span>
+                            <div class="processList">
+                                <div *ngFor="#item of currentPromo.workflows">
+                                    <span class="itemList" (dblclick)="moveWorkflowToListed(item)">{{item.id +' : '+ item.description }}</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:45%">
+                            <span>Processes list:</span>
+                            <div class="processList">
+                                <div *ngFor="#item of processesDisplayList">
+                                    <span class="itemList" (dblclick)="moveProcessToImplemented(item)">{{item.id +' : '+ item.description }}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="text-align:center; width:10px"><span>&nbsp;<button class="moveAll"
+                                                                                      (click)="allProcessesReset()"
+                                                                                      [ngClass]="{hideIt:!currentPromo.processes.length}"> << </button></span>
+                        </td>
+                        <td style="text-align:left;width:45%">
+                            <span> &nbsp;</span>
+                            <div class="processList">
+                                <div *ngFor="#item of currentPromo.processes">
+                        <span class="itemList"
+                              (dblclick)="moveProcessToListed(item)">{{item.id +' : '+ item.description }}</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+
+                <table class="nestedTbl">
+                    <tr>
+                        <td>
+                            <label>Keywords:</label>
+                        </td>
+                        <td><input type="text" [(ngModel)]="currentPromo.keywords"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Tech notification mail:</label>
+                        </td>
+                        <td><textarea [(ngModel)]="currentPromo.notifyEmail"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Biz notification mail:</label>
+                        </td>
+                        <td><textarea [(ngModel)]="currentPromo.notifyEmailBiz"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td><label>Tested:</label>
+                                        <select [(ngModel)]="currentPromo.tested"><option value=""></option>
+                                            <option *ngFor="#item of cboItemsSelection" value="{{item.value}}" >{{item.label}}</option>
+                                        </select>
+                                        &nbsp;
+                                        <span><span
+                                                (click)="doModal('testLog')">Test Log: {{currentPromo.testLog}}</span>
+                                        <a href="#">
+                                            <span class="glyphicon glyphicon-new-window"
+                                                  (click)="doModal('testLog')"></span>
+                                        </a>
+                                        </span>
+                                    </td>
+                                    <td style="text-align: right"><label>Test Case:</label>
+                                        <select [(ngModel)]="currentPromo.testCase"><option value=""></option>
+                                            <option *ngFor="#item of cboItemsSelection" value="{{item.value}}" >{{item.label}}</option>
+                                        </select>
+                                    </td>
+                                    <td style="text-align: right; padding:10px"><label>Log/Screen Shots:</label>
+                                        <select [(ngModel)]="currentPromo.logsScreenShot"><option value=""></option>
+                                            <option *ngFor="#item of cboItemsSelection" value="{{item.value}}" >{{item.label}}</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label>SQL:</label>
+                                        <!--
+                                        <input type="radio" name="sql" value="0" [(ngModel)]="currentPromo.sql">&nbsp;N/A
+                                        <input type="radio" name="sql" value="1" [(ngModel)]="currentPromo.sql">&nbsp;YES
+                                        -->
+                                        <select [(ngModel)]="currentPromo.sql"><option value=""></option>
+                                            <option *ngFor="#item of cboItemsSelection" value="{{item.value}}" >{{item.label}}</option>
+                                        </select>
+                                    </td>
+                                    <td style="text-align: right"><label>Web Config:</label>
+                                        <select [(ngModel)]="currentPromo.webConfig"><option value=""></option>
+                                            <option *ngFor="#item of cboItemsSelection" value="{{item.value}}" >{{item.label}}</option>
+                                        </select>
+                                     </td>
+                                    <td style="text-align: right;padding:10px"><label>Source Code Check-in:</label>
+                                        <select [(ngModel)]="currentPromo.vss"><option value=""></option>
+                                            <option *ngFor="#item of cboItemsSelection" value="{{item.value}}" >{{item.label}}</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Descritption:  <a href="#">
+                                <span class="glyphicon glyphicon-new-window" (click)="doModal('description')"></span>
+                            </a> {{currentPromo?.description}}</span>
+                        </td>
+                        <td><span>Special Instruction:
+                             <a href="#">
+                                <span class="glyphicon glyphicon-new-window"
+                                      (click)="doModal('specialInstruction')"></span>
+                            </a>
+                            {{currentPromo?.specialInstruction}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Instruction:
+                                 <a href="#">
+                                <span class="glyphicon glyphicon-new-window" (click)="doModal('instruction')"></span>
+                            </a>
+                                {{currentPromo?.instruction}}</span>
+                        </td>
+                        <td>
+                            <span>Promoter's Comments:
+                                 <a href="#">
+                                <span class="glyphicon glyphicon-new-window"
+                                      (click)="doModal('promoterComments')"></span>
+                            </a>
+                                {{currentPromo?.promoterComments}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center">
+                            <button *ngIf="utilService.btnValidate">Validate</button>
+                            <button (click)="doSave()" *ngIf="utilService.btnSave">Save</button>
+                            <button *ngIf="utilService.btnRemove">Remove</button>
+                            <button (click)="doSubmit()" *ngIf="utilService.btnSubmit">Submit</button>
+                            <button *ngIf="utilService.btnPromote">Promote</button>
+                            <button *ngIf="utilService.btnRollback">Rollback</button>
+                            <button *ngIf="utilService.btnNotify">Notify</button>
+                            <button *ngIf="utilService.btnComplete">Complete</button>
+                            <button *ngIf="utilService.btnVss">VSS</button>
+
+                        </td>
+
+                    </tr>
+
+
+                </table> <!-- end of table from right part of screen -->
+            </div>
+            </form>
+        </td>
+    </tr>
+</table>
+<tdamSimpleInput *ngIf="showModal" [theInput]="objectForModal"></tdamSimpleInput>
+<tdamPreAproval *ngIf="preAproval" [thePromo]="currentPromo" [user]="user"></tdamPreAproval>
+

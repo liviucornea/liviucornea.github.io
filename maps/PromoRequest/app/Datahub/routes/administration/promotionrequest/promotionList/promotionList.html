@@ -1,0 +1,253 @@
+<div>
+    <div class="td-tabs-primary">
+        <ol class="td-tab-items">
+            <li class="td-tab-item"><span class="td-tab-item-text" (click)="searchTab=!searchTab"
+                                          [ngClass]="{tabSelected: !searchTab}">Active</span></li>
+            <li class="td-tab-item"><span class="td-tab-item-text" (click)="searchTab=!searchTab"
+                                          [ngClass]="{tabSelected: searchTab}">Search</span></li>
+        </ol>
+    </div>
+    <div id="active" *ngIf="!searchTab">
+        <div>
+            <table><tr><td>
+            <span>You can filter promos by :</span>
+            <select id="statusFilter" (change)="0" [(ngModel)]="statusFilter">
+                <option value="All" value="-1">All</option>
+                <option *ngFor="#status of promoStatuses" value="{{status}}">{{status}}</option>
+            </select></td><td>
+                <button (click)="createNewPromo()" *ngIf="user.isImplementer">Create New Promo</button>
+            </td></tr></table>
+            <div><br></div>
+            <table class="scroll" id="promosList">
+                <thead>
+                <tr>
+                    <th colspan="2">Promo Status</th>
+                    <th>Promo description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="#promo of promosActiveList | filterList:statusFilter">
+                    <td><a href="#" (click)="sendPromoOut(promo)">{{promo.id}}</a></td>
+                    <td><span
+                            [ngClass]="{readyToBeCompleted: promo.readyToBeCompleted}">{{promoStatuses[promo.status]}}</span>
+                    </td>
+                    <td><div>
+                        <span [ngClass]="{readyToBeCompleted: promo.readyToBeCompleted}">{{promo.description}}</span>
+                        <a href="#" (click)="sendPromoOut(promo)">({{promo.implementerName}})</a>
+                    </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <!-- QA screen section bellow -->
+            <span>* QA needs to complete QA Checkup</span>
+            <table id="qaEntry">
+                <tr>
+                    <th colspan="2">QA Checkup({{qaEntry.promotionID}})</th>
+                </tr>
+                <tr>
+                    <td>Test Case:</td>
+                    <td>
+                        <select [(ngModel)]="qaEntry.testCase" [disabled]="!user.isQA">
+                            <option value=""></option>
+                            <option *ngFor="#item of cboItemsSelection" value="{{item.value}}">{{item.label}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>SQL:</td>
+                    <td>
+                        <select [(ngModel)]="qaEntry.sql" [disabled]="!user.isQA">
+                            <option value=""></option>
+                            <option *ngFor="#item of cboItemsSelection" value="{{item.value}}">{{item.label}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Web Config:</td>
+                    <td>
+                        <select [(ngModel)]="qaEntry.webConfig" [disabled]="!user.isQA">
+                            <option value=""></option>
+                            <option *ngFor="#item of cboItemsSelection" value="{{item.value}}">{{item.label}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Source Code Check-in:</td>
+                    <td>
+                        <!--
+                        <input type="radio" name="vss" value="0" [(ngModel)]="qaEntry.vss">&nbsp;N/A
+                        <input type="radio" name="vss" value="1" [(ngModel)]="qaEntry.vss">&nbsp;YE-->
+                        <select [(ngModel)]="qaEntry.vss" [disabled]="!user.isQA">
+                            <option value=""></option>
+                            <option *ngFor="#item of cboItemsSelection" value="{{item.value}}">{{item.label}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Description/Instruction:</td>
+                    <td>
+                        <select [(ngModel)]="qaEntry.descriptInstruct" [disabled]="!user.isQA">
+                            <option value=""></option>
+                            <option *ngFor="#item of cboItemsSelection" value="{{item.value}}">{{item.label}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Approval email from promoter:</td>
+                    <td>
+                        <select [(ngModel)]="qaEntry.approvalEmailFromPromoter" [disabled]="!user.isQA">
+                            <option value=""></option>
+                            <option *ngFor="#item of cboItemsSelection" value="{{item.value}}">{{item.label}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Others:</td>
+                    <td>
+                        <select [(ngModel)]="qaEntry.others" [disabled]="!user.isQA">
+                            <option value=""></option>
+                            <option *ngFor="#item of cboItemsSelection" value="{{item.value}}">{{item.label}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr><td colspan="2">
+                    Promo message: <span class="glyphicon glyphicon-new-window" (click)="doQaMessage()"></span>
+                    <qaMessage *ngIf="showQaMessage" [theInput]="qaEntry.promotionID" *ngIf="!user.isQA"></qaMessage>
+                </td></tr>
+            </table>
+
+
+        </div>
+        <br>
+        <br> <span> User login is : {{user.login}}</span>
+    </div>
+    <div id="search" *ngIf="searchTab">
+        Enter your search criteria bellow:
+        <form>
+
+
+             <table id="searchPromo">
+                <tr>
+                    <td style="text-align: right"><span>Promotion Id:</span></td>
+                    <td style="text-align: left">
+                        <typeahead-input [search]="autocompleteInput.searchAllPromos" (onSelected)="typeAheadSelected($event)"></typeahead-input>
+<!--                          <input type="text" [(ngModel)]="promoSearchID"> -->
+
+                    </td>
+                 </tr>
+                 <tr>
+                     <td style="text-align: right" colspan="2"><input type="checkbox" [(ngModel)]="showPromoRef" ><span>Show Ref Promotions</span>
+                     </td>
+                 </tr>
+                 <tr>
+                     <td style="text-align: right"><span>Date Type:</span></td>
+                     <td>
+                         <select style="height: 24px;" [(ngModel)]="dateType">
+                             <option value="-1"></option>
+                             <option value="1">Implementation Date</option>
+                             <option value="2">Promotion Date</option>
+                         </select>
+                     </td>
+                 </tr>
+                 <tr>
+                     <td style="text-align: right"><span>From:</span></td>
+                     <td style="text-align: left"><input type="date" [(ngModel)]="fromDate"></td>
+                 </tr>
+                 <tr>
+                     <td style="text-align: right"><span>To:</span></td>
+                     <td style="text-align: left"><input type="date" [(ngModel)]="toDate"></td>
+                 </tr>
+                 <tr>
+                     <td style="text-align: right">
+                         <lable for="promoType">Promotion</lable>
+                     </td>
+                     <td>
+                         <select id="implementationType" [(ngModel)]="implementationType">
+                             <option value="-1"></option>
+                             <option value="0">Core</option>
+                             <option value="1">Business</option>
+                         </select>
+                     </td>
+                 </tr>
+                 <tr>
+                     <td style="text-align: right">
+                         <lable for="status">Status:</lable>
+                     </td>
+                     <td>
+                         <select id="status">
+                             <option></option>
+                             <option *ngFor="#status of promoStatusesAll">{{status}}</option>
+                         </select>
+                     </td>
+                 </tr>
+                 <tr>
+                     <td style="text-align: right">
+                         <lable for="implementer">Implementer:</lable>
+                     </td>
+                     <td>
+                         <select id="implementer" [(ngModel)]="implementerId">
+                             <option></option>
+                             <option *ngFor="#implementer of implementersList" value="{{implementer.id}}">{{implementer.id}} : {{implementer.name}}</option>
+                         </select>
+                     </td>
+                 </tr>
+                 <tr>
+                     <td style="text-align: right">
+                         <lable for="promoter">Promoter:</lable>
+                     </td>
+                     <td>
+                         <select id="promoter" [(ngModel)]="promoterId">
+                             <option></option>
+                             <option *ngFor="#promoter of promotersList" value="{{promoter.id}}">{{promoter.id}} : {{promoter.name}}</option>
+                         </select>
+                     </td>
+                 </tr>
+                 <tr>
+                     <td style="text-align: right"><span>Workflow ID(s):</span></td>
+                     <td style="text-align: left"><input type="text" [(ngModel)]="workflowIDs"></td>
+                 </tr>
+                 <tr>
+                     <td style="text-align: right"><span>Process ID(s):</span></td>
+                     <td style="text-align: left"><input type="text" [(ngModel)]="processesIDs"></td>
+                 </tr>
+                 <tr>
+                     <td style="text-align: right"><span>Keyword:</span></td>
+                     <td style="text-align: left"><input type="text" [(ngModel)]="keyWord"></td>
+                 </tr>
+                 <tr>
+                     <td style="text-align: right"><input type="checkbox"><span>Not Completed</span></td>
+
+                     <td style="text-align: right"><input type="checkbox"><span>In Production</span></td>
+                 </tr>
+                 <tr>
+                     <td style="text-align: right">
+                         <button type="submit" (click)="doSearch()">Search</button>
+                     </td>
+                     <td style="text-align: left">
+                         <button type="reset" (click)="defaultSearchParam()">Clear</button>
+                     </td>
+                 </tr>
+             </table>
+         </form>
+
+         <table id="promosSearchResultList"  class="scroll"  *ngIf="promoSearchResultList.length > 0">
+             <thead>
+             <tr>
+                 <th>ID</th>
+                 <th>Name</th>
+             </tr>
+             </thead>
+             <tbody>
+             <tr *ngFor="#promo of promoSearchResultList">
+                 <td><a href="#" (click)="sendPromoOut(promo)">{{promo.id}}</a></td>
+                 <td style="width:90% !important"><span>{{promo.description}}</span>
+                 </td>
+             </tr>
+             </tbody>
+         </table>
+     </div>
+
+ </div>

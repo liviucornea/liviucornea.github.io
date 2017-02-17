@@ -12,7 +12,8 @@ import {SchematicModule} from "./schematic/schematic.Module";
 import {ApplicationTreeViewModule} from "./applicationTreeView/applicationTreeView.Module";
 import {LocalizationModule} from "./localization/localization.Module";
 import {DemoModule} from "./Demo/Demo.Module";
-import {AdminApiService} from "./adminApiService";
+import { AdminApiService } from "./adminApiService";
+import { SettingModule } from "./settings/settings.module";
 
 
 @NgModule({
@@ -20,7 +21,7 @@ import {AdminApiService} from "./adminApiService";
         CommonModule, RouterModule,AdminMainRouting,
         ScheduleModule, LogsModule,ApplicationBuilderModule,
         AuthModule,ApplicationTreeViewModule,ConfigBuilderModule,
-        SchematicModule, LocalizationModule, DemoModule
+        SchematicModule, LocalizationModule, DemoModule, SettingModule
     ],
     declarations:[Admin],
     providers: [AdminApiService]

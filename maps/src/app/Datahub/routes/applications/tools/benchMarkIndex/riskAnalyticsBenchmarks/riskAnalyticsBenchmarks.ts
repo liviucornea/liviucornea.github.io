@@ -5,6 +5,7 @@ import {ApiService} from "../../../../../../ReusableServices/apiService";
 import {TabBuilder} from "../../../../../../ReusableComponents/tabBuilder/tabBuilder";
 import {RiskAnalyticsBenchmarksControlConfig} from "./riskAnalyticsBenchmarks.config";
 import {toDateString, toUTCDate} from "../../../../../../ReusableServices/genericfunctions";
+import moment = require("moment");
 
 @Component({
     selector: 'riskAnalyticsBenchmarks',

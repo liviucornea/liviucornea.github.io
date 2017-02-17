@@ -1,0 +1,39 @@
+<artice Id="CustomPlugin" *ngIf="visiblePlugin" class="flex-container" >
+    <div name="seperator" style="height: 30px"></div>
+    <section>
+        <div >
+            <textarea rows="10" cols="50" [(ngModel)]="pluginValue" (click)="textAreaClicked()">
+
+            </textarea>
+        </div>
+        <div>
+            <button (click)="validateClicked()" >validate</button>
+            <button [disabled]="!enableInsert" (click)="insertClicked()">insert</button>
+            <button (click)="cancelClicked()">cancel</button>
+            <button (click)="resetClicked()">reset</button>
+        </div>
+        <div name="seperator" style="height: 30px"></div>
+        <div *ngIf="showValidation" >
+            <Label>Matching Dates;</Label>
+            <div *ngFor="#day of applicableDatesUI">
+                <div >
+                    <label>{{day.ApplicableDate | date  }}</label>
+                </div>
+            </div>
+            <div *ngIf="isEmptyResult">
+                No matching result !
+            </div>
+        </div>
+    </section>
+    <section>
+        <div *ngFor="#attr of attributesVM" >
+            <div>
+                <label>{{attr.AttributeName}}</label>
+                <label>{{attr.UpperLimit}}</label>
+                <label>{{attr.LowerLimit}}</label>
+                <a (click)="attributeClicked(attr)">add</a>
+            </div>
+        </div>
+    </section>
+    <section></section>
+</artice>

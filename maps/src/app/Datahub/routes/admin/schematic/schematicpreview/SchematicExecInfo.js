@@ -1,4 +1,13 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var core_1 = require('@angular/core');
 var schematicService_1 = require('../schematicService');
 var alertService_1 = require("../../../../../ReusableServices/alertService");
@@ -49,52 +58,49 @@ var SchematicExecInfo = (function () {
         var dataJSonReady = data.replace(/\\/g, "\\\\").replace(/\r?\n|\r/g, "").replace(/\t/g, '');
         try {
             var jsonData = JSON.parse(dataJSonReady);
-            var step = self.allStepsVM.find(function (x) { return x.StepNumber.toString() === jsonData.stepId; });
-            if (step != null) {
-                self.updateStepState(jsonData.stepId, jsonData.logLevel, jsonData.message);
-                var msgResult = new Array();
-                if (step.ExecutionMessage.length > 0) {
-                    msgResult = step.ExecutionMessage;
+            if (jsonData.schematicId == this.schematicID + '' || jsonData.schematicId === "0") {
+                var step = self.allStepsVM.find(function (x) { return x.StepNumber.toString() === jsonData.stepId; });
+                if (step != null) {
+                    self.updateStepState(jsonData.stepId, jsonData.logLevel, jsonData.message);
+                    var msgResult = new Array();
+                    if (step.ExecutionMessage.length > 0) {
+                        msgResult = step.ExecutionMessage;
+                    }
+                    // bellow line is coverting ticksfrom C# to Date available for JavaScript
+                    var mcString = Number(jsonData.timeStamp.slice(0, jsonData.timeStamp.indexOf('.')));
+                    var epochMicrotimeDiff = 621355824000000000;
+                    var theDate = new Date((mcString - epochMicrotimeDiff) / 10000);
+                    msgResult.push({
+                        'schematicId': jsonData.schematicId,
+                        'stepId': jsonData.stepId,
+                        'timestamp': jsonData.timeStamp,
+                        'message': jsonData.message,
+                        'class': jsonData.logLevel,
+                        'date': theDate
+                    });
+                    msgResult.sort(sortByTimestamp);
+                    step.ExecutionMessage = msgResult;
+                    self.channelService.sendExecutionMessage$.emit(msgResult);
+                    if (jsonData.message.toUpperCase().indexOf('CONTINUE FALSE') > -1) {
+                        self.channelService.sendExecutionMessage$.emit({ 'lastMsg': 'Finished - but incomplete !!!!' });
+                    }
                 }
-                // bellow line is coverting ticksfrom C# to Date available for JavaScript
-                var mcString = Number(jsonData.timeStamp.slice(0, jsonData.timeStamp.indexOf('.')));
-                var epochMicrotimeDiff = 621355824000000000;
-                var theDate = new Date((mcString - epochMicrotimeDiff) / 10000);
-                msgResult.push({
-                    'schematicId': jsonData.schematicId,
-                    'stepId': jsonData.stepId,
-                    'timestamp': jsonData.timeStamp,
-                    'message': jsonData.message,
-                    'class': jsonData.logLevel,
-                    'date': theDate
-                });
-                msgResult.sort(sortByTimestamp);
-                step.ExecutionMessage = msgResult;
-                self.channelService.sendExecutionMessage$.emit(msgResult);
-                if (jsonData.message.toUpperCase().indexOf('CONTINUE FALSE') > -1) {
-                    self.channelService.sendExecutionMessage$.emit({ 'lastMsg': 'Finished - but incomplete !!!!' });
-                }
-            }
-            else {
-                if (jsonData.stepId === "0" && jsonData.message.startsWith("Schematic Completed with state ")) {
-                    self.schematicState = jsonData.message;
-                    self.channelService.sendExecutionMessage$.emit({ 'lastMsg': 'Schematic Completed with state' + jsonData.messge });
-                    return;
-                }
-                if (jsonData.stepId === "0" && jsonData.message.startsWith("Pipeline") && jsonData.message.indexOf('finished with state') > -1) {
-                    self.schematicState = jsonData.message;
-                    self.channelService.sendExecutionMessage$.emit({ 'lastMsg': jsonData.messge });
-                    return;
-                }
-                if (jsonData.stepId === "0" && jsonData.message.startsWith("Schematic") && jsonData.message.indexOf('finished with state') > -1 && typeof Id == 'undefined') {
-                    self.schematicState = jsonData.message;
-                    self.channelService.sendExecutionMessage$.emit({ 'lastMsg': jsonData.messge });
-                    return;
-                }
-                if (jsonData.stepId === "0" && jsonData.message.startsWith('Cannot continue to process Pipeline')) {
-                    self.schematicState = jsonData.message;
-                    self.channelService.sendExecutionMessage$.emit({ 'lastMsg': 'Pipeline finished!' + jsonData.messge });
-                    return;
+                else {
+                    if (jsonData.stepId === "0" && jsonData.message.startsWith("Pipeline") && jsonData.message.indexOf('finished with state') > -1) {
+                        self.schematicState = jsonData.message;
+                        self.channelService.sendExecutionMessage$.emit({ 'lastMsg': jsonData.messge });
+                        return;
+                    }
+                    if (jsonData.stepId === "0" && jsonData.message.startsWith("Schematic") && jsonData.message.indexOf('finished with state') > -1 && typeof Id == 'undefined') {
+                        self.schematicState = jsonData.message;
+                        self.channelService.sendExecutionMessage$.emit({ 'lastMsg': jsonData.messge });
+                        return;
+                    }
+                    if (jsonData.stepId === "0" && jsonData.message.startsWith('Cannot continue to process Pipeline')) {
+                        self.schematicState = jsonData.message;
+                        self.channelService.sendExecutionMessage$.emit({ 'lastMsg': 'Pipeline finished!' + jsonData.messge });
+                        return;
+                    }
                 }
             }
         }

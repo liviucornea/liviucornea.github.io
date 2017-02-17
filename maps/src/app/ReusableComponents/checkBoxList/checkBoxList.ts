@@ -32,6 +32,7 @@ export class CheckBoxListComponent implements OnInit,DoCheck, ControlValueAccess
     @Input() set Disabled(value: any) {
         this.disabled = value;
     }
+    @Output() focused = new EventEmitter();
 
     //@Output() public CheckBoxListEmitter: EventEmitter<any> = new EventEmitter<any>();
 
@@ -69,6 +70,7 @@ export class CheckBoxListComponent implements OnInit,DoCheck, ControlValueAccess
         // target is null when clicking off of the checkboxlist
         if (!parentFound && typeof target !== 'undefined') {
          this.isVisible = false;
+         this.focused.next(false);
         }
     }
 
@@ -104,6 +106,9 @@ export class CheckBoxListComponent implements OnInit,DoCheck, ControlValueAccess
         this.isVisible = !this.isVisible;
         if (!this.isVisible) {
             //this.dropdownClosed.emit();
+            this.focused.emit(false);
+        } else {
+            this.focused.emit(true);
         }
     }
 

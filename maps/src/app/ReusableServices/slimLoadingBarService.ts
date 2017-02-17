@@ -1,9 +1,7 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Subscriber} from 'rxjs/Subscriber';
-import {_Score} from "./rulesSource/_Score";
-
-
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Subscriber } from 'rxjs/Subscriber';
+import { _Score } from './rulesSource/_Score';
 
 export enum SlimLoadingBarEventType {
     PROGRESS,
@@ -13,7 +11,7 @@ export enum SlimLoadingBarEventType {
 }
 
 export class SlimLoadingBarEvent {
-    constructor(public type:SlimLoadingBarEventType, public value:any) {}
+    constructor(public type: SlimLoadingBarEventType, public value: any) { }
 }
 
 /**
@@ -22,24 +20,25 @@ export class SlimLoadingBarEvent {
 @Injectable()
 export class SlimLoadingBarService {
 
-    private _progress:number = 0;
-    private _height:string = '2px';
-    private _color:string = 'firebrick';
-    private _visible:boolean = true;
-
-    private _intervalCounterId:any = 0;
-    public interval:number = 500; // in milliseconds
+    public interval: number = 500; // in milliseconds
 
     public observable: Observable<SlimLoadingBarEvent>;
     private subscriber: Subscriber<SlimLoadingBarEvent>;
 
+    private _progress: number = 0;
+    private _height: string = '2px';
+    private _color: string = 'firebrick';
+    private _visible: boolean = true;
+
+    private _intervalCounterId: any = 0;
+
     constructor() {
-        this.observable = new Observable<SlimLoadingBarEvent>((subscriber:Subscriber<SlimLoadingBarEvent>) => {
+        this.observable = new Observable<SlimLoadingBarEvent>((subscriber: Subscriber<SlimLoadingBarEvent>) => {
             this.subscriber = subscriber;
         });
     }
 
-    set progress(value:number) {
+    set progress(value: number) {
         if (_Score.isPresent(value)) {
             if (value > 0) {
                 this.visible = true;
@@ -49,30 +48,30 @@ export class SlimLoadingBarService {
         }
     }
 
-    get progress():number {
+    get progress(): number {
         return this._progress;
     }
 
 
-    set height(value:string) {
+    set height(value: string) {
         if (_Score.isPresent(value)) {
             this._height = value;
             this.emitEvent(new SlimLoadingBarEvent(SlimLoadingBarEventType.HEIGHT, this._height));
         }
     }
 
-    get height():string {
+    get height(): string {
         return this._height;
     }
 
-    set color(value:string) {
+    set color(value: string) {
         if (_Score.isPresent(value)) {
             this._color = value;
             this.emitEvent(new SlimLoadingBarEvent(SlimLoadingBarEventType.COLOR, this._color));
         }
     }
 
-    get color():string {
+    get color(): string {
         return this._color;
     }
 
@@ -83,19 +82,11 @@ export class SlimLoadingBarService {
         }
     }
 
-    get visible():boolean {
+    get visible(): boolean {
         return this._visible;
     }
 
-    private emitEvent(event: SlimLoadingBarEvent) {
-        if (this.subscriber) {
-            // Push up a new event
-            this.subscriber.next(event);
-        }
-    }
-
-
-    start(onCompleted:Function = null) {
+    start(onCompleted: Function = null) {
         // Stop current timer
         this.stop();
         // Make it visible for sure
@@ -136,4 +127,10 @@ export class SlimLoadingBarService {
         }, 250);
     }
 
+    private emitEvent(event: SlimLoadingBarEvent) {
+        if (this.subscriber) {
+            // Push up a new event
+            this.subscriber.next(event);
+        }
+    }
 }

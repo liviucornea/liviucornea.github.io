@@ -1,11 +1,16 @@
 "use strict";
-var Utils_1 = require("../Utils");
-var hashMap_1 = require("../hashMap");
-var _Score_1 = require("../_Score");
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var Utils_1 = require('../Utils');
+var hashMap_1 = require('../hashMap');
+var _Score_1 = require('../_Score');
 var Error = (function () {
     function Error() {
         this.HasError = false;
-        this.ErrorMessage = "";
+        this.ErrorMessage = '';
     }
     return Error;
 }());
@@ -66,10 +71,10 @@ var ValidationResult = (function () {
         configurable: true
     });
     ValidationResult.prototype.Add = function (error) {
-        throw ("Cannot add to ValidationResult to leaf node.");
+        throw ('Cannot add to ValidationResult to leaf node.');
     };
     ValidationResult.prototype.Remove = function (index) {
-        throw ("Cannot remove ValidationResult from leaf node.");
+        throw ('Cannot remove ValidationResult from leaf node.');
     };
     ValidationResult.prototype.DispatchErrorsChanged = function () {
         if (this.ErrorsChanged !== undefined)
@@ -98,7 +103,7 @@ var ValidationResult = (function () {
     });
     Object.defineProperty(ValidationResult.prototype, "ErrorMessage", {
         get: function () {
-            return "";
+            return '';
         },
         enumerable: true,
         configurable: true
@@ -154,9 +159,6 @@ var CompositeValidationResult = (function () {
         get: function () {
             if (this.Optional !== undefined && _Score_1._Score.isFunction(this.Optional) && this.Optional())
                 return false;
-            /*return _.some(this.Children, function (error) {
-                return error.HasErrors;
-            });*/
             var hasError = false;
             this.Kids.forEach(function (x) {
                 if (x.HasErrors) {
@@ -172,14 +174,10 @@ var CompositeValidationResult = (function () {
         get: function () {
             if (!this.HasErrors)
                 return 0;
-            /* return _.reduce(this.Children, function (memo, error:IValidationResult) {
-                 return memo + error.ErrorCount;
-             }, 0);*/
             var errorCount = 0;
             for (var key in this.Kids) {
                 errorCount += this.Kids[key].ErrorCount;
             }
-            //return _.filter(this.children, function (error) { return error.HasErrors; }).length;
         },
         enumerable: true,
         configurable: true
@@ -187,11 +185,8 @@ var CompositeValidationResult = (function () {
     Object.defineProperty(CompositeValidationResult.prototype, "ErrorMessage", {
         get: function () {
             if (!this.HasErrors)
-                return "";
-            /*return _.reduce(this.Children, function (memo, error:IValidationResult) {
-                return memo + error.ErrorMessage;
-            }, "");*/
-            var errorMessage = "";
+                return '';
+            var errorMessage = '';
             for (var key in this.Kids) {
                 errorMessage = errorMessage + this.Kids[key].ErrorMessage;
             }
@@ -205,9 +200,6 @@ var CompositeValidationResult = (function () {
             if (!this.HasErrors)
                 return [];
             var newArgs = [];
-            /* _.each(this.Children, function (error:IValidationResult) {
-             newArgs = newArgs.concat(error.TranslateArgs);
-             });*/
             this.Kids.forEach(function (error) {
                 newArgs = newArgs.concat(error.TranslateArgs);
             });
@@ -218,19 +210,16 @@ var CompositeValidationResult = (function () {
     });
     CompositeValidationResult.prototype.LogErrors = function (headerMessage) {
         if (headerMessage === undefined)
-            headerMessage = "Output";
-        console.log("---------------\n");
-        console.log("--- " + headerMessage + " ----\n");
-        console.log("---------------\n");
+            headerMessage = 'Output';
+        console.log('---------------\n');
+        console.log('--- ' + headerMessage + ' ----\n');
+        console.log('---------------\n');
         this.traverse(this, 1);
-        console.log("\n\n\n");
+        console.log('\n\n\n');
     };
     Object.defineProperty(CompositeValidationResult.prototype, "Errors", {
         get: function () {
             var map = {};
-            /* _.each(this.Children,function (val){
-                 map[val.Name] = val;
-             });*/
             for (var key in this.Kids) {
                 var val = this.Kids[key];
                 map[val.Name] = val;
@@ -255,13 +244,18 @@ var CompositeValidationResult = (function () {
     CompositeValidationResult.prototype.SetPristine = function () {
         this.SetDirtyEx(this, false);
     };
+    CompositeValidationResult.prototype.add = function (child) { this.add(child); return true; };
+    CompositeValidationResult.prototype.remove = function (child) { this.remove(child); return true; };
+    CompositeValidationResult.prototype.getChildren = function () { return this.Kids; };
+    CompositeValidationResult.prototype.getName = function () { return this.Name; };
+    CompositeValidationResult.prototype.isItem = function () { return false; };
     CompositeValidationResult.prototype.SetDirtyEx = function (node, dirty) {
         if (node.Kids.length === 0) {
-            node["IsDirty"] = dirty;
+            node['IsDirty'] = dirty;
         }
         else {
             for (var i = 0, len = node.Kids.length; i < len; i++) {
-                //stop if there are no children with errors
+                // stop if there are no children with errors
                 this.SetDirtyEx(node.Kids[i], dirty);
             }
         }
@@ -273,7 +267,7 @@ var CompositeValidationResult = (function () {
         }
         else {
             for (var i = 0, len = node.Kids.length; i < len; i++) {
-                //stop if there are no children with errors
+                // stop if there are no children with errors
                 if (node.Kids[i].HasErrors)
                     this.flattenErrors(node.Kids[i], errorCollection);
             }
@@ -281,16 +275,11 @@ var CompositeValidationResult = (function () {
     };
     // recursively traverse a (sub)tree
     CompositeValidationResult.prototype.traverse = function (node, indent) {
-        console.log(Array(indent++).join("--") + node.Name + " (" + node.ErrorMessage + ")" + '\n\r');
+        console.log(Array(indent++).join('--') + node.Name + ' (' + node.ErrorMessage + ')' + '\n\r');
         for (var i = 0, len = node.Kids.length; i < len; i++) {
             this.traverse(node.Kids[i], indent);
         }
     };
-    CompositeValidationResult.prototype.add = function (child) { this.add(child); return true; };
-    CompositeValidationResult.prototype.remove = function (child) { this.remove(child); return true; };
-    CompositeValidationResult.prototype.getChildren = function () { return this.Kids; };
-    CompositeValidationResult.prototype.getName = function () { return this.Name; };
-    CompositeValidationResult.prototype.isItem = function () { return false; };
     return CompositeValidationResult;
 }());
 exports.CompositeValidationResult = CompositeValidationResult;
@@ -348,8 +337,8 @@ var MixedValidationResult = (function (_super) {
     Object.defineProperty(MixedValidationResult.prototype, "ErrorMessage", {
         get: function () {
             if (!this.Composite.HasErrors && this.PropRule !== undefined && !this.PropRule.HasErrors)
-                return "";
-            this.Composite.ErrorMessage + this.PropRule !== undefined ? this.PropRule.ErrorMessage : "";
+                return '';
+            return this.Composite.ErrorMessage + this.PropRule !== undefined ? this.PropRule.ErrorMessage : '';
         },
         enumerable: true,
         configurable: true
@@ -373,17 +362,15 @@ exports.MixedValidationResult = MixedValidationResult;
  * +  register shared validation rules - use _Validation_ or _ValidationFor_ property
  * +  register custom object validator - use _ValidatorFor_ property - enables composition of child custom validators
  */
-//TODO:RF
 var AbstractValidator = (function () {
     function AbstractValidator() {
-        //export class AbstractValidator<T> {
-        this.Validators = {};
-        this.AbstractValidators = {};
-        this.ValidationFunctions = {};
         /**
          * Return true if this validation rule is intended for list of items, otherwise true.
          */
         this.ForList = false;
+        this.Validators = {};
+        this.AbstractValidators = {};
+        this.ValidationFunctions = {};
     }
     /**
      *  Register property validator for property.
@@ -428,20 +415,14 @@ var AbstractValidator = (function () {
         validator.ForList = forList;
         this.AbstractValidators[prop] = validator;
     };
-    //TODO:RF
     AbstractValidator.prototype.CreateAbstractRule = function (name) {
-        //public CreateAbstractRule(name:string) :AbstractValidationRule<T> {
         return new AbstractValidationRule(name, this);
     };
     AbstractValidator.prototype.CreateAbstractListRule = function (name) {
-        //TODO:RF
         return new AbstractListValidationRule(name, this);
-        //return;
     };
     AbstractValidator.prototype.CreateRule = function (name) {
-        //TODO:RF
         return new AbstractValidationRule(name, this);
-        //return;
     };
     return AbstractValidator;
 }());
@@ -456,7 +437,6 @@ exports.AbstractValidator = AbstractValidator;
  * @description
  * It represents concreate validator for custom object. It enables to assign validation rules to custom object properties.
  */
-//TODO:RF
 var AbstractValidationRule = (function () {
     function AbstractValidationRule(Name, validator, ForList) {
         var _this = this;
@@ -467,25 +447,18 @@ var AbstractValidationRule = (function () {
         this.Validators = {};
         this.Children = {};
         this.ValidationResultVisitor = new ValidationResultVisitor(new CompositeValidationResult(this.Name));
-        /*_.each(this.validator.ValidationFunctions, function (val:Array<IValidatorFce>) {
-         _.each(val, function (validation) {
-         var validator = this.Validators[validation.Name];
-         if (validator === undefined) {
-         validator = new Validator(validation.Name, validation.ValidationFce, validation.AsyncValidationFce);
-         this.Validators[validation.Name] = validator;
-         validator.AcceptVisitor(this.ValidationResultVisitor);
-         //this.ValidationResult.Add(validator);
-         }
-         }, this)
-         }, this);*/
         if (!this.ForList) {
-            for (var key in this.validator.Validators) {
-                var val = this.validator.Validators[key];
-                this.createRuleFor(key);
+            var _loop_1 = function(key) {
+                var val = this_1.validator.Validators[key];
+                this_1.createRuleFor(key);
                 val.forEach(function (x) {
                     var rule = _this.Rules[key];
                     rule.AddValidator(x);
                 });
+            };
+            var this_1 = this;
+            for (var key in this.validator.Validators) {
+                _loop_1(key);
             }
             for (var key in this.validator.ValidationFunctions) {
                 var val = this.validator.ValidationFunctions[key];
@@ -502,7 +475,6 @@ var AbstractValidationRule = (function () {
         }
     }
     Object.defineProperty(AbstractValidationRule.prototype, "ValidationResult", {
-        //class AbstractValidationRule<T> {
         get: function () { return this.ValidationResultVisitor.ValidationResult; },
         set: function (value) { this.ValidationResultVisitor.ValidationResult = value; },
         enumerable: true,
@@ -512,21 +484,9 @@ var AbstractValidationRule = (function () {
         visitor.AddValidator(this);
     };
     AbstractValidationRule.prototype.addChildren = function () {
-        /* _.each(this.validator.AbstractValidators, function(val, key){
-             var validationRule;
-             if (val.ForList) {
-                 validationRule = val.CreateAbstractListRule(key);
-             }
-             else {
-                 validationRule = val.CreateAbstractRule(key);
-             }
-             this.Children[key] = validationRule;
-             validationRule.AcceptVisitor(this.ValidationResultVisitor);
-             //this.ValidationResult.Add(validationRule.ValidationResult);
-         },this);*/
         for (var key in this.validator.AbstractValidators) {
             var val = this.validator.AbstractValidators[key];
-            var validationRule;
+            var validationRule = void 0;
             if (val.ForList) {
                 validationRule = val.CreateAbstractListRule(key);
             }
@@ -539,9 +499,6 @@ var AbstractValidationRule = (function () {
     };
     AbstractValidationRule.prototype.SetOptional = function (fce) {
         this.ValidationResult.Optional = fce;
-        /* _.each(this.Rules, function(value:IValidationResult, key:string){value.Optional = fce;});
-         _.each(this.Validators, function(value:any, key:string){value.Optional = fce;});
-         _.each(this.Children, function(value:any, key:string){value.SetOptional(fce);});*/
         for (var key in this.Rules) {
             var value = this.Rules[key];
             value.Optional = fce;
@@ -555,20 +512,10 @@ var AbstractValidationRule = (function () {
             value.SetOptional(fce);
         }
     };
-    AbstractValidationRule.prototype.createRuleFor = function (prop) {
-        var propValidationRule = new PropertyValidationRule(prop);
-        this.Rules[prop] = propValidationRule;
-        propValidationRule.AcceptVisitor(this.ValidationResultVisitor);
-        //this.ValidationResult.Add(propValidationRule);
-    };
     /**
      * Performs validation using a validation context and returns a collection of Validation Failures.
      */
     AbstractValidationRule.prototype.Validate = function (context) {
-        /* _.each(this.Children,function(val,key){
-             if (context[key] === undefined) context[key] = val.ForList?[]:{};
-             val.Validate(context[key]);
-         },this);*/
         var _this = this;
         for (var key in this.Children) {
             var val = this.Children[key];
@@ -580,12 +527,6 @@ var AbstractValidationRule = (function () {
             var rule = this.Rules[propName];
             rule.Validate(new ValidationContext(propName, context));
         }
-        /*_.each (this.validator.ValidationFunctions, function (valFunctions:Array<IValidatorFce>) {
-            _.each(valFunctions, function (valFce) {
-                var validator = this.Validators[valFce.Name];
-                if (validator !== undefined) validator.Validate(context);
-            },this)
-        },this);*/
         for (var key in this.validator.ValidationFunctions) {
             var valFunctions = this.validator.ValidationFunctions[key];
             valFunctions.forEach(function (x) {
@@ -606,10 +547,6 @@ var AbstractValidationRule = (function () {
         var subResult;
         var deferred = new Promise(function (x) { return x(subResult); });
         var promises = [];
-        /* _.each(this.Children,function(val,key){
-             promises.push(val.ValidateAsync(context[key]));
-         },this);
-*/
         for (var key in this.Children) {
             var val = this.Children[key];
             promises.push(val.ValidateAsync(context[key]));
@@ -619,12 +556,6 @@ var AbstractValidationRule = (function () {
             var rule = this.Rules[propName];
             promises.push(rule.ValidateAsync(new ValidationContext(propName, context)));
         }
-        /*_.each (this.validator.ValidationFunctions, function (valFunctions:Array<IValidatorFce>) {
-            _.each(valFunctions, function (valFce) {
-                var validator = this.Validators[valFce.Name];
-                if (validator !== undefined) promises.push(validator.ValidateAsync(context));
-            },this)
-        },this);*/
         for (var key in this.validator.ValidationFunctions) {
             var valFunctions = this.validator.ValidationFunctions[key];
             valFunctions.forEach(function (valFce) {
@@ -665,15 +596,12 @@ var AbstractValidationRule = (function () {
         }
     };
     AbstractValidationRule.prototype.add = function (child) {
-        throw "not implemented";
+        throw 'not implemented';
     };
     AbstractValidationRule.prototype.remove = function (child) {
-        throw "not implemented";
+        throw 'not implemented';
     };
     AbstractValidationRule.prototype.getChildren = function () {
-        /*  return _.map(this.Children, function (item) {
-         return item;
-         });*/
         var items = new Array();
         for (var key in this.Children) {
             items.push(this.Children[key]);
@@ -685,6 +613,11 @@ var AbstractValidationRule = (function () {
     };
     AbstractValidationRule.prototype.isItem = function () {
         return this.getChildren().length === 0;
+    };
+    AbstractValidationRule.prototype.createRuleFor = function (prop) {
+        var propValidationRule = new PropertyValidationRule(prop);
+        this.Rules[prop] = propValidationRule;
+        propValidationRule.AcceptVisitor(this.ValidationResultVisitor);
     };
     AbstractValidationRule.id = 0;
     return AbstractValidationRule;
@@ -698,16 +631,14 @@ var ValidationResultVisitor = (function () {
         this.ValidationResult = ValidationResult;
     }
     ValidationResultVisitor.prototype.AddRule = function (rule) {
-        //if (this.ValidationResult.ErrorsChanged !== undefined) rule.ErrorsChanged = this.ValidationResult.ErrorsChanged;
         this.ValidationResult.Add(rule);
     };
     ValidationResultVisitor.prototype.AddValidator = function (rule) {
         // mixed composite validation result with property validation error
-        //TODO: find better and more generic way how to solve mixed validation results with the same name
-        //var error:any =  _.find(this.ValidationResult.Children, function(item:IValidationResult) {return item.Name === rule.ValidationResult.Name});
+        // TODO: find better and more generic way how to solve mixed validation results with the same name
         var error = this.ValidationResult.Kids.find(function (x) { return x.Name === rule.ValidationResult.Name; });
         if (error !== undefined) {
-            //compose composite validation result with property validation result
+            // compose composite validation result with property validation result
             this.ValidationResult.Add(new MixedValidationResult(rule.ValidationResult, error));
         }
         else {
@@ -731,7 +662,6 @@ var ValidationResultVisitor = (function () {
  */
 var AbstractListValidationRule = (function (_super) {
     __extends(AbstractListValidationRule, _super);
-    //private RowsObserver;
     function AbstractListValidationRule(Name, validator) {
         _super.call(this, Name, validator, true);
         this.Name = Name;
@@ -742,14 +672,12 @@ var AbstractListValidationRule = (function (_super) {
      * Performs validation using a validation context and returns a collection of Validation Failures.
      */
     AbstractListValidationRule.prototype.Validate = function (context) {
-        //super.Validate(context);
         this.RefreshRows(context);
-        for (var i = 0; i != context.length; i++) {
+        for (var i = 0; i !== context.length; i++) {
             var validationRule = this.RowsMap.get(context[i]);
             if (validationRule !== undefined)
                 validationRule.Validate(context[i]);
         }
-        //this.ClearValidationResult(context);
         return this.ValidationResult;
     };
     /**
@@ -760,14 +688,13 @@ var AbstractListValidationRule = (function (_super) {
         var deferred = new Promise(function (x) { return x(subResult); });
         var promises = [];
         this.RefreshRows(context);
-        for (var i = 0; i != context.length; i++) {
+        for (var i = 0; i !== context.length; i++) {
             var validationRule = this.RowsMap.get(context[i]);
             if (validationRule !== undefined)
                 promises.push(validationRule.ValidateAsync(context[i]));
         }
         var self = this;
         Promise.all(promises).then(function (result) {
-            //self.ClearValidationResult(context);
             subResult = self.ValidationResult;
             Promise.resolve(subResult);
         });
@@ -782,22 +709,8 @@ var AbstractListValidationRule = (function (_super) {
     });
     AbstractListValidationRule.prototype.RefreshRows = function (list) {
         this.refreshList(list);
-        //            var self = this;
-        //            this.RowsObserver = new ObserveJs.ArrayObserver(list, function(splices) {
-        //                // respond to changes to the elements of arr.
-        //                splices.forEach(function(splice) {
-        //                    //var newContext = ObserveJs.ArrayObserver.applySplices(splice, context);
-        //                    var newList = list.splice.apply(list,[splice.index,splice.removed.length].concat(splice.added));
-        //                    self.refreshList(newList);
-        //                });
-        //            });
     };
     AbstractListValidationRule.prototype.ClearRows = function (list) {
-        /*
-         var keysToRemove = _.difference(this.RowsMap.keys(),list);
-         _.each(keysToRemove,function(key){
-         if (this.has(key)) this.remove(key);
-         },this.RowsMap);*/
         var removeList = new Array();
         var secondList = this.RowsMap.keys();
         secondList.forEach(function (x) {
@@ -812,8 +725,6 @@ var AbstractListValidationRule = (function (_super) {
     };
     AbstractListValidationRule.prototype.ClearValidationResult = function (list) {
         this.ClearRows(list);
-        /*   var results =
-               _.map( this.RowsMap.values(), function(item:IAbstractValidationRule<any>) {return item.ValidationResult;});*/
         var results = this.RowsMap.values().map(function (x) { return x.ValidationResult; });
         for (var i = this.ValidationResult.Kids.length - 1; i >= 0; i--) {
             var item = this.ValidationResult.Kids[i];
@@ -825,9 +736,8 @@ var AbstractListValidationRule = (function (_super) {
         }
     };
     AbstractListValidationRule.prototype.getValidationRule = function (key, name) {
-        //TODO:RF
         if (name === undefined)
-            name = "Row";
+            name = 'Row';
         var validationRule;
         if (!this.RowsMap.has(key)) {
             validationRule = this.validator.CreateAbstractRule(name);
@@ -838,7 +748,6 @@ var AbstractListValidationRule = (function (_super) {
             validationRule = this.RowsMap.get(key);
         }
         return validationRule;
-        //return;
     };
     AbstractListValidationRule.prototype.refreshList = function (list) {
         var _this = this;
@@ -875,47 +784,42 @@ var MessageLocalization = (function () {
     function MessageLocalization() {
     }
     MessageLocalization.GetValidationMessage = function (validator) {
-        /*var msgText = MessageLocalization.ValidationMessages[validator.tagName];
-        if (msgText === undefined || msgText === "" || !_Score.isString(msgText)) {
-            msgText = MessageLocalization.customMsg;
-        }*/
-        //return StringFce.format(msgText, validator);
-        return validator.tagName + "ValidatorMessage";
+        return validator.tagName + 'ValidatorMessage';
     };
-    MessageLocalization.customMsg = "Please, fix the field.";
+    MessageLocalization.customMsg = 'Please, fix the field.';
     MessageLocalization.defaultMessages = {
-        "requiredValidatorMessage": "This field is required.",
-        "remoteValidatorMessage": "Please fix the field.",
-        "emailValidatorMessage": "Please enter a valid email address.",
-        "urlValidatorMessage": "Please enter a valid URL.",
-        "dateValidatorMessage": "Please enter a valid date.",
-        "dateISOValidatorMessage": "Please enter a valid date ( ISO ).",
-        "dateCompareValidatorMessage": "Please enter valid dates.",
-        "numberValidatorMessage": "Please enter a valid number.",
-        "digitsValidatorMessage": "Please enter only digits.",
-        "signedDigitsValidatorMessage": "Please enter only signed digits.",
-        "creditcardValidatorMessage": "Please enter a valid credit card number.",
-        "equalToValidatorMessage": "Please enter the same value again.",
-        "maxlengthValidatorMessage": "Please enter no more than {MaxLength} characters.",
-        "minlengthValidatorMessage": "Please enter at least {MinLength} characters.",
-        "rangelengthValidatorMessage": "Please enter a value between {MinLength} and {MaxLength} characters long.",
-        "rangeValidatorMessage": "Please enter a value between {Min} and {Max}.",
-        "maxValidatorMessage": "Please enter a value less than or equal to {Max}.",
-        "minValidatorMessage": "Please enter a value greater than or equal to {Min}.",
-        "stepValidatorMessage": "Please enter a value with step {Step}.",
-        "containsValidatorMessage": "Please enter a value from list of values. Attempted value '{AttemptedValue}'.",
-        "maskValidatorMessage": "Please enter a value corresponding with {Mask}.",
-        "minItemsValidatorMessage": "Please enter at least {Min} items.",
-        "maxItemsValidatorMessage": "Please enter no more than {Max} items.",
-        "uniqItemValidatorMessage": "Please enter unique items.",
-        "enumValidatorMessage": "Please enter a value from list of permitted values.",
-        "typeValidatorMessage": "Please enter a value of type '{Type}'.",
-        "multipleOfValidatorMessage": "Please enter a value that is multiple of {Divider}.",
-        "zipcodeValidatorMessage": "Please enter the postal code in the format A1A 1A1",
-        "phoneValidatorMessage": "Please enter valid phone format +1 123-123-1234",
-        "lettersonlyValidatorMessage": "Please enter only text in the field",
-        "alphanumericValidatorMessage": "Please enter number or text",
-        "customValidatorMessage": MessageLocalization.customMsg
+        'requiredValidatorMessage': 'This field is required.',
+        'remoteValidatorMessage': 'Please fix the field.',
+        'emailValidatorMessage': 'Please enter a valid email address.',
+        'urlValidatorMessage': 'Please enter a valid URL.',
+        'dateValidatorMessage': 'Please enter a valid date.',
+        'dateISOValidatorMessage': 'Please enter a valid date ( ISO ).',
+        'dateCompareValidatorMessage': 'Please enter valid dates.',
+        'numberValidatorMessage': 'Please enter a valid number.',
+        'digitsValidatorMessage': 'Please enter only digits.',
+        'signedDigitsValidatorMessage': 'Please enter only signed digits.',
+        'creditcardValidatorMessage': 'Please enter a valid credit card number.',
+        'equalToValidatorMessage': 'Please enter the same value again.',
+        'maxlengthValidatorMessage': 'Please enter no more than {MaxLength} characters.',
+        'minlengthValidatorMessage': 'Please enter at least {MinLength} characters.',
+        'rangelengthValidatorMessage': 'Please enter a value between {MinLength} and {MaxLength} characters long.',
+        'rangeValidatorMessage': 'Please enter a value between {Min} and {Max}.',
+        'maxValidatorMessage': 'Please enter a value less than or equal to {Max}.',
+        'minValidatorMessage': 'Please enter a value greater than or equal to {Min}.',
+        'stepValidatorMessage': 'Please enter a value with step {Step}.',
+        'containsValidatorMessage': 'Please enter a value from list of values. Attempted value "{AttemptedValue}".',
+        'maskValidatorMessage': 'Please enter a value corresponding with {Mask}.',
+        'minItemsValidatorMessage': 'Please enter at least {Min} items.',
+        'maxItemsValidatorMessage': 'Please enter no more than {Max} items.',
+        'uniqItemValidatorMessage': 'Please enter unique items.',
+        'enumValidatorMessage': 'Please enter a value from list of permitted values.',
+        'typeValidatorMessage': 'Please enter a value of type "{Type}".',
+        'multipleOfValidatorMessage': 'Please enter a value that is multiple of {Divider}.',
+        'zipcodeValidatorMessage': 'Please enter the postal code in the format A1A 1A1',
+        'phoneValidatorMessage': 'Please enter valid phone format +1 123-123-1234',
+        'lettersonlyValidatorMessage': 'Please enter only text in the field',
+        'alphanumericValidatorMessage': 'Please enter number or text',
+        'customValidatorMessage': MessageLocalization.customMsg
     };
     MessageLocalization.ValidationMessages = MessageLocalization.defaultMessages;
     return MessageLocalization;
@@ -942,7 +846,6 @@ var PropertyValidationRule = (function (_super) {
             this.AddValidator(validatorsToAdd[index]);
         }
     }
-    //public AsyncValidationFailures:{[name:string]: IAsyncValidationFailure} = {};
     PropertyValidationRule.prototype.AcceptVisitor = function (visitor) {
         visitor.AddRule(this);
     };
@@ -983,13 +886,13 @@ var PropertyValidationRule = (function (_super) {
     Object.defineProperty(PropertyValidationRule.prototype, "ErrorMessage", {
         get: function () {
             if (!this.HasErrors)
-                return "";
+                return '';
             var values = new Array();
             for (var key in this.Errors) {
                 values.push(this.Errors[key]);
             }
             ;
-            var message = "";
+            var message = '';
             values.forEach(function (x) {
                 message = message + x.ErrorMessage;
             });
@@ -1003,9 +906,6 @@ var PropertyValidationRule = (function (_super) {
             if (!this.HasErrors)
                 return [];
             var newArray = [];
-            /*_.each(_.values(this.Errors), function (error:IValidationFailure) {
-                if (error.HasError) newArray.push(error.Error.TranslateArgs);
-            });*/
             var values = new Array();
             for (var key in this.Errors) {
                 values.push(this.Errors[key]);
@@ -1027,9 +927,7 @@ var PropertyValidationRule = (function (_super) {
             return this.ValidateEx(context.Value);
         }
         catch (e) {
-            //if (this.settings.debug && window.console) {
-            console.log("Exception occurred when checking element " + context.Key + ".", e);
-            //}
+            console.log('Exception occurred when checking element ' + context.Key + '.', e);
             throw e;
         }
     };
@@ -1049,26 +947,22 @@ var PropertyValidationRule = (function (_super) {
                 }
                 else {
                     var ruleResult = validator.isAcceptable(value);
-                    var hasError = ((value === undefined || value === null) && validator.tagName != "required") ? false : !ruleResult;
+                    var hasError = ((value === undefined || value === null) && validator.tagName !== 'required') ? false : !ruleResult;
                     validation.Error.HasError = hasError;
-                    //validation.Error.TranslateArgs = { TranslateId:validator.tagName, MessageArgs:_.extend(validator,{AttemptedValue: value}), CustomMessage: validator.customMessage};
-                    validator["AttemptedValue"] = value;
+                    validator['AttemptedValue'] = value;
                     validation.Error.TranslateArgs = { TranslateId: validator.tagName, MessageArgs: validator, CustomMessage: validator.customMessage };
-                    validation.Error.ErrorMessage = hasError ? MessageLocalization.GetValidationMessage(validation.Error.TranslateArgs.MessageArgs) : "";
+                    validation.Error.ErrorMessage = hasError ? MessageLocalization.GetValidationMessage(validation.Error.TranslateArgs.MessageArgs) : '';
                     shortCircuited = hasError;
                     lastPriority = priority;
                 }
             }
             catch (e) {
-                //if (this.settings.debug && window.console) {
-                console.log("Exception occurred when checking element'" + validator.tagName + "' method.", e);
-                //}
+                console.log('Exception occurred when checking element"' + validator.tagName + '" method.', e);
                 throw e;
             }
         }
         if (original !== this.HasErrors)
             this.DispatchErrorsChanged();
-        //return _.filter(this.ValidationFailures,function(item){return !item.IsAsync;});
         var filtered = new Array();
         for (var key in this.ValidationFailures) {
             var item = this.ValidationFailures[key];
@@ -1092,28 +986,27 @@ var PropertyValidationRule = (function (_super) {
         var deferred = new Promise(function (x) { return x(subResult); });
         var promises = [];
         var original = this.HasErrors;
+        var validation;
+        var validator;
         var setResultFce = function (result) {
             var hasError = !result;
             validation.Error.HasError = hasError;
-            //validation.Error.TranslateArgs = { TranslateId: validator.tagName, MessageArgs: _.extend(validator, {AttemptedValue: value})};
-            validator["AttemptedValue"] = value;
+            validator['AttemptedValue'] = value;
             validation.Error.TranslateArgs = { TranslateId: validator.tagName, MessageArgs: validator };
-            validation.Error.ErrorMessage = hasError ? MessageLocalization.GetValidationMessage(validation.Error.TranslateArgs.MessageArgs) : "";
+            validation.Error.ErrorMessage = hasError ? MessageLocalization.GetValidationMessage(validation.Error.TranslateArgs.MessageArgs) : '';
         };
         for (var index in this.ValidationFailures) {
-            var validation = this.ValidationFailures[index];
+            validation = this.ValidationFailures[index];
             if (!validation.IsAsync)
                 continue;
-            var validator = this.Validators[index];
+            validator = this.Validators[index];
             try {
-                var hasErrorPromise = ((value === undefined || value === null) && validator.tagName != "required") ? Promise.resolve(true) : validator.isAcceptable(value);
+                var hasErrorPromise = ((value === undefined || value === null) && validator.tagName !== 'required') ? Promise.resolve(true) : validator.isAcceptable(value);
                 hasErrorPromise.then(setResultFce);
                 promises.push(hasErrorPromise);
             }
             catch (e) {
-                //if (this.settings.debug && window.console) {
-                console.log("Exception occurred when checking element'" + validator.tagName + "' method.", e);
-                //}
+                console.log('Exception occurred when checking element"' + validator.tagName + '" method.', e);
                 throw e;
             }
         }
@@ -1121,7 +1014,6 @@ var PropertyValidationRule = (function (_super) {
         Promise.all(promises).then(function (result) {
             if (original !== self.HasErrors)
                 self.DispatchErrorsChanged();
-            //subResult=_.filter(self.ValidationFailures,function(item){return item.IsAsync;});
             var subResult = new Array();
             for (var key in self.ValidationFailures) {
                 var item = this.ValidationFailures[key];
@@ -1172,12 +1064,12 @@ var Validator = (function (_super) {
             Promise.resolve(deferred);
         }
         else {
-            var original = this.Error.HasError;
-            var self = this;
+            var original_1 = this.Error.HasError;
+            var self_1 = this;
             this.AsyncValidationFce.bind(context)(this.Error).then(function () {
-                if (original !== self.Error.HasError)
-                    self.DispatchErrorsChanged();
-                subResult = self.ValidationFailures[self.Name];
+                if (original_1 !== self_1.Error.HasError)
+                    self_1.DispatchErrorsChanged();
+                subResult = self_1.ValidationFailures[self_1.Name];
                 Promise.resolve(subResult);
             });
         }
@@ -1216,7 +1108,7 @@ var Validator = (function (_super) {
     Object.defineProperty(Validator.prototype, "ErrorMessage", {
         get: function () {
             if (!this.HasErrors)
-                return "";
+                return '';
             return this.Error.ErrorMessage;
         },
         enumerable: true,
@@ -1268,14 +1160,4 @@ var Validator = (function (_super) {
     CompareOperator[CompareOperator["GreaterThan"] = 5] = "GreaterThan";
 })(exports.CompareOperator || (exports.CompareOperator = {}));
 var CompareOperator = exports.CompareOperator;
-/**
- *
- * @ngdoc object
- * @name  Error
- * @module Validation
- *
- *
- * @description
- * It represents basic error structure.
- */
 //# sourceMappingURL=Validation.js.map

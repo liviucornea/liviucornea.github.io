@@ -1,16 +1,25 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var core_1 = require('@angular/core');
-var appSettingsService_1 = require("./appSettingsService");
-var httpAbstract_1 = require("./httpAbstract");
-var Subject_1 = require("rxjs/Subject");
+var appSettingsService_1 = require('./appSettingsService');
+var httpAbstract_1 = require('./httpAbstract');
+var Subject_1 = require('rxjs/Subject');
 var FileUploadItem = (function () {
     function FileUploadItem(uploader, id, originalName, fileName, size) {
         this.uploader = uploader;
         this.id = id;
         this.file = null;
         this.originalName = originalName;
-        this.fileName = fileName,
-            this.size = size;
+        this.fileName = fileName;
+        this.size = size;
         this.progress = 0;
         this.zone = new core_1.NgZone({ enableLongStackTrace: false });
         this.startTime = new Date().getTime();
@@ -114,7 +123,7 @@ var Ng2Uploader = (function () {
             data: { removeAfterUpload: true },
             autoUpload: false,
             fileName: null,
-            folderPath: "/import",
+            folderPath: '/import',
             applicationID: null
         };
         this.options = {};
@@ -181,7 +190,7 @@ var Ng2Uploader = (function () {
         };
         var fileUploadParams = this.options.folderPath;
         if (this.options.applicationID) {
-            fileUploadParams = fileUploadParams + "/" + this.options.applicationID;
+            fileUploadParams = fileUploadParams + '/' + this.options.applicationID;
         }
         xhr.open(this.method, this.httpAbs.baseUrl + this.fileUploadApiControllerUrl + fileUploadParams, true);
         xhr.withCredentials = this.options.withCredentials;
@@ -199,7 +208,7 @@ var Ng2Uploader = (function () {
         item._onComplete(status, response);
         this.onCompleteItem(item, response, status);
         this.progress = this.getTotalProgress();
-        if (this.getNotUploadedItems().length == 0) {
+        if (this.getNotUploadedItems().length === 0) {
             var fileInfo = JSON.parse(response).fileInfo[0];
             this.notifyUploadComplete.next(fileInfo);
         }
@@ -207,9 +216,6 @@ var Ng2Uploader = (function () {
     Ng2Uploader.prototype._onErrorItem = function (item, response, status) {
         item._onError(response, status);
         this.onErrorItem(item, response, status);
-    };
-    Ng2Uploader.prototype._isSuccessCode = function (status) {
-        return (status >= 200 && status < 300) || status === 304;
     };
     Ng2Uploader.prototype.getTotalProgress = function (value) {
         if (value === void 0) { value = 0; }
@@ -248,14 +254,17 @@ var Ng2Uploader = (function () {
         this.queue.forEach(function (item) {
             if (item.isUploaded && item.response) {
                 var fileInfo = JSON.parse(item.response).fileInfo[0];
-                apiParams.push({ url: _this.fileUploadApiControllerUrl + '/remove', headerKey: JSON.stringify(fileInfo), headerValue: '' });
+                apiParams.push({
+                    url: _this.fileUploadApiControllerUrl + '/remove',
+                    headerKey: JSON.stringify(fileInfo), headerValue: ''
+                });
             }
         });
         if (apiParams.length > 0) {
             return this.httpAbs.removeMultiple(apiParams, this.contentType);
         }
         else {
-            return "";
+            return '';
         }
     };
     Ng2Uploader.prototype.getIndexOfItem = function (item) {
@@ -291,6 +300,9 @@ var Ng2Uploader = (function () {
     };
     Ng2Uploader.prototype.onAfterAddingFile = function (item) {
         return { item: item };
+    };
+    Ng2Uploader.prototype._isSuccessCode = function (status) {
+        return (status >= 200 && status < 300) || status === 304;
     };
     Ng2Uploader.prototype._onProgressItem = function (item, progress) {
         var total = this.getTotalProgress(progress);

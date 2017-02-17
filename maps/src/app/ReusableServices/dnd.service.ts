@@ -1,6 +1,6 @@
-import {Injectable, ElementRef, EventEmitter} from '@angular/core';
-import {DragDropConfig} from "../ReusableComponents/dragdrop/dnd.config";
-import {isPresent} from "../ReusableComponents/dragdrop/dnd.utils";
+import { Injectable, ElementRef, EventEmitter } from '@angular/core';
+import { DragDropConfig } from '../ReusableComponents/dragdrop/dnd.config';
+import { isPresent } from '../ReusableComponents/dragdrop/dnd.utils';
 
 export interface DragDropData {
     dragData: any;
@@ -22,11 +22,10 @@ export class DragDropSortableService {
     isDragged: boolean;
 
     private _elem: HTMLElement;
+    constructor(private _config: DragDropConfig) { }
     public get elem(): HTMLElement {
         return this._elem;
     }
-
-    constructor(private _config:DragDropConfig) {}
 
     markSortable(elem: HTMLElement) {
         if (isPresent(this._elem)) {

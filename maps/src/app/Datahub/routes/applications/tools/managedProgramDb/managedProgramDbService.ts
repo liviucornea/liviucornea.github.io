@@ -3,8 +3,8 @@ import {ApiService} from "../../../../../ReusableServices/apiService";
 
 @Injectable()
 export class ManagedProgramDbService {
-
-    constructor(private apiService: ApiService){}
+    constructor(private apiService: ApiService){
+    }
 
     checkBusinessValidations(inputRecords, pageName)
     {
@@ -32,26 +32,21 @@ export class ManagedProgramDbService {
                     });
                 });
                 break;
-            // case "ImplementChangePortfolioDisplayGrid":
-            //     inputRecords.forEach(x=> {
-            //         let line = x;
-            //         x.cells.forEach(y=> {
-            //             if (y.name == 'Action' || y.name == 'Source') {
-            //                 y.val = decodeURIComponent(y.val);
-            //             }
-            //         });
-            //     });
-            //     break;
-            // case "PortfolioDisplayGrid":
-            //     inputRecords.forEach(x=> {
-            //         let line = x;
-            //         x.cells.forEach(y=> {
-            //             if (y.name == 'Notes') {
-            //                 y.val = decodeURIComponent(y.val);
-            //             }
-            //         });
-            //     });
-            //     break;
+            case "ModuleUpdateDisplayGrid":
+                inputRecords.forEach(x=> {
+                    let line = x;
+                    let b =  x.cells.find(y=> y.name.toLowerCase() == 'moid' && y.val == 66);
+                    if(b)
+                        x.cells.forEach(y=> {
+                            if (y.name.toLowerCase() == 'name') {
+                                y.val = y.val + '<br/><b>*Selectable through Modeling Tool by user</b>';
+                            }
+                            else if (y.name.toLowerCase() == 'mid') {
+                                y.disabled = true;
+                            }
+                        });
+                });
+                break;
         }
     }
 }

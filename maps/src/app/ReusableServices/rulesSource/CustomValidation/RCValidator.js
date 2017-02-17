@@ -1,5 +1,6 @@
 "use strict";
-var _Score_1 = require("../_Score");
+var _Score_1 = require('../_Score');
+var moment = require('moment');
 var RCValidator = (function () {
     function RCValidator() {
         this.tagName = 'rc';
@@ -18,13 +19,13 @@ var RCValidator = (function () {
         }
         if (!s.match(/^\d{6}\/?\d{3,4}$/))
             return false;
-        if (s.indexOf('/') != -1)
+        if (s.indexOf('/') !== -1)
             old = s.length === 10;
         else
             old = s.length === 9;
         if (s.indexOf('/') !== -1) {
-            numrc = s.split("/");
-            numrc = numrc.join("");
+            numrc = s.split('/');
+            numrc = numrc.join('');
         }
         else {
             numrc = s;
@@ -36,7 +37,7 @@ var RCValidator = (function () {
             dbg = true;
         }
         if (!old && !dbg) {
-            if (numrc % 11 !== 0 && s.substr(s.length - 1) === "0") {
+            if (numrc % 11 !== 0 && s.substr(s.length - 1) === '0') {
                 if (parseInt(numrc.substr(0, 9), 10) % 11 !== 10)
                     return false;
             }
@@ -57,7 +58,7 @@ var RCValidator = (function () {
             if (month > 70 && month < 83)
                 month = month - 70;
         }
-        var datum = moment(_Score_1._Score.lpad(day.toString(), 2, '0') + "." + _Score_1._Score.lpad(month.toString(), 2, '0') + "." + year, "DD.MM.YYYY");
+        var datum = moment(_Score_1._Score.lpad(day.toString(), 2, '0') + '.' + _Score_1._Score.lpad(month.toString(), 2, '0') + '.' + year, 'DD.MM.YYYY');
         if (!datum.isValid())
             return false;
         return datum.toDate() <= moment(Date.now()).toDate();

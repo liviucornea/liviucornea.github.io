@@ -1,62 +1,67 @@
-<div Id="CalendatArea">
-    <div class="row">
-        <div class="col-md-3 col-lg-4 text-md-left text-lg-right">
-            <div class="pagination">
-                <div class="page-item" (click)="decrement()">
-                    <span class="page-link">Previous</span>
-                </div>
-                <div class="page-item" (click)="today()">
-                    <span class="page-link">Today</span>
-                </div>
-                <div class="page-item" (click)="increment()">
-                    <span class="page-link">Next</span>
-                </div>
+<div class="row">
+    <div class="col-md-3 col-lg-4 text-md-left text-lg-right">
+        <div class="pagination">
+            <div class="page-item" (click)="decrement()">
+                <span class="page-link">Previous</span>
             </div>
-        </div>
-        <div class="col-md-6 col-lg-4 text-md-center">
-            <br>
-            <h4>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h4>
-        </div>
-        <div class="col-md-3 col-lg-4 text-md-right text-lg-left">
-            <div class="pagination">
-                <div class="page-item" (click)="view = 'month'" [class.active]="view === 'month'">
-                    <span class="page-link">Month</span>
-                </div>
-                <div class="page-item" (click)="view = 'week'" [class.active]="view === 'week'">
-                    <span class="page-link">Week</span>
-                </div>
-                <div class="page-item" (click)="view = 'day'" [class.active]="view === 'day'">
-                    <span class="page-link">Day</span>
-                </div>
+            <div class="page-item" (click)="today()">
+                <span class="page-link">Today</span>
+            </div>
+            <div class="page-item" (click)="increment()">
+                <span class="page-link">Next</span>
             </div>
         </div>
     </div>
-    <div class="text-md-center">
+    <div class="col-md-6 col-lg-4 text-md-center">
+        <br>
+        <h4>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h4>
+    </div>
+    <div class="col-md-3 col-lg-4 text-md-right text-lg-left">
+        <div class="pagination">
+            <div class="page-item" (click)="view = 'month'" [class.active]="view === 'month'">
+                <span class="page-link">Month</span>
+            </div>
+            <div class="page-item" (click)="view = 'week'" [class.active]="view === 'week'">
+                <span class="page-link">Week</span>
+            </div>
+            <div class="page-item" (click)="view = 'day'" [class.active]="view === 'day'">
+                <span class="page-link">Day</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-md-center">
+    <div class="form-group">
         <!--<select (change)="eventTypeSelected($event)">-->
         <select (change)="eventTypeSelected($event.target.value)">
             <option *ngFor="let o  of eventTypes" [value]="o.value">{{o.name}}
         </select>
+        <select (change)="showLongEvents($event.target.value)" *ngIf="view === 'month'">
+            <option [value]="'show'">Show Long Events</option>
+            <option [value]="'hidden'">Hide Long Events</option>
+        </select>
     </div>
-    <br>
-    <div [ngSwitch]="view">
-        <mwl-calendar-month-view
-                *ngSwitchCase="'month'"
-                [viewDate]="viewDate"
-                [events]="events"
-                [activeDayIsOpen]="activeDayIsOpen"
-                (dayClicked)="dayClicked($event.day)">
-        </mwl-calendar-month-view>
-        <mwl-calendar-week-view
-                *ngSwitchCase="'week'"
-                [viewDate]="viewDate"
-                [events]="events">
-        </mwl-calendar-week-view>
-        <mwl-calendar-day-view
-                *ngSwitchCase="'day'"
-                [viewDate]="viewDate"
-                [events]="events">
-        </mwl-calendar-day-view>
-    </div>
+    <span [ngSwitch]="view">
+            <mwl-calendar-month-view
+                    *ngSwitchCase="'month'"
+                    [viewDate]="viewDate"
+                    [events]="events"
+                    [longEvents]="longEvents"
+                    [longEventsShowing]="longEventsShowing"
+                    [activeDayIsOpen]="activeDayIsOpen"
+                    (dayClicked)="dayClicked($event.day)">
+            </mwl-calendar-month-view>
+            <mwl-calendar-week-view
+                    *ngSwitchCase="'week'"
+                    [viewDate]="viewDate"
+                    [events]="events">
+            </mwl-calendar-week-view>
+            <mwl-calendar-day-view
+                    *ngSwitchCase="'day'"
+                    [viewDate]="viewDate"
+                    [events]="events">
+            </mwl-calendar-day-view>
+        </span>
 </div>
 <div Id="EventDetailArea">
     <calendar-toasty [position]="position"></calendar-toasty>

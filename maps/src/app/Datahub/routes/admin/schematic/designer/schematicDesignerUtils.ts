@@ -78,7 +78,9 @@ export class ConfigValueType {
     constructor(public id:string,
                 public unitId:string,
                 public description:string,
-                public template:string, public isMandatory: boolean = false) {
+                public template: string,
+                public isMandatory: boolean = false,
+                public defaultValue: string    ) {
     }
 }
 

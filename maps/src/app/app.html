@@ -1,4 +1,5 @@
-<div>
+<div id="app-container" [class.theme-standard]="theme == 'standard'"
+     [class.theme-dark]="theme == 'dark'" [style.font-size]="fontSize + 'px'">
     <!--Navigation and padding-->
     <navBar></navBar>
     <!--<navBarVert></navBarVert>-->
@@ -15,7 +16,7 @@
                         <h4 class="card-title mb-0">{{navService.pageTitle}}</h4>
                     </div>
                     <div class="card-block">
-                       <spinner></spinner>
+                        <spinner></spinner>
                         <router-outlet></router-outlet>
                     </div>
                 </div>

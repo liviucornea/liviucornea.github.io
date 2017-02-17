@@ -1,0 +1,59 @@
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h4>Review Your Trades</h4>
+    </div>
+    <div class="panel-body">
+        <table class="table text-center">
+            <thead>
+                <th>Order Number</th>
+                <th>Fund Ticker</th>
+                <th>Fund Number</th>
+                <th>Instruction</th>
+                <th>Quantity</th>
+                <th>Projected Price</th>
+                <th>Market Value Unrealized</th>
+                <th>Number of Shares Designed</th>
+                <th>Number of Shares Actual</th>
+                <th>Number of Units</th>
+                <th>MVCU</th>
+                <th>MV Trade to MVCU</th>
+                <th>Country</th>
+                <th>MSCI Country</th>
+                <th>ID Market</th>
+                <th>Portfolio</th>
+                <th>ISIN</th>
+                <th>SEDOL</th>
+                <th>CUSIP</th>
+            </thead>
+            <tbody>
+                <tr *ngIf="trades.length == 0">
+                    <td colspan="19">No data available to display</td>
+                </tr>
+                <tr *ngFor="#trade of trades">
+                    <td>{{ trade.orderNumber }}</td>
+                    <td>{{ trade.fundTicker }}</td>
+                    <td>{{ trade.fundNumber }}</td>
+                    <td>{{ trade.side }}</td>
+                    <td>{{ trade.quantity }}</td>
+                    <td>{{ trade.projectedPrice }}</td>
+                    <td>{{ trade.marketValueUnrealized }}</td>
+                    <td>{{ trade.sharesTradedDesigned }}</td>
+                    <td>{{ trade.sharesTradedActual }}</td>
+                    <td>{{ trade.units }}</td>
+                    <td>{{ trade.mvcu }}</td>
+                    <td>{{ trade.mvTradeToMVCU | percent }}</td>
+                    <td>{{ trade.country }}</td>
+                    <td>{{ trade.msciCountry }}</td>
+                    <td>{{ trade.isIdMarket }}</td>
+                    <td>{{ trade.portfolio }}</td>
+                    <td>{{ trade.isin }}</td>
+                    <td>{{ trade.sedol }}</td>
+                    <td>{{ trade.cusip }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--<div class="panel-footer">
+        <button class="btn btn-default"><span class="glyphicon glyphicon-download-alt left-of-text" aria-hidden="true"></span>Import</button>
+    </div>-->
+</div>

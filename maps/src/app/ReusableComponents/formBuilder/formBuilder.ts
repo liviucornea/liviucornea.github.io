@@ -1,6 +1,6 @@
 import {
     Component, Output, EventEmitter, ElementRef, Input, ComponentFactoryResolver,
-    ComponentRef, ViewChild, ViewContainerRef
+    ComponentRef, ViewChild, ViewContainerRef, SimpleChange
 } from "@angular/core";
 import {AlertService} from "../../ReusableServices/alertService";
 import {sqlQueryBuilder} from "../sqlQueryBuilder/sqlQueryBuilder";
@@ -11,6 +11,8 @@ import {Ng2Uploader} from "../../ReusableServices/uploadService";
 import {HttpAbstract} from "../../ReusableServices/httpAbstract";
 import {matrixService} from "../../ReusableServices/matrixService";
 import {RuleService} from "../../ReusableServices/ruleService";
+import {LocalizationService} from "../../ReusableServices/localizationService";
+import {FormatGridColumnPipe} from "../../Datahub/pipes/formatGridColumn";
 
 @Component({
     template: require("./formBuilder.html"),
@@ -48,20 +50,36 @@ export class FormBuilder {
     isRulesValidation: boolean = false;
     private outputNotifierObservable: Subscription;
     private uploadCompleteSubscription: Subscription;
-
+    private isPageLoaded: boolean = false;
     constructor(alert: AlertService, elementRef: ElementRef, private appSettingsService: AppSettingsService,
                 private apiAbstract: HttpAbstract, private matrixService: matrixService,
                 private intFormSvc: InterFormsService, private componentFactoryResolver: ComponentFactoryResolver,
-                private uploaderSvc: Ng2Uploader, private ruleService: RuleService) {
+                private uploaderSvc: Ng2Uploader, private ruleService: RuleService, private localizationService: LocalizationService) {
         this.alert = alert;
         this.elemRef = elementRef;
     }
 
     ngOnInit() {
+        this.populateData();
+        this.isPageLoaded = true;
+    }
+
+    ngOnChanges(changes: {[propName: string]: SimpleChange})
+    {
+        if(changes['pluginInput'] && this.isPageLoaded)
+        {
+            let currentValue = changes['pluginInput'].currentValue;
+            let oldValue = changes['pluginInput'].previousValue;
+            if (currentValue != oldValue) {
+                this.populateData();
+            }
+        }
+    }
+
+    populateData()
+    {
         let self = this;
-
         this.editViewRowDataTable = this.pluginInput;
-
         if (this.gridSettings && this.gridSettings["CustomButtons"]) {
             this.customButtonsList = this.gridSettings["CustomButtons"];
         }
@@ -72,17 +90,20 @@ export class FormBuilder {
 
         for (var colInd in this.editViewRowDataTable) {
             var column = this.editViewRowDataTable[colInd];
-            var uploadControl = this.gridSettings.ColumnConfiguration.find(x => {
-                return (x.dbColumnName === column.name && column.htmlControlType === "upload")
-            });
-            if (uploadControl) {
 
+            var columnConfiguration = this.gridSettings.ColumnConfiguration.find(x => x.dbColumnName.toLowerCase() === column.name.toLowerCase());
+            if(columnConfiguration && columnConfiguration.hasOwnProperty("columnFormat")){
+                let formatColumnPipe = new FormatGridColumnPipe(this.localizationService);
+                column.val = formatColumnPipe.transform(column.val, columnConfiguration.columnFormat);
+            }
+
+            if (columnConfiguration && columnConfiguration.htmlControlType === "upload") {
                 self.uploadCompleteSubscription = this.uploaderSvc.notifyUploadComplete.subscribe((response) => {
-                    self.uploadCompleteNotifier(uploadControl.dbColumnName, response);
+                    self.uploadCompleteNotifier(columnConfiguration.dbColumnName, response);
                 });
 
-                if (uploadControl.hasOwnProperty("UploadOptions")) {
-                    this.uploadOptions = uploadControl.UploadOptions;
+                if (columnConfiguration.hasOwnProperty("UploadOptions")) {
+                    this.uploadOptions = columnConfiguration.UploadOptions;
                 }
             }
         }
@@ -302,6 +323,14 @@ export class FormBuilder {
     }*/
 
     customDropDownChanged(controlName, value) {
+        this.updatePluginValue();
+        this.formBuilderNotifier.emit({
+            value: value,
+            controlName: controlName
+        });
+    }
+
+    searchListClicked(controlName, value){
         this.updatePluginValue();
         this.formBuilderNotifier.emit({
             value: value,

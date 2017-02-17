@@ -26,6 +26,11 @@ export class Home {
     eventArrivalSubscription:Subscription;
     changeTracker:boolean;
     eventTypes:Array<any>=new Array<any>();
+    events: Array<CalendarEvent>=new Array<CalendarEvent>();
+    activeDayIsOpen: boolean = true;
+    view: string = 'month';
+    viewDate: Date = new Date();
+    private longEventsShowing: boolean = true;
 
     constructor(navigation: NavigationService, location: Location, calService:CalendarService, toastServ:CalendarToastyService) {
         this.toastyService=toastServ;
@@ -52,6 +57,11 @@ export class Home {
             }
         });
         this.calendarService.getEvents(Date.now());
+
+        this.calendarService.longEventsExpandEmitter.subscribe((day) => {
+            this.view = 'day';
+            this.viewDate = day.date;
+        });
     }
 
     extractEvents(){
@@ -77,10 +87,6 @@ export class Home {
         }
     }
 
-    view: string = 'month';
-
-    viewDate: Date = new Date();
-
     actions: CalendarEventAction[] = [{
         label: '<i class="fa fa-fw fa-pencil"></i>',
         onClick: ({event}: {event: CalendarEvent}): void => {
@@ -92,10 +98,6 @@ export class Home {
             this.events = this.events.filter(iEvent => iEvent !== event);
         }
     }];
-
-    events: Array<CalendarEvent>=new Array<CalendarEvent>();
-
-    activeDayIsOpen: boolean = true;
 
     increment(): void {
 
@@ -170,6 +172,15 @@ export class Home {
             case 'wait': this.toastyService.wait(toastOptions); break;
             case 'error': this.toastyService.error(toastOptions); break;
             case 'warning': this.toastyService.warning(toastOptions); break;
+        }
+    }
+
+    private showLongEvents(visibility) {
+        if (visibility === 'show') {
+            this.longEventsShowing = true;
+        }
+        else {
+            this.longEventsShowing = false;
         }
     }
 }

@@ -1,4 +1,13 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var core_1 = require("@angular/core");
 var alertService_1 = require("../../ReusableServices/alertService");
 var sqlQueryBuilder_1 = require("../sqlQueryBuilder/sqlQueryBuilder");
@@ -8,8 +17,10 @@ var uploadService_1 = require("../../ReusableServices/uploadService");
 var httpAbstract_1 = require("../../ReusableServices/httpAbstract");
 var matrixService_1 = require("../../ReusableServices/matrixService");
 var ruleService_1 = require("../../ReusableServices/ruleService");
+var localizationService_1 = require("../../ReusableServices/localizationService");
+var formatGridColumn_1 = require("../../Datahub/pipes/formatGridColumn");
 var FormBuilder = (function () {
-    function FormBuilder(alert, elementRef, appSettingsService, apiAbstract, matrixService, intFormSvc, componentFactoryResolver, uploaderSvc, ruleService) {
+    function FormBuilder(alert, elementRef, appSettingsService, apiAbstract, matrixService, intFormSvc, componentFactoryResolver, uploaderSvc, ruleService, localizationService) {
         this.appSettingsService = appSettingsService;
         this.apiAbstract = apiAbstract;
         this.matrixService = matrixService;
@@ -17,6 +28,7 @@ var FormBuilder = (function () {
         this.componentFactoryResolver = componentFactoryResolver;
         this.uploaderSvc = uploaderSvc;
         this.ruleService = ruleService;
+        this.localizationService = localizationService;
         this.pluginValue = "";
         this.visiblePlugin = true;
         this.showValidation = false;
@@ -31,10 +43,24 @@ var FormBuilder = (function () {
         this.IsHideCancel = false;
         this.customButtonsList = [];
         this.isRulesValidation = false;
+        this.isPageLoaded = false;
         this.alert = alert;
         this.elemRef = elementRef;
     }
     FormBuilder.prototype.ngOnInit = function () {
+        this.populateData();
+        this.isPageLoaded = true;
+    };
+    FormBuilder.prototype.ngOnChanges = function (changes) {
+        if (changes['pluginInput'] && this.isPageLoaded) {
+            var currentValue = changes['pluginInput'].currentValue;
+            var oldValue = changes['pluginInput'].previousValue;
+            if (currentValue != oldValue) {
+                this.populateData();
+            }
+        }
+    };
+    FormBuilder.prototype.populateData = function () {
         var self = this;
         this.editViewRowDataTable = this.pluginInput;
         if (this.gridSettings && this.gridSettings["CustomButtons"]) {
@@ -45,15 +71,17 @@ var FormBuilder = (function () {
         }
         for (var colInd in this.editViewRowDataTable) {
             var column = this.editViewRowDataTable[colInd];
-            var uploadControl = this.gridSettings.ColumnConfiguration.find(function (x) {
-                return (x.dbColumnName === column.name && column.htmlControlType === "upload");
-            });
-            if (uploadControl) {
+            var columnConfiguration = this.gridSettings.ColumnConfiguration.find(function (x) { return x.dbColumnName.toLowerCase() === column.name.toLowerCase(); });
+            if (columnConfiguration && columnConfiguration.hasOwnProperty("columnFormat")) {
+                var formatColumnPipe = new formatGridColumn_1.FormatGridColumnPipe(this.localizationService);
+                column.val = formatColumnPipe.transform(column.val, columnConfiguration.columnFormat);
+            }
+            if (columnConfiguration && columnConfiguration.htmlControlType === "upload") {
                 self.uploadCompleteSubscription = this.uploaderSvc.notifyUploadComplete.subscribe(function (response) {
-                    self.uploadCompleteNotifier(uploadControl.dbColumnName, response);
+                    self.uploadCompleteNotifier(columnConfiguration.dbColumnName, response);
                 });
-                if (uploadControl.hasOwnProperty("UploadOptions")) {
-                    this.uploadOptions = uploadControl.UploadOptions;
+                if (columnConfiguration.hasOwnProperty("UploadOptions")) {
+                    this.uploadOptions = columnConfiguration.UploadOptions;
                 }
             }
         }
@@ -245,6 +273,13 @@ var FormBuilder = (function () {
             controlName: controlName
         });
     };
+    FormBuilder.prototype.searchListClicked = function (controlName, value) {
+        this.updatePluginValue();
+        this.formBuilderNotifier.emit({
+            value: value,
+            controlName: controlName
+        });
+    };
     FormBuilder.prototype.customButtonClicked = function (customButton) {
         var result = true;
         this.updatePluginValue();
@@ -317,7 +352,7 @@ var FormBuilder = (function () {
             template: require("./formBuilder.html"),
             selector: 'formBuilder',
         }), 
-        __metadata('design:paramtypes', [alertService_1.AlertService, core_1.ElementRef, appSettingsService_1.AppSettingsService, httpAbstract_1.HttpAbstract, matrixService_1.matrixService, interFormsService_1.InterFormsService, core_1.ComponentFactoryResolver, uploadService_1.Ng2Uploader, ruleService_1.RuleService])
+        __metadata('design:paramtypes', [alertService_1.AlertService, core_1.ElementRef, appSettingsService_1.AppSettingsService, httpAbstract_1.HttpAbstract, matrixService_1.matrixService, interFormsService_1.InterFormsService, core_1.ComponentFactoryResolver, uploadService_1.Ng2Uploader, ruleService_1.RuleService, localizationService_1.LocalizationService])
     ], FormBuilder);
     return FormBuilder;
 }());

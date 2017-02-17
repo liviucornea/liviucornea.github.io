@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for assignableListItems\assignableListItems.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">assignableListItems/</a> assignableListItems.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">38.1% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>32/84</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/41</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">22.22% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>4/18</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">35.53% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>27/76</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span></td><td class="text"><pre class="prettyprint lang-js">import {Component, Input, OnInit, EventEmitter, Output, SimpleChange} from '@angular/core';
+import * as _ from 'lodash';
+//usage
+// &lt;assignable-list [inputList]="allItems" [assignedList]="assignedItems" [inputTitle]="'Left Title'" [assignedTitle]="'Assigned Title'" (listOut)="getAssignedList($event)"&gt;&lt;/assignable-list&gt;
+&nbsp;
+@Component({
+    selector: "assignable-list",
+    template: require('./assignableListItems.html'),
+    styles: [require('./assignableListItems.scss')]
+})
+export class AssignableListItems implements OnInit {
+    @Input('inputTitle') inputTitle: string ;
+    @Input('assignedTitle') assignedTitle: string ;
+    @Input('inputList') inputList: Array&lt;any&gt;=[];
+    @Input('assignedList') assignedList: Array&lt;any&gt;=[] ;
+    @Output() listOut = new EventEmitter();
+    @Input() inputSettings: any;
+&nbsp;
+    isPageLoaded: boolean = false;
+    formattedInputList: Array&lt;any&gt;=[];
+    formattedAssignedList: Array&lt;any&gt;=[];
+    configuration: any;
+    customButtonsList: Array&lt;any&gt; = [];
+&nbsp;
+<span class="fstat-no" title="function not covered" >    ngOnInit() {</span>
+<span class="cstat-no" title="statement not covered" >        if(this.inputSettings &amp;&amp; this.inputSettings.ListItemsConfiguration) {</span>
+<span class="cstat-no" title="statement not covered" >            this.configuration = this.inputSettings.ListItemsConfiguration;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            this.assignedTitle = this.configuration.assignedListTitle;</span>
+<span class="cstat-no" title="statement not covered" >            this.inputTitle = this.configuration.inputListTitle;</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (this.inputSettings &amp;&amp; this.inputSettings["CustomButtons"]) {</span>
+<span class="cstat-no" title="statement not covered" >            this.customButtonsList = this.inputSettings["CustomButtons"];</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.formattedInputList = this.getFormattedListItems(this.inputList, this.configuration.inputListDataFields["dbColumnName"], this.configuration.inputListDataFields["displayColumnName"]);</span>
+<span class="cstat-no" title="statement not covered" >        this.formattedAssignedList = this.getFormattedListItems(this.assignedList, this.configuration.assignedListDataFields["dbColumnName"], this.configuration.assignedListDataFields["displayColumnName"]);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.isPageLoaded = true;</span>
+    }
+&nbsp;
+    ngOnChanges(changes: {[propName: string]: SimpleChange}<span class="fstat-no" title="function not covered" >) {</span>
+<span class="cstat-no" title="statement not covered" >        if(this.isPageLoaded) {</span>
+<span class="cstat-no" title="statement not covered" >            if (changes['inputList']) {</span>
+                let currentValue = <span class="cstat-no" title="statement not covered" >changes['inputList'].currentValue;</span>
+                let oldValue = <span class="cstat-no" title="statement not covered" >changes['inputList'].previousValue;</span>
+<span class="cstat-no" title="statement not covered" >                if (currentValue != oldValue) {</span>
+<span class="cstat-no" title="statement not covered" >                    this.formattedInputList = this.getFormattedListItems(currentValue, this.configuration.inputListDataFields["dbColumnName"], this.configuration.inputListDataFields["displayColumnName"]);</span>
+                }
+            }
+<span class="cstat-no" title="statement not covered" >            if (changes['assignedList']) {</span>
+                let currentValue = <span class="cstat-no" title="statement not covered" >changes['assignedList'].currentValue;</span>
+                let oldValue = <span class="cstat-no" title="statement not covered" >changes['assignedList'].previousValue;</span>
+<span class="cstat-no" title="statement not covered" >                if (currentValue != oldValue) {</span>
+<span class="cstat-no" title="statement not covered" >                    this.formattedAssignedList = this.getFormattedListItems(currentValue, this.configuration.assignedListDataFields["dbColumnName"], this.configuration.assignedListDataFields["displayColumnName"]);</span>
+                }
+            }
+        }
+    }
+&nbsp;
+    getFormattedListItems(listItems, valueColumn, descriptionColumn<span class="fstat-no" title="function not covered" >){</span>
+        let formattedList: Array&lt;any&gt;=<span class="cstat-no" title="statement not covered" >[];</span>
+<span class="cstat-no" title="statement not covered" >        if(!valueColumn){</span>
+<span class="cstat-no" title="statement not covered" >            valueColumn = 'Value';</span>
+        }
+<span class="cstat-no" title="statement not covered" >        if(!descriptionColumn){</span>
+<span class="cstat-no" title="statement not covered" >            descriptionColumn = 'Description';</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if(listItems &amp;&amp; listItems.length) {</span>
+<span class="cstat-no" title="statement not covered" >            listItems.forEach(x<span class="fstat-no" title="function not covered" >=&gt; {</span></span>
+                let formattedItem = <span class="cstat-no" title="statement not covered" >new ListItem();</span>
+<span class="cstat-no" title="statement not covered" >                formattedItem.Value = x[valueColumn];</span>
+<span class="cstat-no" title="statement not covered" >                formattedItem.Description = x[descriptionColumn];</span>
+<span class="cstat-no" title="statement not covered" >                formattedList.push(formattedItem);</span>
+            });
+        }
+<span class="cstat-no" title="statement not covered" >        return formattedList;</span>
+    }
+&nbsp;
+    assignListOut(customButton<span class="fstat-no" title="function not covered" >) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.listOut.emit({</span>
+            value: this.formattedAssignedList,
+            controlName: customButton.name,
+            inputList: this.formattedInputList
+        });
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    switchSelection(selection: any, sourceList: Array&lt;any&gt;, destinationList: Array&lt;any&gt;<span class="fstat-no" title="function not covered" >) {</span></span>
+<span class="cstat-no" title="statement not covered" >        if (selection.selectedOptions.length === 0) {</span>
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        } else {
+            let selectedOptions = <span class="cstat-no" title="statement not covered" >Array.from(selection.selectedOptions);</span>
+<span class="cstat-no" title="statement not covered" >            selectedOptions.forEach(option<span class="fstat-no" title="function not covered" > =&gt; {</span></span>
+                let item = <span class="cstat-no" title="statement not covered" >new ListItem();</span>
+<span class="cstat-no" title="statement not covered" >                item.Value = option['value'];</span>
+<span class="cstat-no" title="statement not covered" >                item.Description = option['text'];</span>
+<span class="cstat-no" title="statement not covered" >                this.changeItemList(item, sourceList, destinationList);</span>
+            })
+        }
+    }
+&nbsp;
+    changeItemList(item: ListItem, sourceList: Array&lt;ListItem&gt;, destinationList: Array&lt;ListItem&gt;<span class="fstat-no" title="function not covered" >) {</span>
+<span class="cstat-no" title="statement not covered" >        _.remove(sourceList, (x<span class="fstat-no" title="function not covered" >) =&gt; <span class="cstat-no" title="statement not covered" >x.Value == item.Value &amp;&amp; x.Description === item.Description)</span></span>;</span>
+<span class="cstat-no" title="statement not covered" >        if (destinationList &amp;&amp; destinationList.length &gt; 0 &amp;&amp; destinationList.find(x<span class="fstat-no" title="function not covered" > =&gt; <span class="cstat-no" title="statement not covered" >x.Value == item.Value &amp;&amp; x.Description === item.Description)</span></span>) {</span>
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        destinationList.push(item);</span>
+    }
+&nbsp;
+    moveAllToInput() {
+        this.formattedInputList = _.uniqWith(_.union(this.formattedInputList, this.formattedAssignedList), function (a, b<span class="fstat-no" title="function not covered" >) {</span>
+<span class="cstat-no" title="statement not covered" >            return a.Value == b.Value &amp;&amp; a.Description === b.Description</span>
+        });
+        this.formattedAssignedList = [];
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    moveAllToAssigned() {</span>
+<span class="cstat-no" title="statement not covered" >        this.formattedAssignedList = _.uniqWith(_.union(this.formattedInputList, this.formattedAssignedList), function (a, b<span class="fstat-no" title="function not covered" >) {</span></span>
+<span class="cstat-no" title="statement not covered" >            return a.Value == b.Value &amp;&amp; a.Description === b.Description</span>
+        });
+<span class="cstat-no" title="statement not covered" >        this.formattedInputList = [];</span>
+    }
+}
+export class ListItem {
+    public Value: string;
+    public Description: string;
+&nbsp;
+<span class="fstat-no" title="function not covered" >    constructor() {</span>
+    };
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Feb 13 2017 09:44:24 GMT-0500 (Eastern Standard Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

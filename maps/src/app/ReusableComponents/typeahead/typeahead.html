@@ -1,4 +1,4 @@
-<input #theInput type="text" [(ngModel)]="itemDescription" class="form-control" placeholder="Start typing the value you search for here ..." type="text" autocomplete="off">
+<input #theInput type="text" id="itemDescription" [(ngModel)]="itemDescription" placeholder="{{placeholderText}}" type="text" autocomplete="off" (focus)="this.focused.next(true);" (blur)="this.focused.next(false)" (input)="this.itemDescriptionChanged.next(this.itemDescription)">
 <template [ngIf]="listCmp.length > 0">
     <ul id="typeahead-list" class="list-group">
         <li class="list-group-item" (click)="selectItem(item)" *ngFor="let item of listCmp">

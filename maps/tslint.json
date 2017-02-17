@@ -35,10 +35,10 @@
 
         "ban": false,
         "curly": false,
-        "forin": true,
+        "forin": false,
         "label-position": true,
         "no-arg": true,
-        "no-bitwise": true,
+        "no-bitwise": false,
         "no-conditional-assignment": true,
         "no-console": [
         true,
@@ -54,7 +54,7 @@
         "no-empty": false,
         "no-eval": true,
         "no-null-keyword": false,
-        "no-shadowed-variable": true,
+        "no-shadowed-variable": false,
         "no-string-literal": false,
         "no-switch-case-fall-through": true,
         "no-unused-expression": true,
@@ -73,7 +73,7 @@
     ],
         "max-line-length": [
         true,
-        120
+        180
     ],
         "no-require-imports": false,
         "no-trailing-whitespace": true,
@@ -111,7 +111,6 @@
         "semicolon": [true, "always"],
         "variable-name": [
         true,
-        "check-format",
         "allow-leading-underscore",
         "ban-keywords"
     ],

@@ -1,66 +1,103 @@
 ﻿<template [ngIf]="!addEditClicked">
-    <div *ngFor="let child of elementList; let ndx = index">
+    <div *ngFor="let child of elementList; let ndx = index" class="row">
         <template [ngIf]="child.expanded">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <h3 id="card-title">{{child.mainPageObject[0].modelName | LocalizationTranslate}} {{ndx + 1}}
-                                    <button *ngIf="canAddDelete" (click)="deleteClicked(child)" title="{{'Delete' | LocalizationTranslate}}" class="button-standard ">
-                                        <span class="fa fa-eraser fa-lg"></span>
-                                    </button>
-                                    <button (click)="editClicked(child)" title="{{'Edit' | LocalizationTranslate}}" class="button-standard ">
-                                        <span class="fa fa-pencil-square-o fa-lg"></span>
-                                    </button>
-                                    <button (click)="moreClicked(child)" title="{{'View' | LocalizationTranslate}}" class="button-standard "><span class="fa fa-ellipsis-h fa-lg"></span></button>
+                        <div class="row">
+                            <!--<div class="form-inline">-->
+                            <!--<div class="form-group">-->
+                            <div class="col-md-9">
+                                <h3 id="card-title">{{child.mainPageObject[0].modelName | LocalizationTranslate}} {{ndx
+                                    + 1}}
                                 </h3>
                             </div>
+                            <div class="col-md-3">
+                                <button (click)="moreClicked(child)" title="{{'View' | LocalizationTranslate}}"
+                                        class="btn btn-sm btn-td float-xs-right">
+                                    <span class="fa fa-ellipsis-h"></span>
+                                </button>
+                                <button *ngIf="canAddDelete" (click)="deleteClicked(child)"
+                                        title="{{'Delete' | LocalizationTranslate}}"
+                                        class="btn btn-sm btn-td float-xs-right">
+                                    <span class="fa fa-eraser"></span>
+                                </button>
+                                <button (click)="editClicked(child)" title="{{'Edit' | LocalizationTranslate}}"
+                                        class="btn btn-sm btn-td float-xs-right">
+                                    <span class="fa fa-pencil-square-o"></span>
+                                </button>
+                            </div>
                         </div>
+                        <!--</div>-->
+                        <!--</div>-->
                     </div>
                     <div class="card-block">
-                        <div class="col-md-4">
-                            <div class="card card-block">
-                                <template ngFor let-summary [ngForOf]="child.summaryObject">
-                                    <strong>{{summary.lbl | LocalizationTranslate}}:</strong> {{summary.val | LocalizationTranslate}}
-                                    <br/>
-                                </template>
-                            </div>
-                        </div>
-                        <template [ngIf]="child.viewDetail">
-                            <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-4">
                                 <div class="card card-block">
-                                    <reportBuilder [NodeClass]="child.nodeClass" [pluginInput]="child.model" [gridSettings]="child.config"></reportBuilder>
-                                </div>
-                            </div>
-                        </template>
-                        <template [ngIf]="child.editDetail">
-                            <div class="col-md-8">
-                                <div class="card card-block">
-                                    <treeViewAddEditForm [originalInput]="originalInput" [NodeClass]="singleEditClass" [pluginInput]="addEditObject" [gridSettings]="addEditObjectConfig" [childRulesConfig]="child.childRulesConfig"></treeViewAddEditForm>
-                                </div>
-                            </div>
-                        </template>
-                        <template [ngIf]="child.childrenArrayList.length > 0">
-                            <!-- <div *ngIf="child.level<currentLevel">-->
-                            <template ngFor let-subchild [ngForOf]="child.childrenArrayList">
-                                <div class="col-md-12">
-                                    <div class="card-block">
-                                        <h3 id="treeview-node-child-title" *ngIf="subchild.elementList">{{subchild.modelName | LocalizationTranslate}}({{subchild.elementList.length}})</h3>
-                                        <button (click)="childClicked(subchild)" title="{{'View' | LocalizationTranslate}}" class="button-standard  treeview-node-button">
-                                            <span class="fa fa-ellipsis-h fa-lg"></span>
-                                        </button>
-                                        <button (click)="addClicked(subchild)" title="{{'Add' | LocalizationTranslate}}" class="button-standard  treeview-node-button">
-                                            <span class="fa fa-plus fa-lg"></span>
-                                        </button>
-                                    </div>
-                                    <template [ngIf]="subchild.addDetail">
-                                        <treeViewAddEditForm [originalInput]="originalInput" [NodeClass]="singleEditClass" [pluginInput]="addEditObject" [gridSettings]="addEditObjectConfig" [childRulesConfig]="subchild.childRulesConfig"></treeViewAddEditForm>
+                                    <template ngFor let-summary [ngForOf]="child.summaryObject">
+                                        <strong>{{summary.lbl | LocalizationTranslate}}:</strong> {{summary.val |
+                                        LocalizationTranslate}}
+                                        <br/>
                                     </template>
-                                    <treeViewChildrenParser *ngIf="!subchild.addDetail" [children]="subchild" [subChild]="true"></treeViewChildrenParser>
+                                </div>
+                            </div>
+                            <template [ngIf]="child.viewDetail">
+                                <div class="col-md-8">
+                                    <div class="card card-block">
+                                        <reportBuilder [NodeClass]="child.nodeClass" [pluginInput]="child.model"
+                                                       [gridSettings]="child.config"></reportBuilder>
+                                    </div>
                                 </div>
                             </template>
-                        </template>
+                            <template [ngIf]="child.editDetail">
+                                <div class="col-md-8">
+                                    <div class="card card-block">
+                                        <treeViewAddEditForm [originalInput]="originalInput"
+                                                             [NodeClass]="singleEditClass" [pluginInput]="addEditObject"
+                                                             [gridSettings]="addEditObjectConfig"
+                                                             [childRulesConfig]="child.childRulesConfig"></treeViewAddEditForm>
+                                    </div>
+                                </div>
+                            </template>
+                            <template [ngIf]="child.childrenArrayList.length > 0">
+                                <!-- <div *ngIf="child.level<currentLevel">-->
+                                <template ngFor let-subchild [ngForOf]="child.childrenArrayList">
+                                    <div class="col-md-12">
+                                        <div class="card-block">
+                                            <div class="row">
+                                                <div class="col-md-9">
+                                                    <h3 id="treeview-node-child-title" *ngIf="subchild.elementList">
+                                                        {{subchild.modelName |
+                                                        LocalizationTranslate}}({{subchild.elementList.length}})</h3>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <button (click)="childClicked(subchild)"
+                                                            title="{{'View' | LocalizationTranslate}}"
+                                                            class="btn btn-sm btn-td float-xs-right">
+                                                        <span class="fa fa-ellipsis-h"></span>
+                                                    </button>
+                                                    <button (click)="addClicked(subchild)"
+                                                            title="{{'Add' | LocalizationTranslate}}"
+                                                            class="btn btn-sm btn-td float-xs-right">
+                                                        <span class="fa fa-plus"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <template [ngIf]="subchild.addDetail">
+                                            <treeViewAddEditForm [originalInput]="originalInput"
+                                                                 [NodeClass]="singleEditClass"
+                                                                 [pluginInput]="addEditObject"
+                                                                 [gridSettings]="addEditObjectConfig"
+                                                                 [childRulesConfig]="subchild.childRulesConfig"></treeViewAddEditForm>
+                                        </template>
+                                        <treeViewChildrenParser *ngIf="!subchild.addDetail" [children]="subchild"
+                                                                [subChild]="true"></treeViewChildrenParser>
+                                    </div>
+                                </template>
+                            </template>
+                        </div>
                         <!--<section>
                             <treeViewChildrenParser [children]="child" [pluginInput]="child.model" [gridSettings]="child.config"></treeViewChildrenParser>
                         </section>-->

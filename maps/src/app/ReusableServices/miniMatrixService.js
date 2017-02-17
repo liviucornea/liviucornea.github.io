@@ -1,6 +1,15 @@
 "use strict";
-var core_1 = require("@angular/core");
-var matrixService_1 = require("./matrixService");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = require('@angular/core');
+var matrixService_1 = require('./matrixService');
 var MiniMatrixService = (function () {
     function MiniMatrixService(matrix) {
         var _this = this;
@@ -8,12 +17,12 @@ var MiniMatrixService = (function () {
             Countries: [
                 {
                     IsActive: false,
-                    Name: "TAIWAN",
+                    Name: 'TAIWAN',
                     Shares: 10
                 },
                 {
                     IsActive: false,
-                    Name: "India",
+                    Name: 'India',
                     Shares: 20
                 }
             ],
@@ -30,80 +39,80 @@ var MiniMatrixService = (function () {
                 }]
         };
         this.testDataConfig = {
-            correlationColumn: "IsActive",
+            correlationColumn: 'IsActive',
             Countries: {
                 ColumnConfiguration: [
                     {
-                        "dbColumnName": "IsActive",
-                        "htmlControlType": "checkbox",
-                        "isVisible": true,
-                        "isRequired": false,
-                        "displayName": "TradeFlag",
-                        "dataSourceAddress": undefined,
-                        "dataSource": undefined,
-                        "regex": "",
-                        "isAllowGridLevelEdit": true,
-                        "columnFormat": { format: "font-awesome", pattern: { false: 'fa fa-remove fa-lg', true: 'fa fa-check fa-lg' } }
+                        'dbColumnName': 'IsActive',
+                        'htmlControlType': 'checkbox',
+                        'isVisible': true,
+                        'isRequired': false,
+                        'displayName': 'TradeFlag',
+                        'dataSourceAddress': undefined,
+                        'dataSource': undefined,
+                        'regex': '',
+                        'isAllowGridLevelEdit': true,
+                        'columnFormat': { format: 'font-awesome', pattern: { false: 'fa fa-remove fa-lg', true: 'fa fa-check fa-lg' } }
                     },
                     {
-                        "dbColumnName": "Name",
-                        "htmlControlType": "text",
-                        "isVisible": true,
-                        "isRequired": false,
-                        "displayName": "Name",
-                        "dataSourceAddress": undefined,
-                        "dataSource": undefined,
-                        "regex": "",
-                        "isAllowGridLevelEdit": true,
+                        'dbColumnName': 'Name',
+                        'htmlControlType': 'text',
+                        'isVisible': true,
+                        'isRequired': false,
+                        'displayName': 'Name',
+                        'dataSourceAddress': undefined,
+                        'dataSource': undefined,
+                        'regex': '',
+                        'isAllowGridLevelEdit': true,
                     },
                     {
-                        "dbColumnName": "Shares",
-                        "htmlControlType": "number",
-                        "isVisible": true,
-                        "isRequired": false,
-                        "displayName": "Id",
-                        "dataSourceAddress": undefined,
-                        "dataSource": undefined,
-                        "regex": "",
-                        "isAllowGridLevelEdit": true,
+                        'dbColumnName': 'Shares',
+                        'htmlControlType': 'number',
+                        'isVisible': true,
+                        'isRequired': false,
+                        'displayName': 'Id',
+                        'dataSourceAddress': undefined,
+                        'dataSource': undefined,
+                        'regex': '',
+                        'isAllowGridLevelEdit': true,
                     }
                 ]
             },
             Sedol: {
                 ColumnConfiguration: [
                     {
-                        "dbColumnName": "IsActive",
-                        "htmlControlType": "checkbox",
-                        "isVisible": true,
-                        "isRequired": false,
-                        "displayName": "TradeFlag",
-                        "dataSourceAddress": undefined,
-                        "dataSource": undefined,
-                        "regex": "",
-                        "isAllowGridLevelEdit": true,
-                        "columnFormat": { format: "font-awesome", pattern: { false: 'fa fa-remove fa-lg', true: 'fa fa-check fa-lg' } }
+                        'dbColumnName': 'IsActive',
+                        'htmlControlType': 'checkbox',
+                        'isVisible': true,
+                        'isRequired': false,
+                        'displayName': 'TradeFlag',
+                        'dataSourceAddress': undefined,
+                        'dataSource': undefined,
+                        'regex': '',
+                        'isAllowGridLevelEdit': true,
+                        'columnFormat': { format: 'font-awesome', pattern: { false: 'fa fa-remove fa-lg', true: 'fa fa-check fa-lg' } }
                     },
                     {
-                        "dbColumnName": "Number",
-                        "htmlControlType": "text",
-                        "isVisible": true,
-                        "isRequired": false,
-                        "displayName": "Number",
-                        "dataSourceAddress": undefined,
-                        "dataSource": undefined,
-                        "regex": "",
-                        "isAllowGridLevelEdit": true,
+                        'dbColumnName': 'Number',
+                        'htmlControlType': 'text',
+                        'isVisible': true,
+                        'isRequired': false,
+                        'displayName': 'Number',
+                        'dataSourceAddress': undefined,
+                        'dataSource': undefined,
+                        'regex': '',
+                        'isAllowGridLevelEdit': true,
                     },
                     {
-                        "dbColumnName": "Shares",
-                        "htmlControlType": "number",
-                        "isVisible": true,
-                        "isRequired": false,
-                        "displayName": "Shared",
-                        "dataSourceAddress": undefined,
-                        "dataSource": undefined,
-                        "regex": "",
-                        "isAllowGridLevelEdit": true,
+                        'dbColumnName': 'Shares',
+                        'htmlControlType': 'number',
+                        'isVisible': true,
+                        'isRequired': false,
+                        'displayName': 'Shared',
+                        'dataSourceAddress': undefined,
+                        'dataSource': undefined,
+                        'regex': '',
+                        'isAllowGridLevelEdit': true,
                     }
                 ]
             }

@@ -320,8 +320,8 @@ var ModuleUpdateFormBuilderConfig = {
             "isComplexType": false,
             "isRequired": false,
             "displayName": "Module",
-            "dataSourceAddress": { tableName: "/Application/SqlStatementDetail/ManagedProgramDB_GetModule", dbColumnName: "ID", displayColumnName: "Name",
-                dbParameters: { Parameters: [] }, defaultValue: [{ Value: "", Name: "" }] },
+            "dataSourceAddress": { tableName: "/Application/SqlStatementDetail/ManagedProgramDB_GetModule", dbColumnName: "id", displayColumnName: "Name",
+                dbParameters: { Parameters: [{ Name: "@ModuleType", Value: null }], defaultValue: [{ Value: "", Name: "" }] } },
             "dataSource": undefined,
             "regex": undefined,
         }

@@ -91,11 +91,11 @@
                             <span *ngIf="asset.editByComponent">
                                         (JSON element) {{':'}}
                                     </span>
-                            <button *ngIf="!asset.isVisible" (click)="asset.isVisible=!asset.isVisible" class="button-standard ">
-                                <span class="fa fa-plus fa-lg"></span>
+                            <button *ngIf="!asset.isVisible" (click)="asset.isVisible=!asset.isVisible" class="btn btn-sm btn-td">
+                                <span class="fa fa-plus"></span>
                             </button>
-                            <button *ngIf="asset.isVisible" (click)="asset.isVisible=!asset.isVisible" class="button-standard ">
-                                <span class="fa fa-minus-circle fa-lg"></span>
+                            <button *ngIf="asset.isVisible" (click)="asset.isVisible=!asset.isVisible" class="btn btn-sm btn-td">
+                                <span class="fa fa-minus-circle"></span>
                             </button>
                             <template [ngIf]="!asset.editByComponent && asset.isVisible">
                                 <textarea id="execution-textarea" rows="1" cols="25" [(ngModel)]="asset.RuntimeConfigurationValue" [ngClass]="{neutral: !asset.isChanged, changed: asset.isChanged}" (keyup)="checkIt($event, asset)" (ngModelChange)="assetChanged(asset)"></textarea>

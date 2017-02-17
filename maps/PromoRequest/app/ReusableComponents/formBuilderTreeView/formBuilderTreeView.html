@@ -1,0 +1,91 @@
+﻿<article Id="editConfigPage" *ngIf="visiblePlugin" class="flex-container">
+    <div class="col-24">
+        <section Id="editForm" class="formItem">
+            <form #genericForm="ngForm" (ngSubmit)="saveClicked()">
+                <div *ngFor="#ln of editViewRowDataTable" class="flex-container">
+                    <div class="col-10">
+                        <div class="formItemLabel">
+                            <label [attr.for]="ln.sequence">{{ln.label}}:</label>
+                        </div>
+                    </div>
+                    <div class="col-14">
+                        <div *ngIf="ln.htmlControlType !== 'select' && ln.htmlControlType !== 'radio' && ln.htmlControlType !== 'checkbox'">
+                            <div class="formItemControl">
+                                <input #name="ngForm" [attr.Id]="ln.sequence" type={{ln.htmlControlType}} [(ngModel)]="ln.val"  checked={{ln.val}} (click)="inputClicked(ln)" [disabled]="!ln.visibility && PageType != 'add'">
+                            </div>
+                            <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                                Valid input for {{ln.label}} is required
+                            </div>
+                            <div *ngIf="ln.togglable" >
+                                <formBuilderInline [PageType]='edit' [pluginInput]="ln.isComplexTypeInlineTemplate" [gridSettings]="ln.isComplexTypeInlineTemplateConfig"></formBuilderInline>
+                            </div>
+                        </div>
+                        <div *ngIf="ln.htmlControlType === 'checkbox'">
+                            <div class="formItemControl">
+                                <input #name="ngForm" [attr.Id]="ln.sequence" type="checkbox" [(ngModel)]="ln.val" [disabled]="!ln.visibility" (click)="inputClicked(ln)">
+                            </div>
+                            <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                                Valid input for {{ln.label}} is required
+                            </div>
+                        </div>
+                        <div *ngIf="ln.htmlControlType === 'select'">
+                            <div class="formItemControl">
+                                <select #name="ngForm" [(ngModel)]="ln.val" [attr.Id]="ln.sequence" >
+                                    <option *ngFor="#itemOption of ln.dataSource" value="{{itemOption}}">{{itemOption}}</option>
+                                </select>
+                            </div>
+                            <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                                Valid input for {{ln.label}} is required
+                            </div>
+                        </div>
+                        <div *ngIf="ln.htmlControlType === 'radio'">
+                            <div class="formItemControl">
+                                <span *ngFor="#itemOption of ln.dataSource">
+                                    <div class="row">
+                                        <input #name="ngForm" name="ln.objId" type="radio" [(ngModel)]="ln.val" value="{{itemOption}}"><span class="pull-left">{{' ' + itemOption + '    '}}</span><br/>
+                                    </div>
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <section id="childrenList" class="flex-container-main" >
+                    <!--<div *ngFor="#ln of children">
+                        <h3 (click)="childClicked(ln)">{{ln.name}}</h3>
+                        &lt;!&ndash;<formBuilderInlineChildren [IsHideCancel]="true" [pluginInput]="child.model" [gridSettings]="child.config"></formBuilderInlineChildren>&ndash;&gt;
+                    </div>-->
+                    <div class="tdam-tabs-primary" >
+                        <ol class="tdam-tab-items">
+                            <li class="tdam-tab-item" *ngFor="#ln of children"(click)="childClicked(ln)"><div class="tdam-tab-item-text">{{ln.name}}</div></li>
+                        </ol>
+                        <!--<formBuilderInlineChildren [IsHideCancel]="true" [pluginInput]="child.model" [gridSettings]="child.config"></formBuilderInlineChildren>-->
+                    </div>
+                </section>
+                <section id="children" class="flex-container" >
+                    <div *ngFor="#ln of children" class="row">
+                        <div *ngIf="ln.visible">
+                                <span id="treeViewTitle">{{ln.name}}</span>
+                            <div class="col-24">
+                                <formBuilderInlineChildren [children] = "ln" ></formBuilderInlineChildren>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div id="buttons" class="row">
+                    <button type="submit" [disabled]="!genericForm.form.valid" class="tdam-button tdam-button-secondary" *ngIf ="PageType != 'view'">
+                        <span class="glyphicon glyphicon-save"></span>
+                        Save
+                    </button>
+                    <button (click)="cancelClicked()" class="tdam-button tdam-button-secondary" *ngIf="!IsHideCancel">
+                        <span class="glyphicon glyphicon-ban-circle"></span>
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </section>
+        <section>
+
+        </section>
+    </div>
+</article>

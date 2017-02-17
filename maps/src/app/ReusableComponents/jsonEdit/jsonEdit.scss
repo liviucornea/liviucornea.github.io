@@ -1,17 +1,6 @@
 @import "../../Datahub/assets/_variables";
 
 //jsonEdit.html settings
-.expandCollapseBtn {
-  height: 25px;
-  width: 25px;
-  margin-left: 0.5px;
-  margin-right: 0.5px;
-  margin-top: 0.5px;
-}
-
-.node {
-  font-weight: bold;
-}
 
 // last item settings
 .changed {
@@ -21,77 +10,3 @@
 .neutral {
   background-color: white;
 }
-
-.addNewSelect {
-  height: 25px;
-  width: 280px;
-}
-
-.addNewInput {
-  height: 25px;
-  width: 280px;
-}
-
-.sizedSelect {
-  height: 25px;
-  width: 55%;
-}
-
-.sizedInput {
-  height: 25px;
-  width: 85% !important;
-}
-
-button {
-  margin: 2px 2px 2px 2px;
-}
-
-#tblList tr:nth-child(even) {
-  background-color: #E8E8E8;
-}
-
-#tblList tr:nth-child(odd) {
-  background-color: #ffffff;
-}
-
-#tblList {
-  border: 1px solid black;
-  width: 100%;
-  /*width: 500px;*/
-
-  thead {
-    display: block;
-  }
-
-  tbody {
-    display: block;
-    //height: 480px;
-    overflow-y: auto;
-  }
-}
-
-.listArea {
-  padding: 5px;
-  /* ensures table doesn't fly off panel */
-  overflow-x: auto;
-
-}
-
-.bottomBttns {
-  padding-left: 5px;
-}
-
-.expandable {
-  height: 25px;
-  width: 35px;
-  overflow: hidden;
-  margin: auto;
-}
-
-.expandable:hover {
-  height: auto;
-  width: auto;
-  margin: auto;
-}
-
-

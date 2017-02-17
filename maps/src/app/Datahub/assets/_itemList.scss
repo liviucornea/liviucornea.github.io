@@ -1,0 +1,10 @@
+.item-list {
+  width: 100%;
+  height: 300px;
+  border: $base-border;
+  overflow-y: auto;
+}
+
+.item-list-entry:hover {
+  cursor: pointer;
+}

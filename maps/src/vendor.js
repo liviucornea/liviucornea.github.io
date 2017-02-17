@@ -21,7 +21,10 @@ require('jquery');
 require('bootstrap-loader');
 require('font-awesome-sass-loader');
 require('lodash');
+require('moment');
 require('signalr');
+require('ts-xlsx');
+require('file-saver');
 if ('production' === ENV) {
 }
 else {

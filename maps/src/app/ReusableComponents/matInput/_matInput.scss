@@ -1,19 +1,37 @@
-.mat-input-wrapper {
-}
-
 .mat-editing {
-  color: #008000;
+  color: #008000 !important;
 }
 
-.mat-input-element {
-  border: none;
-  height: initial;
-  width: 100%;
+.mat-input-infix {
+  > input,
+  > select,
+  > customdropdown > select,
+  > typeahead-input > input {
+    border: none;
+    height: initial;
+    width: 100%;
 
-  &:focus {
-    outline: none;
+    &:focus {
+      outline: none;
+    }
   }
 }
+
+//.mat-hide-date-input {
+//  input [type="date"],
+//  input [type="datetime-local"] {
+//    // chrome compatibility - JetBrains throws warnings that can be ignored
+//    &::-webkit-datetime-edit-year-field,
+//    &::-webkit-datetime-edit-month-field,
+//    &::-webkit-datetime-edit-day-field,
+//    &::-webkit-datetime-edit-hour-field,
+//    &::-webkit-datetime-edit-minute-field,
+//    &::-webkit-datetime-edit-ampm-field,
+//    &::-webkit-datetime-edit-text {
+//      color: transparent;
+//    }
+//  }
+//}
 
 .mat-input-infix {
   position: relative;
@@ -32,14 +50,13 @@
 .mat-input-placeholder {
   left: 0;
   margin-bottom: 0;
-  opacity: 0.5;
   position: absolute;
   top: 0;
 }
 
 .mat-input-placeholder-floating {
   padding-bottom: 5px;
-  transform: translateY(-75%);
+  transform: translateY(-80%);
   transition-duration: 0.4s;
 }
 
@@ -55,4 +72,9 @@
   height: 1px;
   margin-top: 4px;
   width: 100%;
+}
+
+.mat-input-placeholder-disabled {
+  cursor: not-allowed !important;
+  opacity: 0.5;
 }

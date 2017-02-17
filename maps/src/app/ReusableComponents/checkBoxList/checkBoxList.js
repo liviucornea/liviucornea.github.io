@@ -1,4 +1,13 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var core_1 = require("@angular/core");
 var matrixService_1 = require("../../ReusableServices/matrixService");
 var forms_1 = require("@angular/forms");
@@ -11,6 +20,7 @@ var CheckBoxListComponent = (function () {
     function CheckBoxListComponent(matrixService, element) {
         this.matrixService = matrixService;
         this.element = element;
+        this.focused = new core_1.EventEmitter();
         //@Output() public CheckBoxListEmitter: EventEmitter<any> = new EventEmitter<any>();
         this.expanded = false;
         this.disabled = false;
@@ -44,6 +54,7 @@ var CheckBoxListComponent = (function () {
         // target is null when clicking off of the checkboxlist
         if (!parentFound && typeof target !== 'undefined') {
             this.isVisible = false;
+            this.focused.next(false);
         }
     };
     CheckBoxListComponent.prototype.writeValue = function (value) {
@@ -67,6 +78,11 @@ var CheckBoxListComponent = (function () {
     CheckBoxListComponent.prototype.toggleDropdown = function () {
         this.isVisible = !this.isVisible;
         if (!this.isVisible) {
+            //this.dropdownClosed.emit();
+            this.focused.emit(false);
+        }
+        else {
+            this.focused.emit(true);
         }
     };
     CheckBoxListComponent.prototype.isSelected = function (option) {
@@ -131,6 +147,10 @@ var CheckBoxListComponent = (function () {
         __metadata('design:type', Object), 
         __metadata('design:paramtypes', [Object])
     ], CheckBoxListComponent.prototype, "Disabled", null);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], CheckBoxListComponent.prototype, "focused", void 0);
     __decorate([
         core_1.HostListener('document: click', ['$event.target']), 
         __metadata('design:type', Function), 

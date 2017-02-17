@@ -1,4 +1,13 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var core_1 = require('@angular/core');
 var navigationService_1 = require("../../ReusableServices/navigationService");
 var alertService_1 = require("../../ReusableServices/alertService");
@@ -8,14 +17,16 @@ var httpAbstract_1 = require("../../ReusableServices/httpAbstract");
 var router_1 = require("@angular/router");
 var localizationService_1 = require("../../ReusableServices/localizationService");
 var common_1 = require('@angular/common');
+var interFormsService_1 = require("../../ReusableServices/interFormsService");
 var navBar = (function () {
-    function navBar(httpAbs, apiService, nav, router, localizationService, alert, loc) {
+    function navBar(httpAbs, apiService, nav, router, localizationService, alert, loc, intFormSvc) {
         var _this = this;
         this.nav = nav;
         this.router = router;
         this.localizationService = localizationService;
         this.alert = alert;
         this.loc = loc;
+        this.intFormSvc = intFormSvc;
         this.routeName = "Home";
         this.userName = "Guest";
         this.canShowAlert = false;
@@ -71,8 +82,8 @@ var navBar = (function () {
             if (res[0]) {
                 currentUser = _this.assignUserDetails(currentUser, res[0]);
             }
-            if (res[1] && res[1].length) {
-                _this.assignEnvironmentDetails(res[1]);
+            if (res[1] && res[1].ConfigurationValue) {
+                _this.assignEnvironmentDetails(res[1].ConfigurationValue);
             }
         }, function (error) {
             _this.alert.error(appSettings_1.AppNotificationsMSG.apiMsg.apiGetUserInfo + '   ' + error.status);
@@ -99,22 +110,13 @@ var navBar = (function () {
         }
     };
     navBar.prototype.toggleTheme = function () {
-        if (this.theme == "standard") {
-            this.theme = "dark";
-            document.getElementById('theme-link').setAttribute('href', 'resources/Datahub/assets/theme_dark.css');
-        }
-        else {
-            this.theme = "standard";
-            document.getElementById('theme-link').setAttribute('href', 'resources/Datahub/assets/theme_standard.css');
-        }
+        this.intFormSvc.toggleTheme();
     };
     navBar.prototype.shrinkAllFont = function () {
-        var previousFontSize = window.getComputedStyle(document.getElementById("app-html")).getPropertyValue('font-size').split("px")[0];
-        document.getElementById("app-html").style.fontSize = (parseInt(previousFontSize) - 1) + "px";
+        this.intFormSvc.adjustFontSize(-1);
     };
     navBar.prototype.expandAllFont = function () {
-        var previousFontSize = window.getComputedStyle(document.getElementById("app-html")).getPropertyValue('font-size').split("px")[0];
-        document.getElementById("app-html").style.fontSize = (parseInt(previousFontSize) + 1) + "px";
+        this.intFormSvc.adjustFontSize(1);
     };
     navBar.prototype.toggleEnvDetails = function () {
         this.envDetailsOpen = !this.envDetailsOpen;
@@ -169,7 +171,7 @@ var navBar = (function () {
             selector: 'navBar',
             template: require('./navbar.html'),
         }), 
-        __metadata('design:paramtypes', [httpAbstract_1.HttpAbstract, apiService_1.ApiService, navigationService_1.NavigationService, router_1.Router, localizationService_1.LocalizationService, alertService_1.AlertService, common_1.Location])
+        __metadata('design:paramtypes', [httpAbstract_1.HttpAbstract, apiService_1.ApiService, navigationService_1.NavigationService, router_1.Router, localizationService_1.LocalizationService, alertService_1.AlertService, common_1.Location, interFormsService_1.InterFormsService])
     ], navBar);
     return navBar;
 }());

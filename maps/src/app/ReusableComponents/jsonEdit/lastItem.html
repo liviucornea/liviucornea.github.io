@@ -2,7 +2,9 @@
     <accordionHeaderContent>
         <!--<span (click)="expanded = !expanded" class="node">{{title}}</span>-->
         <!--<img src="./app/Datahub/img/collapse_expand.png" (click)="expanded = !expanded" class="expandCollapseBtn">-->
-        <button (click)="removeMe()" class="button-standard float-xs-right"><span class="fa fa-trash fa-lg"></span></button>
+        <button (click)="removeMe()" class="btn btn-sm btn-td float-xs-right">
+            <span class="fa fa-trash"></span>
+        </button>
     </accordionHeaderContent>
     <!--
     <button (click)="moveMe('up')"  data-toggle="tooltip" title="Move node up." style="float: right;height: 20px;">
@@ -14,46 +16,72 @@
 -->
     <accordionBodyContent>
         <template ngFor let-item [ngForOf]="Items">
-            <div class="row">
-                <div class="col-md-2 text-md-left">
-                    <label><strong>{{item.label}}</strong></label>
-                </div>
-                <div class="col-md-9 text-md-left">
-                    <input *ngIf="item.objType =='textbox'" #theValue readonly="{{item.readOnly}}" type="text" class="neutral sizedInput" [ngClass]="{neutral: !item.isChanged, changed: item.isChanged}" [(ngModel)]="item.value" (keyup)="checkIt($event, item)" (ngModelChange)="itemChanged(item)">
-                    <input *ngIf="item.objType =='checkbox'" #theValue readonly="{{item.readOnly}}" type="checkbox" [(ngModel)]="item.value" (keyup)="checkIt($event, item)" (ngModelChange)="itemChanged(item)">
-                    <select *ngIf="item.objType =='dropdown'" class="sizedSelect" #theValue [ngClass]="{neutral: !item.isChanged, changed: item.isChanged}" [(ngModel)]="item.value" (ngModelChange)="itemChanged(item)">
-                        <option *ngFor="let itemOption of item.listValues" value="{{itemOption}}">{{itemOption}}</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <template [ngIf]="item.objType =='textbox'">
+                    <mat-input>
+                        <label class="form-label"><strong>{{item.label}}</strong></label>
+                        <input #theValue readonly="{{item.readOnly}}" type="text"
+                               class="neutral"
+                               [ngClass]="{neutral: !item.isChanged, changed: item.isChanged}"
+                               [(ngModel)]="item.value" (keyup)="checkIt($event, item)"
+                               (ngModelChange)="itemChanged(item)">
+                    </mat-input>
+                </template>
+                <template [ngIf]="item.objType =='checkbox'">
+                    <label class="form-label"><strong>{{item.label}}</strong></label>
+                    <input #theValue readonly="{{item.readOnly}}" type="checkbox" [(ngModel)]="item.value"
+                           class="form-control" (keyup)="checkIt($event, item)" (ngModelChange)="itemChanged(item)">
+                </template>
+                <template [ngIf]="item.objType =='dropdown'">
+                    <mat-input>
+                        <label class="form-label"><strong>{{item.label}}</strong></label>
+                        <select #theValue [ngClass]="{neutral: !item.isChanged, changed: item.isChanged}"
+                                [(ngModel)]="item.value" (ngModelChange)="itemChanged(item)">
+                            <option *ngFor="let itemOption of item.listValues" value="{{itemOption}}">{{itemOption}}
+                            </option>
+                        </select>
+                    </mat-input>
+                </template>
                 <template [ngIf]="showEdit">
                     <div class="col-md-1">
-                        <button *ngIf="showEdit" type="button" class="button-standard " (click)="removeItem(item)">
-                            <span class="fa fa-trash fa-lg"></span>
+                        <button *ngIf="showEdit" type="button" class="btn btn-sm btn-td" (click)="removeItem(item)">
+                            <span class="fa fa-trash"></span>
                         </button>
                     </div>
                 </template>
             </div>
             <div class="row">
-                <button *ngIf="showEdit && hierarchyLvl != 3" class="button-standard " (click)="adding = true"><span class="fa fa-plus fa-lg"></span>New Property</button>
-                <button class="button-standard " (click)="resetAll()" *ngIf="!formIsClean && showEdit">Reset All</button>
+                <button *ngIf="showEdit && hierarchyLvl != 3" class="btn btn-td" (click)="adding = true">
+                    <span class="fa fa-plus"></span>New Property
+                </button>
+                <button class="btn btn-td" (click)="resetAll()" *ngIf="!formIsClean && showEdit">Reset All
+                </button>
             </div>
         </template>
         <template [ngIf]="adding">
             <template [ngIf]="hasValidTemplate">
-                <input type="checkbox" [(ngModel)]="fromPredefined" value="true" (click)="usePredefinedKeys()"> Use template Values<br>
+                <input type="checkbox" [(ngModel)]="fromPredefined" value="true" (click)="usePredefinedKeys()"> Use
+                template Values<br>
             </template>
             <template [ngIf]="fromPredefined">
-                <select class="addNewSelect" [(ngModel)]="newKey" #objKey (change)="showOptionsForKeyValue(objKey.value)">
+                <select class="form-control" [(ngModel)]="newKey" #objKey
+                        (change)="showOptionsForKeyValue(objKey.value)">
                     <option *ngFor="let itemOption of preDefinedJsonKeys" value="{{itemOption}}">{{itemOption}}</option>
                 </select>
             </template>
-            <input class="addNewInput" *ngIf="!fromPredefined" #objKey placeholder="json key" [(ngModel)]="newKey" (keyup)="cleanIt(objKey)"/>
-            <input class="addNewInput" *ngIf="keyValueTypeObj == 'textbox'" #objValue placeholder="value" [(ngModel)]="newKeyValue" (keyup)="cleanIt(objValue)"/>
-            <select class="addNewSelect" *ngIf="keyValueTypeObj =='dropdown'" [(ngModel)]="newKeyValue">
+            <input class="form-control" *ngIf="!fromPredefined" #objKey placeholder="json key" [(ngModel)]="newKey"
+                   (keyup)="cleanIt(objKey)"/>
+            <input class="form-control" *ngIf="keyValueTypeObj == 'textbox'" #objValue placeholder="value"
+                   [(ngModel)]="newKeyValue" (keyup)="cleanIt(objValue)"/>
+            <select class="form-control" *ngIf="keyValueTypeObj =='dropdown'" [(ngModel)]="newKeyValue">
                 <option *ngFor="let itemOption of keyValueTypeOptions" value="{{itemOption}}">{{itemOption}}</option>
             </select>
-            <button *ngIf="showEdit" class="button-standard " (click)="saveNewProp(newKey ,newKeyValue)"><span class="fa fa-floppy-o fa-lg"></span></button>
-            <button *ngIf="showEdit" class="button-standard " (click)="adding = false"><span class="fa fa-ban fa-lg"></span></button>
+            <button *ngIf="showEdit" class="btn btn-td" (click)="saveNewProp(newKey ,newKeyValue)">
+                <span class="fa fa-floppy-o"></span>
+            </button>
+            <button *ngIf="showEdit" class="btn btn-td" (click)="adding = false">
+                <span class="fa fa-ban"></span>
+            </button>
         </template>
     </accordionBodyContent>
 </accordion>

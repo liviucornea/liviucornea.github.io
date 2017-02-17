@@ -1,0 +1,58 @@
+<div class="modal" tabindex="-1" style="display:block !important;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="cancel()"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <span><strong>Promotion # {{promoID}} : New QA Message</strong></span>
+            <div class="modal-body">
+                <div>
+                    <table>
+                        <tr>
+                            <th>Message Date/time</th>
+                            <th>Message</th>
+                            <th>Completed</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td><a href="#" (click)="makeItCurrent()"> Edit </a></td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+                <div><br></div>
+                <div  *ngIf="showCurrentItem">
+                    <table>
+                        <tr>
+                            <td>Originator:</td>
+                            <td></td>
+                        </tr>
+
+
+                        <tr>
+                            <td>Message:</td>
+                            <td><textarea placeholder="Your message here"></textarea></td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <button class="td-button td-button-secondary" name="btnSave" (click)="update()" *ngIf="showCurrentItem">
+                    <span class="glyphicon glyphicon-check"></span>
+                    Update
+                </button>
+                <button class="td-button td-button-secondary" name="btnCancel" (click)="cancel()" *ngIf="showCurrentItem">
+                    <span class="glyphicon glyphicon-ban-circle"></span>
+                    Cancel
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,10 +1,19 @@
 "use strict";
-var core_1 = require("@angular/core");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var Observable_1 = require('rxjs/Observable');
 require('rxjs/add/operator/map');
 require('rxjs/Rx');
-var appSettingsService_1 = require("./appSettingsService");
+var appSettingsService_1 = require('./appSettingsService');
 var HttpAbstract = (function () {
     function HttpAbstract(http, appSettingsService) {
         this.appSettingsService = appSettingsService;
@@ -13,23 +22,12 @@ var HttpAbstract = (function () {
         this.contentTypeDefault = 'application/x-www-form-urlencoded';
         this.contentTypeJson = 'application/json';
     }
-    //region CRUD return observable
+    // region CRUD return observable
     HttpAbstract.prototype.fetch = function (apiParams) {
         var test = this.baseUrl + apiParams;
         this.result = this.http.get(test).map(function (response) { return response.json(); });
         return this.result;
     };
-    /* fetchMultiple(apiParams:Array<string>):Observable<any> {
-         var allObservables:Array<Observable<any>> = new Array<Observable<any>>();
-         var httpProvider=this.http;
-         var root=this.baseUrl;
-         apiParams.forEach(function(x){
-             allObservables.push(httpProvider.get(root+x).map(response=>response.json()))
-         });
-         Observable.forkJoin(allObservables);
-         this.result = Observable.forkJoin(allObservables);
-         return this.result;
-     }*/
     HttpAbstract.prototype.fetchMultiple = function (apiParams, contentType) {
         var allObservables = new Array();
         var httpProvider = this.http;
@@ -59,26 +57,9 @@ var HttpAbstract = (function () {
         var headers = this.constructHeaders('', '', contentType);
         this.result = this.http.post(this.baseUrl + apiParams, body, { headers: headers }).map(function (response) { return response.json(); });
         return this.result;
-        /*let apiList= [];
-        apiList.push({url: apiParams, body: body});
-        return this.fetchMultiple(apiList,contentType);*/
     };
-    /*fetchMultipleWithFilter(apiParams:Array<any>, contentType?: string):Observable<any> {
-        var allObservables:Array<Observable<any>> = new Array<Observable<any>>();
-
-        apiParams.forEach(x =>{
-            let headers = this.constructHeaders('', '', contentType);
-            allObservables.push(this.http.post(this.baseUrl + x.url, x.body, { headers: headers }).map(response => response.json()));
-        });
-
-        Observable.forkJoin(allObservables);
-        this.result = Observable.forkJoin(allObservables);
-
-        return this.result;
-    }*/
     HttpAbstract.prototype.remove = function (apiParams) {
         this.result = this.http.delete(this.baseUrl + apiParams).map(function (response) { return response.json(); });
-        ;
         return this.result;
     };
     HttpAbstract.prototype.removeWithHeader = function (apiParams, headerKey, headerValue, contentType) {
@@ -104,7 +85,6 @@ var HttpAbstract = (function () {
     };
     HttpAbstract.prototype.update = function (apiParams, body) {
         this.result = this.http.put(this.baseUrl + apiParams, body).map(function (response) { return response.json(); });
-        ;
         return this.result;
     };
     HttpAbstract.prototype.updateBulkRecords = function (apiParams, body, headerKey, headerValue, contentType) {
@@ -119,7 +99,6 @@ var HttpAbstract = (function () {
     };
     HttpAbstract.prototype.insert = function (apiParams, body) {
         this.result = this.http.post(this.baseUrl + apiParams, body).map(function (response) { return response.json(); });
-        ;
         return this.result;
     };
     HttpAbstract.prototype.insertWithHeader = function (apiParams, body, headerKey, headerValue, contentType) {
@@ -137,8 +116,8 @@ var HttpAbstract = (function () {
         this.result = this.http.post(this.baseUrl + apiParams, body, { headers: headers }).map(function (response) { return response.json(); });
         return this.result;
     };
-    //endregion CRUD with observable
-    //region helper functions
+    // endregion CRUD with observable
+    // region helper functions
     HttpAbstract.prototype.setBaseAddress = function (url) {
         this.baseUrl = url;
     };

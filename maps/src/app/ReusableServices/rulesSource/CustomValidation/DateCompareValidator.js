@@ -1,6 +1,7 @@
 "use strict";
-var Validation_1 = require("../StandardValidation/Validation");
-var genericfunctions_1 = require("../../genericfunctions");
+var Validation_1 = require('../StandardValidation/Validation');
+var genericfunctions_1 = require('../../genericfunctions');
+var moment = require('moment');
 var DateCompareValidator = (function () {
     function DateCompareValidator() {
         /**
@@ -11,7 +12,7 @@ var DateCompareValidator = (function () {
     }
     DateCompareValidator.prototype.isAcceptable = function (s) {
         var isValid = false;
-        //if date to compare is not specified - defaults to compare against now
+        // if date to compare is not specified - defaults to compare against now
         if (isNaN(Date.parse(s))) {
             return false;
         }

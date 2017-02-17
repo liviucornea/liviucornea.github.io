@@ -9,6 +9,7 @@ import {BaseDisplayGrid} from "./displayGridUtils";
 import {InterFormsService} from "../../ReusableServices/interFormsService";
 import {RuleService} from "../../ReusableServices/ruleService";
 import {ApiService} from "../../ReusableServices/apiService";
+import {ExcelService} from "../../ReusableServices/excelService";
 
 @Component({
     template: require("./displayGrid.html"),
@@ -26,7 +27,7 @@ export class DisplayGridComponent extends BaseDisplayGrid implements OnDestroy, 
 
     constructor(private intFormSvc: InterFormsService, nav:NavigationService,alert: AlertService,   vmMatrix: matrixService
         , private appSettingsService: AppSettingsService, crudserv:crudService,private filterListener: DisplayGridFilterService, private ruleService: RuleService
-        , private apiService: ApiService) {
+        , private apiService: ApiService, private excelService: ExcelService) {
         super (nav, alert,  vmMatrix, appSettingsService, crudserv , filterListener );
         this.alert = alert;
         this.vmMatrix = vmMatrix;
@@ -99,6 +100,7 @@ export class DisplayGridComponent extends BaseDisplayGrid implements OnDestroy, 
     }
 
     setDbMatrix(databaseRecords: any, gridSettings:any) {
+        this.PrimaryKeyColumn = this.vmMatrix.getPrimaryColumnName(this.gridSettings);
         this.masterMatrixForDataTable = this.vmMatrix.extractMatrix(databaseRecords, this.gridSettings);
         //Check for any Business Validations for cells like disabled or css changes for specific rows/columns
         if(this.gridSettings["UseBusinessValidation"]){
@@ -413,8 +415,7 @@ export class DisplayGridComponent extends BaseDisplayGrid implements OnDestroy, 
     }
 
     DeleteSucceeded(){
-        var primaryColumnName = this.vmMatrix.getPrimaryColumnName(this.gridSettings);
-        var data = this.vmMatrix.buildJSONObject(this.editViewRowDataTable, primaryColumnName);
+        var data = this.vmMatrix.buildJSONObject(this.editViewRowDataTable, this.PrimaryKeyColumn);
         var IdValue = 0;
         if (this.pageName.indexOf("_child") > 0) {
 
@@ -867,8 +868,7 @@ export class DisplayGridComponent extends BaseDisplayGrid implements OnDestroy, 
         var result = true;
         if (customButton.formValidate) {
             this.matrixForDataTable.forEach((x)=>{
-                var primaryColumnName = this.vmMatrix.getPrimaryColumnName(this.gridSettings);
-                var plugInValue = this.vmMatrix.buildJSONObject(x.cells, primaryColumnName);
+                var plugInValue = this.vmMatrix.buildJSONObject(x.cells, this.PrimaryKeyColumn);
                 var tempResult = this.ruleService.validateRulesByRulesConfig(plugInValue, this.gridSettings["RulesConfig"], x.cells);
                 if(!tempResult) result = false;
             })
@@ -895,8 +895,7 @@ export class DisplayGridComponent extends BaseDisplayGrid implements OnDestroy, 
     {
         var result = true;
         if (customRowButton.formValidate) {
-            var primaryColumnName = this.vmMatrix.getPrimaryColumnName(this.gridSettings);
-            var plugInValue = this.vmMatrix.buildJSONObject(selectedRow.cells, primaryColumnName);
+            var plugInValue = this.vmMatrix.buildJSONObject(selectedRow.cells, this.PrimaryKeyColumn);
             var tempResult = this.ruleService.validateRulesByRulesConfig(plugInValue, this.gridSettings["RulesConfig"], selectedRow.cells);
             if(!tempResult) result = false;
         }
@@ -949,4 +948,8 @@ export class DisplayGridComponent extends BaseDisplayGrid implements OnDestroy, 
         }
     }
 
+    exportToExcelClicked()
+    {
+        this.excelService.exportToExcel(this.gridSettings,this.databaseRecords);
+    }
 }

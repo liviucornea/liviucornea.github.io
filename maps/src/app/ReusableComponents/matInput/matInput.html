@@ -1,0 +1,17 @@
+<div class="mat-input-wrapper">
+    <br>
+    <div class="mat-input-table">
+        <div class="mat-input-infix" #matContent>
+            <!-- input and label go here -->
+            <ng-content></ng-content>
+
+            <!--<label class="mat-input-placeholder form-label"
+                   [class.mat-editing]="editing"
+                   [class.mat-input-placeholder-floating]="floating"
+                   [class.mat-input-placeholder-disabled]="disabled">
+                <strong>{{placeholderText}}</strong>
+            </label>-->
+        </div>
+    </div>
+    <div class="mat-input-underline" [class.mat-editing]="editing"></div>
+</div>

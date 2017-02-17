@@ -1,7 +1,4 @@
 export class _Score {
-    constructor() {
-
-    }
 
     static isNumber(s: any): boolean {
         return (typeof s === 'number');
@@ -24,15 +21,15 @@ export class _Score {
     }
 
     static isArray(s: any): boolean {
-        return (Object.prototype.toString.call(s) === '[object Array]')
+        return (Object.prototype.toString.call(s) === '[object Array]');
     }
 
 
     static uniq(array: any): any {
-        var result = new Array<any>()
-        for (var i = 0, length = array.length; i < length; i++) {
-            var value = array[i];
-            var ind = result.indexOf(result);
+        let result = new Array<any>();
+        for (let i = 0, length = array.length; i < length; i++) {
+            let value = array[i];
+            let ind = result.indexOf(result);
             if (ind < 0) {
                 result.push(value);
             }
@@ -41,18 +38,18 @@ export class _Score {
     }
 
     static contains(set: Array<any>, lookupObj: any): boolean {
-        var result = set.indexOf(lookupObj);
-        return (result >= 0)
+        let result = set.indexOf(lookupObj);
+        return (result >= 0);
     }
 
     static extend(obj1: any, obj2: any) {
-        for (var ind in obj2) {
+        for (let ind in obj2) {
             obj1[ind] = obj2[ind];
         }
     }
 
     static some(obj, predicate) {
-        for (var index in obj) {
+        for (let index in obj) {
             if (predicate(obj[index])) return true;
         }
         return false;
@@ -63,22 +60,22 @@ export class _Score {
     };
 
     static lpad(str, length, padStr) {
-        return _Score.pad(str, length, padStr,'left');
+        return _Score.pad(str, length, padStr, 'left');
     };
 
     static rpad(str, length, padStr) {
-      return _Score.pad(str, length, padStr, 'right');
+        return _Score.pad(str, length, padStr, 'right');
     };
 
     static lrpad(str, length, padStr) {
-       return _Score.pad(str, length, padStr, 'both');
+        return _Score.pad(str, length, padStr, 'both');
     }
 
     static pad(str, length, padStr, type) {
         str = str == null ? '' : String(str);
         length = ~~length;
 
-        var padlen = 0;
+        let padlen = 0;
 
         if (!padStr)
             padStr = ' ';
@@ -101,15 +98,18 @@ export class _Score {
 
     static strRepeat(str, qty) {
         if (qty < 1) return '';
-        var result = '';
+        let result = '';
         while (qty > 0) {
-            if (qty & 1) result += str;
-            qty >>= 1, str += str;
+            result += str;
         }
         return result;
     }
 
     static isPresent(obj: any) {
-    return obj !== undefined && obj !== null;
-}
+        return obj !== undefined && obj !== null;
+    }
+
+    constructor() {
+
+    }
 }

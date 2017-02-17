@@ -33,9 +33,11 @@
         <label (click)="expandCollapseAll(false)"><span class="fa fa-plus"></span> Expand All</label> |
         <label (click)="expandCollapseAll(true)"><span class="fa fa-minus"></span> Collapse All</label>
     </div>
-    <template ngFor let-panel [ngForOf]="panelsConfigInfo">
-        <div class="col-md-12 col-lg-6 col-xl-4">
-            <collapse-panel [key]="panel.Key" [title]="panel.Title"></collapse-panel>
-        </div>
-    </template>
+    <div class="row">
+        <template ngFor let-panel [ngForOf]="panelsConfigInfo">
+            <div class="col-md-12 col-lg-6 col-xl-4">
+                <collapse-panel [key]="panel.Key" [title]="panel.Title"></collapse-panel>
+            </div>
+        </template>
+    </div>
 </div>

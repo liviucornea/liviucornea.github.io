@@ -1,0 +1,377 @@
+//
+// Variables
+// --------------------------------------------------
+
+// Global values
+// --------------------------------------------------
+
+$image-dir: '../../img' !default;
+
+
+/********************************************************
+ * Named colors
+ *******************************************************/
+
+// -------------------------
+// Primary colors
+// -------------------------
+
+$black: #000000 !default;
+$dark-green: #1a5336 !default;
+$safe-green: #dbe9e2 !default;
+$safer-green: #dbe9e2 !default;
+$dark-gray: #707070 !default;
+$lighter-gray: #c8c8c8 !default;
+$lightest-gray: #f1f1f1 !default;
+$white: #ffffff !default;
+
+// -------------------------
+// Secondary Colors
+// -------------------------
+
+$darker-green: #12422b !default;
+$bright-green: #00a221 !default;
+$label-green: #9dc2b1 !default;
+$label-gray: #696969 !default;
+$medium-gray: #aaaaaa !default;
+$gray: #cccccc !default;
+$light-gray: #dadada !default;
+
+// -------------------------
+// Misc. colors
+// -------------------------
+
+$burnt-orange: #b54c00 !default;
+$orange: #ffd800 !default;
+$pale-yellow: #fff9d9 !default;
+
+/********************************************************
+ * Primary colors
+ *******************************************************/
+
+$primary:#1a5336;
+$primary-dark:#0e3e26;
+$primary-medium: #9dc2b1;
+$primary-light: #f4f7f4;
+
+/********************************************************
+ * Secondary colors
+ *******************************************************/
+
+$secondary:#00A221;
+$secondary-dark:#008000;
+$secondary-medium:#00A221;
+$secondary-light:#eff9ef;
+
+/********************************************************
+ * Tertiary colors
+ *******************************************************/
+
+$tertiary:#555555;
+$tertiary-dark:#555555;
+$tertiary-medium: #bdbdbd;
+$tertiary-light: #f1f1f1;
+
+/********************************************************
+ * end Named colors
+ *******************************************************/
+
+/********************************************************
+ * Callout colors
+
+  These colors are used for generating different callouts
+ *******************************************************/
+
+$almost-white: #efefef !default;
+
+$secondary-color: #95C838;
+$secondary-bg: #f1f8ed;
+
+// primary
+$primary-border: #9dc2b1;
+$primary-border-hover: #3f7e61;
+$primary-bg-color: $primary-light;
+$primary-bg-gradient-color: #dbe9e2;
+// secondary
+$secondary-border: #95C838;
+$secondary-border-hover: #6da900;
+$secondary-bg-color: #f1f8ed;
+$secondary-bg-gradient-color: #ecf6e7;
+// tertiary
+$tertiary-border: #bdbdbd;
+$tertiary-border-hover: #606060;
+$tertiary-bg-color: #f1f1f1;
+$tertiary-bg-gradient-color: #efefef ;
+// warning
+$warning-border: #ffd800;
+$warning-border-hover: #f2bc00;
+$warning-bg-color: #fff9d9;
+$warning-bg-gradient-color: #fff9dc;
+// danger
+$danger-border: #e6aeaf;
+$danger-border-hover: #e67f81;
+$danger-bg-color: #f9eded;
+$danger-bg-gradient-color: #f9eded;
+
+/********************************************************
+ * end Callout colors
+ *******************************************************/
+
+/********************************************************
+ * Derived colors
+ *******************************************************/
+
+// -------------------------
+// Global
+// -------------------------
+$body-bg: $white !default;
+$text-color: $black !default;
+$feature-body: $bright-green !default;
+$header-light-gray: $dark-gray !default;
+
+// -------------------------
+// Buttons
+// -------------------------
+
+$btn-font-weight: normal !default;
+
+/* Primary buttons */
+$btn-primary-text-color: $white !default;
+$btn-primary-bg-color: #c0570d !default;
+$btn-primary-border-color: #ac3e01  !default;
+
+$btn-primary-hover-text-color: $white !default;
+$btn-primary-hover-border-color: #ad0101;
+$btn-primary-bg-hover-color: $burnt-orange !default;
+
+$btn-primary-gradient-0-color: #c0570d;
+$btn-primary-gradient-49-color: #B94D00;
+$btn-primary-gradient-50-color: #ac3e01;
+$btn-primary-gradient-100-color: #B04A02;
+
+$btn-primary-text-shadow: #8d3f09;
+
+/* Secondary buttons */
+$btn-secondary-bg-color: #f3f7ef !default;
+$btn-secondary-border-color: #7ea292  !default;
+$btn-secondary-text-color: #1a5336 !default;
+
+$btn-secondary-bg-hover-color: #e9f2d8  !default;
+$btn-secondary-border-hover-color: #68a92e !default;
+$btn-secondary-text-hover-color: #1a5336 !default;
+
+$btn-secondary-gradient-0-color: #F3F7EF;
+$btn-secondary-gradient-49-color: #EBF6D4;
+$btn-secondary-gradient-50-color: #D9E7C0;
+$btn-secondary-gradient-100-color: #E5F3CD;
+
+$btn-secondary-gradient-0-focus-color: #E9F2D8;
+$btn-secondary-gradient-49-focus-color: #D9EDB3;
+$btn-secondary-gradient-50-focus-color: #C7DE9E;
+$btn-secondary-gradient-100-focus-color: #D2E9AA;
+
+$btn-secondary-box-shadow: #1a5336;
+
+/* Disabled buttons */
+$btn-disabled-text-color: $label-gray !default;
+$btn-disabled-bg-color: $lightest-gray !default;
+$btn-disabled-border-color: $lighter-gray !default;
+$btn-disabled-outline-color: $label-gray !default;
+
+$btn-link-disabled-color: $gray !default;
+
+// -------------------------
+// DataGrid
+// -------------------------
+
+$datagrid-body-border-color: #b8d5c8;
+$datagrid-cell-border-color: #e8e8e8;
+$datagrid-filters-border-color: #b8d5c8;
+$datagrid-filters-bg-color: $primary-light;
+$datagrid-header-border-color: #b8d5c8;
+$datagrid-row-alt-bg-color: #f5f5f5;
+$datagrid-row-bg-color: $white;
+$datagrid-row-bg-hover-color: #f5f5f5;
+$datagrid-row-border-color: #e8e8e8;
+
+/* DataGrid Spreadsheet */
+
+$datagridspreadsheet-inlineedit-bg-color: #ffef99;
+$datagrid-expandcontent-bg-color: $safer-green;
+$datagrid-toggleitem-color: $primary;
+
+// -------------------------
+// Flex container
+// -------------------------
+
+$flex-container-header-bg-color: $secondary-dark;
+$flex-container-header-item-text-color: snow;
+
+// -------------------------
+// Form
+// -------------------------
+
+$form-bg-color: $primary-light;
+
+// -------------------------
+// Form Elements
+// -------------------------
+
+$input-bg: $white !default;
+$input-bg-disabled: $lightest-gray !default;
+
+$input-color: $black !default;
+$input-border: #bdbdbd !default;
+$input-border-radius: 5px !default;
+$input-border-focus: #008000 !default;
+
+$input-text-border-color: $black;
+
+$input-color-placeholder: $dark-gray !default;
+$legend-color: $label-gray !default;
+
+
+
+// -------------------------
+// Headings
+// -------------------------
+
+$headings-color: $dark-green !default;
+$headings-h1-color: $dark-green;
+$headings-h2-color: $black;
+$headings-h3-color: $tertiary;
+$headings-h4-color: $tertiary;
+$headings-h5-color: $tertiary;
+$headings-h6-color: $tertiary;
+
+// -------------------------
+// Links
+// -------------------------
+
+$link-color: $dark-green !default;
+$link-hover-color: $feature-body !default;
+
+// -------------------------
+// ng directives
+// -------------------------
+
+$ng-valid-border-color: #42A948;
+$ng-invalid-border-color: #A94442;
+
+// -------------------------
+// Navbar (top)
+// -------------------------
+
+$navbar-account-link-color: $white;
+$navbar-alerts-bg-color: #F5F5F5;
+$navbar-alerts-border-color: $black;
+$navbar-bg-color: $primary-dark;
+$navbar-border-color: $primary-medium;
+$navbar-link-color: $white;
+$navbar-link-hover-color: $black;
+$navbar-link-hover-bg-color: $white;
+$navbar-list-group-item-color: $secondary-color;
+$navbar-vertical-border-color: $tertiary-medium;
+
+
+// -------------------------
+// Navbar (vertical)
+// -------------------------
+
+$navbarvert-bg-color: $body-bg;
+$navbarvert-border-color: $primary-medium;
+$navbarvert-item-bg-color: $primary-light;
+$navbarvert-item-border-color: $primary-medium;
+$navbarvert-link-color: $primary-dark;
+$navbarvert-link-hover-color: $black;
+
+// -------------------------
+// Pagination
+// -------------------------
+
+$pagination-bg-color: $white !default;
+$pagination-border-color: $lighter-gray !default;
+$pagination-text-color: $black;
+
+$pagination-hover-bg-color: $dark-gray !default;
+$pagination-hover-border-color: #DDD !default;
+
+$pagination-active-bg-color: $dark-green !default;
+$pagination-active-border-color: $primary !default;
+$pagination-active-color: $white !default;
+
+$pagination-disabled-bg-color: $white !default;
+$pagination-disabled-border-color: #DDD !default;
+$pagination-disabled-color: $gray !default;
+
+// -------------------------
+// Panels (TDAM)
+// -------------------------
+
+$panel-bg-color: $primary-light;
+$panel-border-color: $primary-medium;
+$panel-text-color: $text-color;
+
+$panel-blue-border-color: blue;
+
+$panel-red-border-color: red;
+
+// -------------------------
+// Tabs
+// -------------------------
+
+$tab-border-color: #9ac1b1 !default;
+$tab-border-bottom-color: $white;
+
+$tab-text-color: $dark-green !default;
+
+$tab-hover-bg-color: $white !default;
+$tab-hover-border-color: #1C5438 !default;
+$tab-hover-border-bottom-color: $white !default;
+$tab-hover-text-color: $black !default;
+
+$tab-active-bg-color: $white;
+$tab-active-border-color: #656565 !default;
+$tab-active-border-bottom-color: $white !default;
+$tab-active-text-color: $black;
+
+// -------------------------
+// Tenant selection
+// -------------------------
+
+$h2-tenant-color: #444;
+
+$tenant-module-bg-color: $primary;
+$tenant-module-hover-bg-color: $primary-medium;
+$tenant-module-text-color: $white;
+$tenant-module-text-hover-color: $black;
+$tenant-module-text-disabled-color: $gray;
+
+// -------------------------
+// Treeview
+// -------------------------
+
+$treeview-children-bg-color: $body-bg;
+
+/********************************************************
+ * end Derived colors
+ *******************************************************/
+
+// -------------------------
+// Typography
+// -------------------------
+
+$font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-size-base: 13px !default;
+$font-size-large: 14px !default;
+$line-height-base: 1.428571429 !default;
+$line-height-computed: floor($font-size-base * $line-height-base) !default;
+
+// -------------------------
+// Components
+// -------------------------
+
+$padding-base-vertical: 6px !default;
+$padding-base-horizontal: 12px !default;
+$margin-bottom-default: 20px !default;
+$border-radius-base: 5px !default;

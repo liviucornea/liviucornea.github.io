@@ -1,19 +1,28 @@
 "use strict";
-var core_1 = require("@angular/core");
-var navItem_1 = require("../ReusableComponents/navbarVert/navItem");
-var router_1 = require("@angular/router");
-var localizationService_1 = require("./localizationService");
-var apiService_1 = require("./apiService");
-var common_1 = require("@angular/common");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = require('@angular/core');
+var navItem_1 = require('../ReusableComponents/navbarVert/navItem');
+var router_1 = require('@angular/router');
+var localizationService_1 = require('./localizationService');
+var apiService_1 = require('./apiService');
+var common_1 = require('@angular/common');
 var NavigationService = (function () {
     function NavigationService(router, localizationService, apiService, loc) {
         this.router = router;
         this.localizationService = localizationService;
         this.apiService = apiService;
         this.loc = loc;
-        this.mainPageFilteredArray = "";
+        this.mainPageFilteredArray = '';
         this.breadCrumbList = [];
-        this.pageTitle = "";
+        this.pageTitle = '';
         this.navigationCb = new core_1.EventEmitter();
         this.navigationLeftMenuEmitter = new core_1.EventEmitter();
         this.allowedPageArray = new Array();
@@ -25,7 +34,7 @@ var NavigationService = (function () {
         return this.mainPageNavigationArray;
     };
     NavigationService.prototype.getFiltertedPageNavigation = function (parentName) {
-        var myChildren = this.mainPageNavigationArray.find(function (p) { return p.Name == parentName; }).Children;
+        var myChildren = this.mainPageNavigationArray.find(function (p) { return p.Name === parentName; }).Children;
         this.mainPageFilteredArray = JSON.stringify(myChildren);
     };
     NavigationService.prototype.getNavigationStructure = function (navigationArray) {
@@ -59,7 +68,7 @@ var NavigationService = (function () {
                 if (temp.Children && temp.Children.length > 0) {
                     children = this.buildNavigationMenu(temp.Children);
                 }
-                if (temp && temp.MenuType != "NONE") {
+                if (temp && temp.MenuType !== 'NONE') {
                     if (temp.ParamValue) {
                         temp.RouteLink.push(temp.ParamValue);
                     }
@@ -86,23 +95,23 @@ var NavigationService = (function () {
         var lenArray = routeStringList.length;
         if (lenArray > 0 && this.mainPageNavigationArray) {
             var lastRoute = routeStringList[lenArray - 1];
-            var tempParamsList = lastRoute.split(";");
+            var tempParamsList = lastRoute.split(';');
             routeStringList[lenArray - 1] = tempParamsList[0];
-            var paramCount = 0;
-            var modelName = "";
+            var paramCount_1 = 0;
+            var modelName_1 = '';
             if (Object.prototype.toString.call(tempParamsList) === '[object Array]') {
                 tempParamsList.forEach(function (x) {
-                    if (paramCount > 0) {
-                        var formattedData = x.split("=");
-                        if (formattedData[0].toLowerCase() == 'modelname') {
-                            modelName = formattedData[1];
+                    if (paramCount_1 > 0) {
+                        var formattedData = x.split('=');
+                        if (formattedData[0].toLowerCase() === 'modelname') {
+                            modelName_1 = formattedData[1];
                         }
                     }
-                    paramCount++;
+                    paramCount_1++;
                 });
             }
-            if (modelName) {
-                routeStringList[lenArray - 1] = modelName;
+            if (modelName_1) {
+                routeStringList[lenArray - 1] = modelName_1;
             }
             this.buildBreadCrumbList(routeStringList, this.mainPageNavigationArray);
         }
@@ -111,8 +120,8 @@ var NavigationService = (function () {
     };
     NavigationService.prototype.buildBreadCrumbList = function (routeStringList, navItemList) {
         if (routeStringList.length > 0) {
-            var routeName = routeStringList[0];
-            var tempNavItem = navItemList.find(function (p) { return p.Name.toLowerCase() == routeName.toLowerCase(); });
+            var routeName_1 = routeStringList[0];
+            var tempNavItem = navItemList.find(function (p) { return p.Name.toLowerCase() === routeName_1.toLowerCase(); });
             if (tempNavItem) {
                 var formattedTitle = this.localizationService.getLocalizedValueDescription(tempNavItem.LookupKey);
                 this.breadCrumbList.push({ Title: formattedTitle, RouteLink: tempNavItem.RouteLink });
@@ -124,7 +133,7 @@ var NavigationService = (function () {
         }
     };
     NavigationService.prototype.setPageTitle = function () {
-        this.pageTitle = "";
+        this.pageTitle = '';
         if (this.breadCrumbList && this.breadCrumbList.length > 0) {
             var lenArray = this.breadCrumbList.length;
             this.pageTitle = this.breadCrumbList[lenArray - 1].Title;
@@ -147,12 +156,12 @@ var NavigationService = (function () {
         }
         if (path) {
             if (path.length) {
-                var link = '';
+                var link_1 = '';
                 path.forEach(function (x) {
-                    link = link + '/' + x;
+                    link_1 = link_1 + '/' + x;
                 });
                 var arr = [];
-                arr.push(link);
+                arr.push(link_1);
                 if (arr)
                     this.router.navigate(arr);
             }
@@ -166,36 +175,36 @@ var NavigationService = (function () {
         var tempCustomChildMenuList = [];
         if (routeStringList.length > 0) {
             var lastRoute = routeStringList[lenArray - 1];
-            var tempParamsList = lastRoute.split(";");
+            var tempParamsList = lastRoute.split(';');
             routeStringList[lenArray - 1] = tempParamsList[0];
-            var count = 0;
+            var count_1 = 0;
             routeStringList.forEach(function (x) {
                 routeArray.push(x);
-                if (count > 0) {
+                if (count_1 > 0) {
                     childMenuArrayList.push(x);
                     tempCustomChildMenuList.push(x);
                 }
-                count++;
+                count_1++;
             });
-            //Adding parameters to route navigation
-            var paramCount = 0;
-            var modelName = "";
+            // Adding parameters to route navigation
+            var paramCount_2 = 0;
+            var modelName_2 = '';
             if (Object.prototype.toString.call(tempParamsList) === '[object Array]') {
                 tempParamsList.forEach(function (x) {
-                    if (paramCount > 0) {
-                        var formattedData = x.split("=");
-                        if (formattedData[0].toLowerCase() == 'modelname') {
-                            modelName = formattedData[1];
+                    if (paramCount_2 > 0) {
+                        var formattedData = x.split('=');
+                        if (formattedData[0].toLowerCase() === 'modelname') {
+                            modelName_2 = formattedData[1];
                         }
                     }
-                    paramCount++;
+                    paramCount_2++;
                 });
             }
-            if (modelName && tempCustomChildMenuList.length > 0) {
-                tempCustomChildMenuList[tempCustomChildMenuList.length - 1] = modelName;
+            if (modelName_2 && tempCustomChildMenuList.length > 0) {
+                tempCustomChildMenuList[tempCustomChildMenuList.length - 1] = modelName_2;
             }
             this.getChildMenu(tempCustomChildMenuList);
-            this.getLeftMenuRoutes(childMenuArrayList, (modelName) ? modelName : routeStringList[lenArray - 1]);
+            this.getLeftMenuRoutes(childMenuArrayList, (modelName_2) ? modelName_2 : routeStringList[lenArray - 1]);
         }
         this.setCurrentPage(urlPath);
     };
@@ -203,7 +212,7 @@ var NavigationService = (function () {
         if (navItems === void 0) { navItems = []; }
         if (inputData === void 0) { inputData = []; }
         if (inputData.length > 0) {
-            var x = navItems.find(function (p) { return p.Name == inputData[0]; });
+            var x = navItems.find(function (p) { return p.Name === inputData[0]; });
             if (x && x.Children) {
                 x.Active = true;
                 this.leftMenuItems = x;
@@ -216,13 +225,13 @@ var NavigationService = (function () {
     };
     NavigationService.prototype.getLeftMenuRoutes = function (inputData, childName) {
         if (inputData === void 0) { inputData = []; }
-        if (childName === void 0) { childName = ""; }
+        if (childName === void 0) { childName = ''; }
         var tempLeftMenuItems = [];
         if (this.leftMenuItems && this.leftMenuItems.Children && this.leftMenuItems.Children.length > 0) {
             this.getTempLeftMenuArray(this.leftMenuItems.Children, inputData);
             tempLeftMenuItems = this.leftMenuItems.Children;
             if (childName) {
-                var tempItem = tempLeftMenuItems.find(function (p) { return p.Name.toLowerCase() == childName.toLowerCase(); });
+                var tempItem = tempLeftMenuItems.find(function (p) { return p.Name.toLowerCase() === childName.toLowerCase(); });
                 if (tempItem) {
                     tempItem.Active = true;
                 }
@@ -235,7 +244,7 @@ var NavigationService = (function () {
         if (navItems === void 0) { navItems = []; }
         if (inputData === void 0) { inputData = []; }
         if (inputData.length > 0) {
-            var x = navItems.find(function (p) { return p.Name == inputData[0]; });
+            var x = navItems.find(function (p) { return p.Name === inputData[0]; });
             if (x && x.Children) {
                 var y = inputData.slice(1, 2);
                 if (y.length > 0) {
@@ -247,12 +256,11 @@ var NavigationService = (function () {
     NavigationService.prototype.getChildMenusForTileView = function (leftchildmenuName) {
         var tempLeftMenuItems = [];
         if (this.leftMenuItems && this.leftMenuItems.Children && this.leftMenuItems.Children.length > 0) {
-            var tempLeftMenuItemChildren = this.leftMenuItems.Children.find(function (p) { return p.Name.toLowerCase() == leftchildmenuName.toLowerCase(); });
+            var tempLeftMenuItemChildren = this.leftMenuItems.Children.find(function (p) { return p.Name.toLowerCase() === leftchildmenuName.toLowerCase(); });
             if (tempLeftMenuItemChildren && tempLeftMenuItemChildren.Children) {
                 tempLeftMenuItems = tempLeftMenuItemChildren.Children;
             }
         }
-        //this.navigationLeftMenuEmitter.emit(tempLeftMenuItems);
         return tempLeftMenuItems;
     };
     NavigationService = __decorate([

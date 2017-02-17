@@ -1,0 +1,178 @@
+<!--Edit Header + lookup boxes-->
+<article Id="mainConfigPage" *ngIf="!(viewDetail||editDetail||addDetail)">
+    <section id="dataGridFilters" *ngIf="showFilters">
+        <div id="dataGridFilterControls">
+            <div class="row " *ngFor="#filterRow of filterForDataTable">
+                <div *ngIf="filterRow.filterable">
+                    <div class="col-3" id="filter-field-labels">
+                            {{filterRow.val}}
+                    </div>
+                    <div class="col-1" *ngIf="filterRow.htmlControlType == 'date'">
+                        From
+                        <br/>
+                        To
+                    </div>
+                    <div *ngIf="filterRow.htmlControlType == 'text'" class="col-6">
+                        <select [attr.Id]="'f' + filterRow.sequence" [(ngModel)]="filterRow.filterValue[0]" (change)="filterSelect($event)">
+                            <option *ngFor="#opt of filterRow.options" [value]="opt.value">{{opt.label}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="filterRow.htmlControlType == 'date'">
+                        <div class="col-5">
+                            <div class="row">
+                                <!--From-->
+                                <input type="date" [attr.id]="'ff' + filterRow.sequence" [(ngModel)]="filterRow.filterValue[0]" (change)="filterDate($event)" />
+                            </div>
+                            <div class="row">
+                                <!--To-->
+                                <input type="date" [attr.id]="'ft' + filterRow.sequence" [(ngModel)]="filterRow.filterValue[1]" (change)="filterDate($event)" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+    </section>
+    <br/>
+    <section id="dataGridBody" *ngIf="showGridBody">
+        <section Id="dataGridDynamicHeader" *ngIf="hasDynamicHeader">
+            <div class="row" *ngFor="#level of dynamicHeaders" >
+                <div >
+                    <div *ngFor="#header of level" >
+                        <div class="{{header.columnCss}}" >
+                            {{header.displayName}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section Id="dataGridHeader" >
+                <div class="row"  >
+                    <div *ngFor="#headerRow of headerForDataTable" >
+                        <div *ngIf="headerRow.visibility" class="{{headerRow.columnCss}}" (click)="sortRequested(headerRow.name, headerRow.sortCss)">
+                            {{headerRow.val}}<span class="{{headerRow.sortCss}}"></span>
+                        </div>
+                    </div>
+                </div>
+        </section>
+        <section Id="dataGridLookups" *ngIf="!showNoData">
+            <div class="row" >
+                <div *ngFor="#headerRow of headerForDataTable">
+                    <div *ngIf="headerRow.visibility" class="{{headerRow.columnCss}} flex-container"><input [attr.Id]="headerRow.sequence" type="text" [(ngModel)]="headerRow.filter" (keyup)=filterValueEntered($event) (click)="filterBoxClicked(headerRow.sequence)" >
+                    </div>
+                </div>
+                <button class="tdam-button tdam-button-secondary" (click)="AddClicked()" *ngIf="!hideAddBtn && !(viewDetail||editDetail||addDetail)">
+                    <span class="glyphicon glyphicon-plus-sign"></span>
+                    Add
+                </button>
+            </div>
+        </section>
+        <div *ngIf="!showNoData">
+            <section Id="dataGrid-spreadSheet" >
+            <div *ngFor="#row of matrixForDataTable" class="row" >
+                <div *ngIf="isSpreadsheetGrid">
+                    <div *ngFor="#col of row.cells">
+                        <div *ngIf="col.allowGridLevelEdit">
+                            <div *ngIf="!(col.htmlControlType ==='select' || col.htmlControlType === 'checkbox')">
+                                <div *ngIf="col.visibility" class="{{col.columnCss}} flex-container">
+                                    <ec-trigger *ngIf="col.togglable" [collapsed]="row.collapsed" [owner]="row" class="toggledItem"></ec-trigger>
+                                    <input class="toggledItem" #name="ngForm" [attr.Id]="col.sequence" type={{col.htmlControlType}} [(ngModel)]="col.val"  (click)="inputClicked(row,col)">
+                                </div>
+                            </div>
+                            <div *ngIf="col.htmlControlType ==='checkbox'">
+                                <div *ngIf="col.visibility" class="{{col.columnCss}} flex-container">
+                                    <ec-trigger *ngIf="col.togglable" [collapsed]="row.collapsed" [owner]="row" class="toggleItem"></ec-trigger>
+                                    <input class="toggledItem" #name="ngForm" [attr.Id]="col.sequence" type='checkbox' [(ngModel)]="col.val"  (click)="inputClicked(row,col)">
+                                </div>
+                            </div>
+                            <div *ngIf="col.htmlControlType === 'select'" class="{{col.columnCss}} flex-container">
+                                <ec-trigger *ngIf="col.togglable" [collapsed]="row.collapsed" [owner]="row"></ec-trigger>
+                                <select #name="ngForm" [(ngModel)]="col.val" [attr.Id]="col.sequence" class="tdam-select">
+                                    <option *ngFor="#itemOption of col.dataSource" value="{{itemOption}}">{{itemOption}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div *ngIf="!col.allowGridLevelEdit">
+                            <div *ngIf="col.visibility" class="{{col.columnCss}} flex-container">
+                                <ec-trigger *ngIf="col.togglable" [collapsed]="row.collapsed" [owner]="row" class="toggleItem"></ec-trigger>
+                                <div *ngIf="col.visibility" class="toggledItem">{{col.val}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!isSpreadsheetGrid">
+                    <div *ngFor="#col of row.cells" >
+                        <div *ngIf="col.visibility" class="{{col.columnCss}} flex-container">
+                        <ec-trigger *ngIf="col.togglable" [collapsed]="row.collapsed" [owner]="row" class="toggleItem" ></ec-trigger>
+                        <div class="toggledItem" >{{col.val}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="buttons">
+                    <button *ngIf="showChildDetail" (click)="showChildViewClicked(row)" class="tdam-button tdam-button-secondary">
+                        <span class="glyphicon glyphicon-cog">
+                        </span>
+                        Show
+                    </button>
+                    <button *ngIf="childType === 'view'" (click)="editViewClicked(row)" class="tdam-button tdam-button-secondary">
+                        <span class="glyphicon glyphicon-ok-sign">
+                        </span>
+                        View
+                    </button>
+                    <button *ngIf="childType.startsWith('edit')" (click)="editViewClicked(row)" class="tdam-button tdam-button-secondary">
+                        <span class="glyphicon glyphicon-edit"></span>
+                        <span class="display-grid-button-text">Edit</span>
+                    </button>
+                    <button *ngIf="!hideDeleteBtn"  (click)="DeleteClicked(row)" class="tdam-button tdam-button-secondary">
+                        <span class="glyphicon glyphicon-erase">
+                        </span>
+                        Delete
+                    </button>
+                 </div>
+                <article *ngIf="childType==='editInline'"  >
+                    <div *ngIf="row.inlineEditEnabled">
+                        <br/>
+                        <inlineEditForm [handler]="recordSaveHandler" [columns]="editViewRowDataTable" [selectedRow]="row" [httpProxy]="httpProxy" [gridSettings]="gridSettings" [pageName]="pageName" ></inlineEditForm>
+                    </div>
+                </article>
+                <div class="expand-content" *ngIf="!row.collapsed">
+                    <table class="table" width="100%">
+                        <th id="expand-content-header">Expand/Collapse Content</th>
+                        <tr>
+                            <td ><miniGrid [selectedRow]="row"></miniGrid></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+        </div>
+    </section>
+    <div *ngIf="showNoData">
+        No data to display.
+    </div>
+    <div *ngIf="IsChildPage">
+        <br />
+        <button (click)="ReturnToParent()" class="tdam-button tdam-button-secondary">
+            <span class="glyphicon glyphicon-arrow-left">
+            </span>
+            Back
+        </button>
+    </div>
+    <div *ngIf="!showNoData">
+        <div *ngIf="IsPagination" class="col-9">
+            <pagination  [totalItems]="totalItems"
+                        [itemsPerPage]="itemsPerPage"
+                        [(ngModel)]="currentPage"
+                        [boundaryLinks]="true"
+                        [maxSize]="5"
+                        [rotate]="false"
+                        (pageChanged)="pageChanged($event)"></pagination>
+        </div>
+    </div>
+</article>
+
+<article id="pluginSection" >
+   <div #formBuilder></div>
+</article>
+
+

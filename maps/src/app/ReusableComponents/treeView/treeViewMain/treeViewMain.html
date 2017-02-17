@@ -9,7 +9,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="card-block">
+            <div class="card-block p-0">
                 <div class="col-md-12">
                     <section Id="editForm">
                         <form genericMainTreeForm="ngForm">
@@ -21,23 +21,26 @@
                                      </div>
                                  </div>-->
                                 <!--</section>-->
-                                <br/>
                                 <section id="children">
                                     <template ngFor let-ln [ngForOf]="children">
-                                        <div class="row">
-                                            <template [ngIf]="ln.visible">
-                                                <div class="card-block">
-                                                    <button *ngIf="canAdd" title="{{'Add' | LocalizationTranslate}}" (click)="addClicked(ln)" class="button-standard ">
-                                                        <span class="fa fa-plus fa-lg"></span> {{"Add" | LocalizationTranslate}}
-                                                        {{ln.modelName | LocalizationTranslate}}
-                                                    </button>
+                                        <template [ngIf]="ln.visible">
+                                            <div *ngIf="canAdd" class="card-block pb-0">
+                                                <button title="{{'Add' | LocalizationTranslate}}" (click)="addClicked(ln)" class="btn btn-td">
+                                                    <span class="fa fa-plus"></span> {{"Add" | LocalizationTranslate}}
+                                                    {{ln.modelName | LocalizationTranslate}}
+                                                </button>
+                                            </div>
+                                            <div class="card-block">
+                                                <div class="row">
+                                                    <template [ngIf]="ln.addDetail">
+                                                        <treeViewAddEditForm [originalInput]="originalInput" [NodeClass]="singleEditClass" [pluginInput]="addEditObject" [gridSettings]="addEditObjectConfig" [childRulesConfig]="ln.childRulesConfig"></treeViewAddEditForm>
+                                                    </template>
+                                                    <div class="col-md-12">
+                                                        <treeViewChildrenParser [children]="ln" [gridSettings]="addEditObjectConfig"></treeViewChildrenParser>
+                                                    </div>
                                                 </div>
-                                                <template [ngIf]="ln.addDetail">
-                                                    <treeViewAddEditForm [originalInput]="originalInput" [NodeClass]="singleEditClass" [pluginInput]="addEditObject" [gridSettings]="addEditObjectConfig" [childRulesConfig]="ln.childRulesConfig"></treeViewAddEditForm>
-                                                </template>
-                                                <treeViewChildrenParser [children]="ln" [gridSettings]="addEditObjectConfig"></treeViewChildrenParser>
-                                            </template>
-                                        </div>
+                                            </div>
+                                        </template>
                                     </template>
                                 </section>
                                 <!--<section id="mainPage"  class="flex-container" *ngIf="isMainPageVisible">

@@ -19,7 +19,7 @@ import {calendarutils} from "../../../../Datahub/routes/home/calendarutils";
 @Component({
     selector: 'mwl-calendar-month-view',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    template: require("./calendarMonthView.html")
+    template: require("./calendarMonthView.html"),
 })
 
 export class CalendarMonthViewComponent implements OnChanges, OnInit, OnDestroy {
@@ -80,6 +80,8 @@ export class CalendarMonthViewComponent implements OnChanges, OnInit, OnDestroy 
     openRowIndex: number;
     openDay: any;
     refreshSubscription: Subscription;
+    @Input() longEvents: any;
+    @Input() longEventsShowing: boolean;
 
     constructor(private cdr: ChangeDetectorRef, @Inject(LOCALE_ID) locale: string) {
         this.locale = locale;
@@ -107,7 +109,6 @@ export class CalendarMonthViewComponent implements OnChanges, OnInit, OnDestroy 
         if (changes.activeDayIsOpen || changes.viewDate || changes.events) {
             this.checkActiveDayIsOpen();
         }
-
     }
 
     ngOnDestroy(): void {
@@ -132,6 +133,8 @@ export class CalendarMonthViewComponent implements OnChanges, OnInit, OnDestroy 
         if (this.dayModifier) {
             this.view.days.forEach(day => this.dayModifier(day));
         }
+        console.log("this.view: ");
+        console.log(this.view);
     }
 
     private checkActiveDayIsOpen(): void {
@@ -161,4 +164,18 @@ export class CalendarMonthViewComponent implements OnChanges, OnInit, OnDestroy 
         });
     }
 
+    private getCalCellHeight(day: any) {
+        let cellHeight = 70;
+        if (this.longEventsShowing) {
+            let numLongEvents = calendarutils.getLongEvents(day.events).length;
+
+            if (numLongEvents > 4) {
+                cellHeight = 155;
+            }
+            else if (numLongEvents > 0) {
+                cellHeight = cellHeight + (numLongEvents * 16);
+            }
+        }
+        return cellHeight + 'px';
+    }
 }

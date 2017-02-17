@@ -1,0 +1,27 @@
+<style>
+    .file-import {
+        position: relative;
+        overflow: hidden;
+        margin-left: 5px;
+    }
+    .file-import input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+    .file-import-title {
+        margin-left:2px;
+    }
+</style>
+
+<button class="btn btn-default btn-xs pull-right file-import">
+    <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+    <span class="file-import-title">Import</span>
+    <input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" (change)="onFileChange($event)">
+</button>

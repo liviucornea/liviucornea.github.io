@@ -6,7 +6,7 @@
 @import "accordion";
 @import "buttons";
 @import "formElements";
-@import "fontAwesome/_font-awesome";
+@import "itemList";
 @import "scaffolding";
 @import "tabs";
 @import "utilities";
@@ -29,6 +29,7 @@
 @import "../../ReusableComponents/upload/_uploader";
 
 @import "theme_standard";
+@import "theme_dark";
 
 .changed {
   background-color: $pale-yellow;

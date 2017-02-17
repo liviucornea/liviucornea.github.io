@@ -1,0 +1,11 @@
+<div class="cal-cell-top">
+    <span *ngFor="let badge of badges" class="cal-badge {{getEventColor(badge.status)}}"
+          (click)="dayEventClicked(badge)">{{badge.badgeTotal }}</span>
+    <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+</div>
+<div class="cal-events">
+</div>
+<div class="text-xs-right" *ngIf="getLongEvents(day.events).length > 4 && longEventsShowing"
+     (click)="longEventsArrowClicked(day)" title="Click for more events.">
+    <span class="additional-events-arrow fa fa-caret-down fa-lg"></span>
+</div>
