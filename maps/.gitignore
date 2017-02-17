@@ -1,3 +1,4 @@
+<<<<<<< .mine
 **/node_modules
 **/*.sln
 **/*.csproj
@@ -24,3 +25,31 @@ npm-debug.log
 !config/html-elements-plugin/*js
 !e2e/*js
 !postcss.config.js
+=======
+**/node_modules
+**/*.sln
+**/*.csproj
+**/*.suo
+**/*.*.user
+**/bin
+**/obj
+!Scripts/*.js
+!systemjs.config.js
+!gulpfile.js
+!gulp.config.js
+npm-debug.log
+**/.idea
+**/build
+**/dist
+!resources/Bootstrap/bootstrap.css
+**/resources
+**/*.js
+**/*.js.map
+**/.idea
+!Scripts/*.js
+!config/*.js
+!webpack.config.js
+!config/html-elements-plugin/*js
+!postcss.config.js
+
+>>>>>>> .theirs
