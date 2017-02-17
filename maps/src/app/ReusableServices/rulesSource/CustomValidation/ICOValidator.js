@@ -1,6 +1,6 @@
 var ICOValidator = (function () {
     function ICOValidator() {
-        this.tagName = "ico";
+        this.tagName = 'ico';
     }
     /**
      * It checks validity of identification number of CZE company (called ico)
@@ -14,24 +14,22 @@ var ICOValidator = (function () {
             return false;
         if (!/^\d+$/.test(input))
             return false;
-        var Sci = [];
-        var Souc;
-        var Del = input.length;
-        var kon = parseInt(input.substring(Del, Del - 1), 10); // CLng(Right(strInput, 1));
-        //var Numer = parseInt(input.substring(0,Del - 1),10);
-        Del = Del - 1;
-        Souc = 0;
-        for (var a = 0; a < Del; a++) {
-            Sci[a] = parseInt(input.substr((Del - a) - 1, 1), 10);
-            Sci[a] = Sci[a] * (a + 2);
-            Souc = Souc + Sci[a];
+        var sci = [];
+        var souc;
+        var del = input.length;
+        var kon = parseInt(input.substring(del, del - 1), 10);
+        del = del - 1;
+        souc = 0;
+        for (var a = 0; a < del; a++) {
+            sci[a] = parseInt(input.substr((del - a) - 1, 1), 10);
+            sci[a] = sci[a] * (a + 2);
+            souc = souc + sci[a];
         }
-        if (Souc > 0) {
-            //var resul = 11 - (Souc % 11);
-            var resul = Souc % 11;
-            var mezi = Souc - resul;
+        if (souc > 0) {
+            var resul = souc % 11;
+            var mezi = souc - resul;
             resul = mezi + 11;
-            resul = resul - Souc;
+            resul = resul - souc;
             if ((resul === 10 && kon === 0) || (resul === 11 && kon === 1) || (resul === kon))
                 return true;
         }

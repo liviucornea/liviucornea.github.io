@@ -1,0 +1,24 @@
+//----- Formbuilder
+
+#editForm {
+
+  #buttons {
+    background-color: $form-bg-color;
+  };
+
+  // Treeview
+  #children {
+
+    .row {
+      background-color: $treeview-children-bg-color;
+    }
+  }
+
+  // each row in the form
+  .flex-container {
+
+    label {
+      font-weight: bold;
+    }
+  }
+}

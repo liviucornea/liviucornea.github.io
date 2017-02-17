@@ -94,42 +94,6 @@ $baseline-px: 13px;
   transform: rotate($deg);
 }
 
-@mixin button-gradient-coloring($base-color, $text-color) {
-
-  $gradient-49: darken(saturate(adjust-hue($base-color, -10.5), 32), 5.5);
-  $gradient-50: darken(saturate(adjust-hue($base-color, -8.5), 11.5), 12);
-  $gradient-100: darken(saturate(adjust-hue($base-color, -8), 28), 7.5);
-
-  $gradient-0-focus: darken(saturate(adjust-hue($base-color, -9), 17), 5.5) !default;
-  $gradient-49-focus: darken(saturate(adjust-hue($base-color, 0), 12), 8);
-  $gradient-50-focus: darken(desaturate(adjust-hue($base-color, 1), 1), 15);
-  $gradient-100-focus: darken(saturate(adjust-hue($base-color, 1), 9), 11);
-
-  border-color: darken(desaturate(adjust-hue($base-color, 63.5), 17), 40) !important;
-  color: $text-color;
-  background: $base-color;
-  background: -moz-linear-gradient(top, $base-color 0%, $gradient-49 49.9%, $gradient-50 50%, $gradient-100 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $base-color), color-stop(49.9%, $gradient-49), color-stop(50%, $gradient-50), color-stop(100%, $gradient-100));
-  background: -webkit-linear-gradient(top, $base-color 0%, $gradient-49 49.9%, $gradient-50 50%, $gradient-100 100%);
-  background: -o-linear-gradient(top, $base-color 0%, $gradient-49 49.9%, $gradient-50 50%, $gradient-100 100%);
-  background: -ms-linear-gradient(top, $base-color 0%, $gradient-49 49.9%, $gradient-50 50%, $gradient-100 100%);
-  background: linear-gradient(top, $base-color 0%, $gradient-49 49.9%, $gradient-50 50%, $gradient-100 100%);
-
-  &:active,
-  &:hover,
-  &:focus {
-    color: $text-color;
-    border-color: darken(saturate(adjust-hue($gradient-0-focus, 11), 7), 48);
-    background: $gradient-0-focus;
-    background: -moz-linear-gradient(top, $gradient-0-focus 0%, $gradient-49-focus 49.9%, $gradient-50-focus 50%, $gradient-100-focus 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $gradient-0-focus), color-stop(49.9%, $gradient-49-focus), color-stop(50%, $gradient-50), color-stop(100%, $gradient-100-focus));
-    background: -webkit-linear-gradient(top, $gradient-0-focus 0%, $gradient-49-focus 49.9%, $gradient-50-focus 50%, $gradient-100-focus 100%);
-    background: -o-linear-gradient(top, $gradient-0-focus 0%, $gradient-49-focus 49.9%, $gradient-50-focus 50%, $gradient-100-focus 100%);
-    background: -ms-linear-gradient(top, $gradient-0-focus 0%, $gradient-49-focus 49.9%, $gradient-50-focus 50%, $gradient-100-focus 100%);
-    background: linear-gradient(top, $gradient-0-focus 0%, $gradient-49-focus 49.9%, $gradient-50-focus 50%, $gradient-100-focus 100%);
-  }
-}
-
 // takes a desired font size and returns the new font-size in em
 // 14 as default font size in pixels
 @mixin em($desired-font-size) {

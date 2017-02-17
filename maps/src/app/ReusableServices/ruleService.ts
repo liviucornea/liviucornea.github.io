@@ -1,13 +1,13 @@
-import {Injectable} from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
     RequiredValidator, MinLengthValidator, MaxLengthValidator, EmailValidator, RangeValidator
     , ZipCodeValidator, NumberValidator, LettersOnlyValidator, PhoneOnlyValidator, AlphaNumericValidator, DateValidator,
     PatternValidator
-} from "./rulesSource/StandardValidation/BasicValidators";
-import {AbstractValidator} from "./rulesSource/StandardValidation/Validation";
-import {DateCompareValidator} from "./rulesSource/CustomValidation/DateCompareValidator";
+} from './rulesSource/StandardValidation/BasicValidators';
+import { AbstractValidator } from './rulesSource/StandardValidation/Validation';
+import { DateCompareValidator } from './rulesSource/CustomValidation/DateCompareValidator';
 import * as _ from 'lodash';
-import {GenericValidator} from "./rulesSource/CustomValidation/GenericValidator";
+import { GenericValidator } from './rulesSource/CustomValidation/GenericValidator';
 
 
 @Injectable()
@@ -63,23 +63,23 @@ export class RuleService {
     }
 
     validateRulesByRulesConfig(jsonData, rulesConfig, editViewRowDataTable) {
-        var result = true;
+        let result = true;
         this.errorsResultSet = [];
-        editViewRowDataTable.forEach(p => p["errors"] = []);
+        editViewRowDataTable.forEach(p => p['errors'] = []);
         if (rulesConfig && rulesConfig.length) {
-            var modelName = rulesConfig[0].apiObject ? rulesConfig[0].apiObject : "";
-            var tempJsonData = {};
+            let modelName = rulesConfig[0].apiObject ? rulesConfig[0].apiObject : '';
+            let tempJsonData = {};
             tempJsonData[modelName] = jsonData;
 
             if (!this.checkIfRulesSatisfied(tempJsonData, rulesConfig)) {
                 if (this.errorsResultSet && this.errorsResultSet.length > 0) {
                     this.errorsResultSet.forEach(x => {
-                        var tempRowTable = editViewRowDataTable.find(p => p.name == x.name);
-                        if (!tempRowTable["errors"]) {
-                            tempRowTable["errors"] = [];
+                        let tempRowTable = editViewRowDataTable.find(p => p.name === x.name);
+                        if (!tempRowTable['errors']) {
+                            tempRowTable['errors'] = [];
                         }
                         if (tempRowTable && x.message.length > 0) {
-                            tempRowTable["errors"].push(x.name + "_" + x.message);
+                            tempRowTable['errors'].push(x.name + '_' + x.message);
                             result = false;
                         }
                     });
@@ -92,80 +92,79 @@ export class RuleService {
 
     AddSpecificRules(ruleName: string, columns: Array<any>, ruleValue, data) {
         switch (ruleName.toLowerCase()) {
-            case "requiredtarget":
+            case 'requiredtarget':
                 columns.forEach(x => {
                     if (_.isArray(ruleValue.targets)) {
                         ruleValue.targets.forEach(y => {
-                            for (var prop in data) {
+                            for (let prop in data) {
                                 if (data[prop].hasOwnProperty(y) && y === ruleValue.ruleFunction(data[prop][x])) {
                                     let newValidator = new AbstractValidator();
                                     newValidator.RuleFor(y.toString(), new RequiredValidator());
-                                    this.allValidators.push({name: y, validator: newValidator});
+                                    this.allValidators.push({ name: y, validator: newValidator });
                                 }
                                 ;
                             }
 
-                        })
-
+                        });
                     }
                 });
                 break;
 
-            case "required":
+            case 'required':
                 columns.forEach(x => {
-                    var newValidator = new AbstractValidator();
+                    let newValidator = new AbstractValidator();
                     this.requiredValidator = new RequiredValidator();
                     newValidator.RuleFor(x, this.requiredValidator);
-                    this.allValidators.push({name: x, validator: newValidator});
+                    this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "minlength":
-            case "childminlength":
+            case 'minlength':
+            case 'childminlength':
                 columns.forEach(x => {
-                    var newValidator = new AbstractValidator();
+                    let newValidator = new AbstractValidator();
                     this.minlengthValidator = new MinLengthValidator(ruleValue);
                     newValidator.RuleFor(x, this.minlengthValidator);
-                    this.allValidators.push({name: x, validator: newValidator});
+                    this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "maxlength":
+            case 'maxlength':
                 columns.forEach(x => {
-                    var newValidator = new AbstractValidator();
+                    let newValidator = new AbstractValidator();
                     this.maxlengthValidator = new MaxLengthValidator(ruleValue);
                     newValidator.RuleFor(x, this.maxlengthValidator);
-                    this.allValidators.push({name: x, validator: newValidator});
+                    this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "email":
+            case 'email':
                 columns.forEach(x => {
-                    var newValidator = new AbstractValidator();
+                    let newValidator = new AbstractValidator();
                     this.emailValidator = new EmailValidator();
                     newValidator.RuleFor(x, this.emailValidator);
-                    this.allValidators.push({name: x, validator: newValidator});
+                    this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "date":
+            case 'date':
                 columns.forEach(x => {
-                    var newValidator = new AbstractValidator();
+                    let newValidator = new AbstractValidator();
                     this.dateValidator = new DateValidator();
                     newValidator.RuleFor(x, this.dateValidator);
-                    this.allValidators.push({name: x, validator: newValidator});
+                    this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "datecompare":
+            case 'datecompare':
                 columns.forEach(x => {
-                    var newValidator = new AbstractValidator();
+                    let newValidator = new AbstractValidator();
                     this.dateCompareValidator = new DateCompareValidator();
 
-                    var compareTo = ruleValue.CompareTo;
+                    let compareTo = ruleValue.CompareTo;
 
                     if (isNaN(Date.parse(compareTo))) {
 
-                        var modelName = x.apiObject ? x.apiObject : "";
+                        let modelName = x.apiObject ? x.apiObject : '';
                         this.getTargetObjects(data, modelName);
-                        var dataObj = this.targetObjects;
+                        let dataObj = this.targetObjects;
 
-                        var tempData = dataObj.find(x => x[ruleValue.CompareTo]);
+                        let tempData = dataObj.find(x => x[ruleValue.CompareTo]);
                         compareTo = new Date(tempData[ruleValue.CompareTo]);
                     }
 
@@ -174,75 +173,77 @@ export class RuleService {
                     this.dateCompareValidator.IgnoreTime = ruleValue.IgnoreTime ? ruleValue.IgnoreTime : true;
 
                     newValidator.RuleFor(x, this.dateCompareValidator);
-                    this.allValidators.push({name: x, validator: newValidator});
+                    this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "range":
+            case 'range':
                 columns.forEach(x => {
-                    var newValidator = new AbstractValidator();
-                    var validatorData = [parseInt(ruleValue[0]), parseInt(ruleValue[1])];
+                    let newValidator = new AbstractValidator();
+                    let validatorData = [parseInt(ruleValue[0], 10), parseInt(ruleValue[1], 10)];
                     this.rangeValidator = new RangeValidator(validatorData);
                     newValidator.RuleFor(x, this.rangeValidator);
-                    this.allValidators.push({name: x, validator: newValidator});
+                    this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "zipcode":
+            case 'zipcode':
                 columns.forEach(x => {
-                    var newValidator = new AbstractValidator();
+                    let newValidator = new AbstractValidator();
                     this.zipCodeValidator = new ZipCodeValidator();
                     newValidator.RuleFor(x, this.zipCodeValidator);
-                    this.allValidators.push({name: x, validator: newValidator});
+                    this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "number":
+            case 'number':
                 columns.forEach(x => {
-                    var newValidator = new AbstractValidator();
+                    let newValidator = new AbstractValidator();
                     this.numberValidator = new NumberValidator();
                     newValidator.RuleFor(x, this.numberValidator);
-                    this.allValidators.push({name: x, validator: newValidator});
+                    this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "letter":
+            case 'letter':
                 columns.forEach(x => {
-                    var newValidator = new AbstractValidator();
+                    let newValidator = new AbstractValidator();
                     this.lettersOnlyValidator = new LettersOnlyValidator();
                     newValidator.RuleFor(x, this.lettersOnlyValidator);
-                    this.allValidators.push({name: x, validator: newValidator});
+                    this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "phone":
+            case 'phone':
                 columns.forEach(x => {
-                    var newValidator = new AbstractValidator();
+                    let newValidator = new AbstractValidator();
                     this.phoneValidator = new PhoneOnlyValidator();
                     newValidator.RuleFor(x, this.phoneValidator);
-                    this.allValidators.push({name: x, validator: newValidator});
+                    this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "alphanumeric":
+            case 'alphanumeric':
                 columns.forEach(x => {
-                    var newValidator = new AbstractValidator();
+                    let newValidator = new AbstractValidator();
                     this.alphanumericValidator = new AlphaNumericValidator();
                     newValidator.RuleFor(x, this.alphanumericValidator);
-                    this.allValidators.push({name: x, validator: newValidator});
+                    this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "inputmask":
+            case 'inputmask':
                 columns.forEach(x => {
                     let newValidator = new AbstractValidator();
                     newValidator.RuleFor(x, new PatternValidator(ruleValue));
-                    this.allValidators.push({name: x, validator: newValidator});
+                    this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "genericvalidation":
+            case 'genericvalidation':
                 columns.forEach(x => {
-                    var newValidator = new AbstractValidator();
+                    let newValidator = new AbstractValidator();
                     let genValidator = new GenericValidator();
                     // base on your function (execution of it), generic Validator will return true or false (valid or invalid)
                     genValidator.genericFunctionResult = ruleValue.ruleFunction(data);
                     newValidator.RuleFor(x, genValidator);
-                    this.allValidators.push({name: x, validator: newValidator});
+                    this.allValidators.push({ name: x, validator: newValidator });
 
                 });
+                break;
+            default:
                 break;
 
         }
@@ -251,49 +252,49 @@ export class RuleService {
     validateRules(inputData: any, modelName, ruleType: any, ruleApplyMode: any): any {
         this.targetObjects = new Array<any>();
         this.resultSet = [];
-        var errors = [];
+        let errors = [];
         this.getTargetObjects(inputData, modelName);
-        var dataObj = this.targetObjects;
+        let dataObj = this.targetObjects;
 
         dataObj.forEach(data => {
 
             this.allValidators.forEach(x => {
-                var rule = x.validator.CreateRule(x.name);
-                var result = rule.Validate(data);
-                this.resultSet.push({name: x.name, result: result.HasErrors, message: result.ErrorMessage});
+                let rule = x.validator.CreateRule(x.name);
+                let result = rule.Validate(data);
+                this.resultSet.push({ name: x.name, result: result.HasErrors, message: result.ErrorMessage });
                 if (result.HasErrors)
-                    errors.push(x.name + ": " + result.ErrorMessage);
+                    errors.push(x.name + ': ' + result.ErrorMessage);
             });
         });
 
-        var collectiveResult: boolean;
+        let collectiveResult: boolean;
 
         switch (ruleType) {
-            case "OneOf":
+            case 'OneOf':
                 collectiveResult = this.resultSet.find(x => x.result === false) ? false : true;
                 if (!collectiveResult) errors = [];
                 break;
-            case "AllOf":
+            case 'AllOf':
                 collectiveResult = this.resultSet.find(x => x.result === true) ? true : false;
                 break;
             default:
                 collectiveResult = this.resultSet.find(x => x.result === true) ? true : false;
         }
-        return {hasErrors: collectiveResult, errorMessage: errors, resultSet: this.resultSet};
+        return { hasErrors: collectiveResult, errorMessage: errors, resultSet: this.resultSet };
 
     }
 
     checkIfRulesSatisfied(jsonObject, rulesConfig) {
-        var finalResult = true;
+        let finalResult = true;
         this.ruleErrors = [];
         if (rulesConfig) {
             rulesConfig.forEach(x => {
-                var ruleType = x.ruleType;
-                var applicationMode = x.applyTo;
-                var modelName = x.apiObject ? x.apiObject : "";
+                let ruleType = x.ruleType;
+                let applicationMode = x.applyTo;
+                let modelName = x.apiObject ? x.apiObject : '';
                 this.clearExistingValidations();
                 this.associateRule(x, jsonObject);
-                var result = this.validateRules(jsonObject, modelName, ruleType, applicationMode);
+                let result = this.validateRules(jsonObject, modelName, ruleType, applicationMode);
                 if (result.hasErrors || result.errorMessage.length) {
                     if (result.errorMessage) {
                         result.errorMessage.forEach(x => {
@@ -312,12 +313,12 @@ export class RuleService {
     }
 
     getTargetObjects(data: any, modelName: any) {
-        for (var colInd in data) {
-            var obj = data[colInd];
+        for (let colInd in data) {
+            let obj = data[colInd];
             if (colInd === modelName) {
                 if (Object.prototype.toString.call(obj) === '[object Array]') {
                     obj.forEach(x => {
-                        this.targetObjects.push(x)
+                        this.targetObjects.push(x);
                     });
                 }
                 if (Object.prototype.toString.call(obj) === '[object Object]') {
@@ -328,7 +329,7 @@ export class RuleService {
                 obj.forEach(x => this.getTargetObjects(x, modelName));
             }
             if (Object.prototype.toString.call(obj) === '[object Object]') {
-                this.getTargetObjects(obj, modelName)
+                this.getTargetObjects(obj, modelName);
             }
         }
     }

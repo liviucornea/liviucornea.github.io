@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {HttpAbstract} from "./httpAbstract";
-import {AppSettingsService} from "./appSettingsService";
+import { Injectable } from '@angular/core';
+import { HttpAbstract } from './httpAbstract';
+import { AppSettingsService } from './appSettingsService';
 
 @Injectable()
 export class ImportExportService {

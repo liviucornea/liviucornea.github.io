@@ -3,61 +3,88 @@
         <form #genericForm="ngForm" (ngSubmit)="saveClicked()">
             <template ngFor let-ln [ngForOf]="editViewRowDataTable">
                 <div class="form-group">
-                    <template [ngIf]="(ln.isVisible != undefined ? ln.isVisible : true) && (ln.htmlControlType != 'text' || ln.htmlControlType.indexOf('date') == 0)">
-                        <!-- because of material design inputs, don't show this label if the field is a text, date -->
-                        <label [attr.for]="ln.sequence" class="mb-0"><strong>{{ln.label | LocalizationTranslate}}:</strong></label>
-                    </template>
-                    <template [ngIf]="(ln.htmlControlType =='text' || ln.htmlControlType == 'textarea' || ln.htmlControlType.indexOf('date') >= 0 && ((ln.isVisible != undefined ? ln.isVisible : true) || ln.isAlwaysVisibleOn.indexOf('FormBuilder') > -1 ))">
-                        <div class="mat-input-wrapper">
-                            <div class="mat-input-table">
-                                <div class="mat-input-infix">
-                                    <input name={{ln.label}} #name="ngModel" class="mat-input-element" [attr.Id]="ln.sequence" type={{ln.htmlControlType}} [(ngModel)]="ln.val" checked={{ln.val}}
-                                           (click)="inputClicked(ln);" (focus)="ln.editing = true" (focusout)="ln.editing = false" (blur)="onBlur(ln)" [disabled]="!ln.isVisible || ln.readOnly" [required]="ln.required"
-                                           [pattern]="ln.pattern" [title]="ln.title" [minlength]="ln.minlength" [maxlength]="ln.maxlength">
-                                    <label [attr.for]="ln.sequence" class="mat-input-placeholder"
-                                           [class.mat-editing]="ln.editing == true" [class.mat-input-placeholder-floating]="ln.val != '' || ln.editing == true">
-                                        <strong>{{ln.label | LocalizationTranslate}}</strong>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="mat-input-underline" [ngClass]="ln.editing == true ? 'mat-editing' : ''"></div>
-                            <br>
-                        </div>
+                    <template [ngIf]="(ln.htmlControlType =='text' || ln.htmlControlType == 'textarea' || ln.htmlControlType.indexOf('date') >= 0) && ((ln.isVisible != undefined ? ln.isVisible : true) || ln.isAlwaysVisibleOn.indexOf('FormBuilder') > -1 )">
+                        <mat-input>
+                            <label [attr.for]="ln.sequence"
+                                   class="mb-0 form-label">
+                                <strong>{{ln.label | LocalizationTranslate}}:</strong>
+                            </label>
+                            <input name={{ln.label}} #name="ngModel"
+                                   [attr.Id]="ln.sequence" type={{ln.htmlControlType}} [(ngModel)]="ln.val"
+                                   checked={{ln.val}}
+                                   (click)="inputClicked(ln);" (blur)="onBlur(ln)"
+                                   [disabled]="!ln.isVisible || ln.readOnly" [required]="ln.required"
+                                   [pattern]="ln.pattern" [title]="ln.title" [minlength]="ln.minlength"
+                                   [maxlength]="ln.maxlength">
+                        </mat-input>
+                        <!--</mat-input>-->
                         <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
                             {{ln.label}} - {{"ValidInputRequired" | LocalizationTranslate}}
                         </div>
                         <template [ngIf]="ln.isToggleable">
-                            <formBuilderInline [PageType]='edit' [pluginInput]="ln.isComplexTypeInlineTemplate" [gridSettings]="ln.isComplexTypeInlineTemplateConfig"></formBuilderInline>
+                            <formBuilderInline [PageType]='edit' [pluginInput]="ln.isComplexTypeInlineTemplate"
+                                               [gridSettings]="ln.isComplexTypeInlineTemplateConfig"></formBuilderInline>
                         </template>
                     </template>
                     <template [ngIf]="ln.htmlControlType === 'checkbox'">
-                        <input name={{ln.label}} class="form-control" #name="ngModel" [attr.Id]="ln.sequence" type="checkbox" [(ngModel)]="ln.val" [disabled]="!ln.isVisible || ln.readOnly"
+                        <label *ngIf="ln.isVisible != undefined ? ln.isVisible : true" [attr.for]="ln.sequence"
+                               class="mb-0 form-label">
+                            <strong>{{ln.label | LocalizationTranslate}}:</strong>
+                        </label>
+                        <input name={{ln.label}} class="form-control" #name="ngModel" [attr.Id]="ln.sequence"
+                               type="checkbox" [(ngModel)]="ln.val" [disabled]="!ln.isVisible || ln.readOnly"
                                (click)="inputClicked(ln)">
                         <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
                             {{ln.label}} - {{"ValidInputRequired" | LocalizationTranslate}}
                         </div>
                     </template>
                     <template [ngIf]="ln.htmlControlType === 'select'">
-                        <select name={{ln.label}} class="form-control" #name="ngModel" [(ngModel)]="ln.val" [attr.Id]="ln.sequence" [required]="ln.isRequired && !isRulesValidation"
-                                [disabled]="!ln.isVisible || ln.readOnly || ln.name == getForeignKeyColumnName()">
-                            <option *ngFor="let itemOption of ln.dataSource" value="{{itemOption.Value}}" selected="ln.val == itemOption.Value">{{itemOption.Description}}</option>
-                        </select>
+                        <mat-input>
+                            <label *ngIf="ln.isVisible != undefined ? ln.isVisible : true" [attr.for]="ln.sequence"
+                                   class="mb-0 form-label">
+                                <strong>{{ln.label | LocalizationTranslate}}:</strong>
+                            </label>
+                            <select name={{ln.label}} #name="ngModel"
+                                    [(ngModel)]="ln.val" [attr.Id]="ln.sequence"
+                                    [required]="ln.isRequired && !isRulesValidation"
+                                    [disabled]="!ln.isVisible || ln.readOnly || ln.name == getForeignKeyColumnName()">
+                                <option *ngFor="let itemOption of ln.dataSource" value="{{itemOption.Value}}"
+                                        selected="ln.val == itemOption.Value">{{itemOption.Description}}
+                                </option>
+                            </select>
+                        </mat-input>
                         <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
                             {{ln.label}} - {{"ValidInputRequired" | LocalizationTranslate}}
                         </div>
                     </template>
                     <template [ngIf]="ln.htmlControlType === 'customselect' && (ln.isVisible != undefined ? ln.isVisible : true)">
-                        <customDropDown [DataSource]="ln.customdataSource" [selectedValue]="ln.val" [Disabled]="ln.readOnly != undefined ? ln.readOnly : false" (DropDownEmitter)="getDropDownResult($event,ln)"></customDropDown>
+                        <mat-input>
+                            <label [attr.for]="ln.sequence" class="mb-0 form-label">
+                                <strong>{{ln.label | LocalizationTranslate}}:</strong>
+                            </label>
+                            <customDropDown [DataSource]="ln.customdataSource" [selectedValue]="ln.val"
+                                            [Disabled]="ln.readOnly != undefined ? ln.readOnly : false"
+                                            (DropDownEmitter)="getDropDownResult($event,ln)"></customDropDown>
+                        </mat-input>
                     </template>
                     <template [ngIf]="ln.htmlControlType === 'checkboxlist' && (ln.isVisible != undefined ? ln.isVisible : true)">
-                        <checkBoxList [DataSource]="ln.dataSource" [(ngModel)]="ln.val" name="{{ln.label}}" #name="ngModel"
-                                      [Disabled]="ln.readOnly != undefined ? ln.readOnly : false"></checkBoxList>
+                        <mat-input>
+                            <label [attr.for]="ln.sequence" class="mb-0 form-label">
+                                <strong>{{ln.label | LocalizationTranslate}}:</strong>
+                            </label>
+                            <checkBoxList [DataSource]="ln.dataSource" [(ngModel)]="ln.val" name="{{ln.label}}"
+                                          #name="ngModel"
+                                          [Disabled]="ln.readOnly != undefined ? ln.readOnly : false"></checkBoxList>
+                        </mat-input>
                         <!--
                          <checkBoxList [DataSource]="ln.dataSource" [(ngModel)]="ln.val" name="{{ln.label}}" ngDefaultControl (ngModelChange)="onChange($event)"
                                       [Disabled]="ln.readOnly != undefined ? ln.readOnly : false"></checkBoxList>
                         -->
                     </template>
                     <template [ngIf]="ln.htmlControlType === 'radio'">
+                        <label *ngIf="ln.isVisible != undefined ? ln.isVisible : true" [attr.for]="ln.sequence" class="mb-0 form-label">
+                            <strong>{{ln.label | LocalizationTranslate}}:</strong>
+                        </label>
                         <template ngFor let-itemOption [ngForOf]="ln.dataSource">
                             <br/><input type="radio" [checked]="(itemOption.Value === ln.val)"
                                         [value]="itemOption.Value" name="modeSelector" [(ngModel)]="ln.val"
@@ -69,30 +96,59 @@
                         </div>-->
                     </template>
                     <template [ngIf]="ln.htmlControlType === 'upload'">
-                        <customUploader [UploadOptions]="uploadOptions" [Disabled]="ln.readOnly != undefined ? ln.readOnly : false"></customUploader>
+                        <label *ngIf="ln.isVisible != undefined ? ln.isVisible : true" [attr.for]="ln.sequence" class="mb-0 form-label">
+                            <strong>{{ln.label | LocalizationTranslate}}:</strong>
+                        </label>
+                        <customUploader [UploadOptions]="uploadOptions"
+                                        [Disabled]="ln.readOnly != undefined ? ln.readOnly : false"></customUploader>
                     </template>
                     <template *ngIf="ln.isVisible" ngFor let-er [ngForOf]="ln.errors">
                         <div class="alert alert-danger">
                             {{er | LocalizationTranslate}}
                         </div>
                     </template>
+                    <template [ngIf]="ln.htmlControlType === 'searchlist'">
+                        <label *ngIf="ln.isVisible != undefined ? ln.isVisible : true" [attr.for]="ln.sequence" class="mb-0 form-label">
+                            <strong>{{ln.label | LocalizationTranslate}}:</strong>
+                        </label>
+                        <div class="form-group">
+                            <input type="text" name={{ln.label}} class="form-control" [(ngModel)]="filter"
+                                   placeholder="..enter the value to filter by." (change)="0">
+                        </div>
+                        <div class="form-group">
+                            <div class="item-list">
+                                <template ngFor let-itemOption [ngForOf]="ln.dataSource | searchFilter:[filter, ln.dataSourceAddress.searchFilterFields, editViewRowDataTable]">
+                                    <div class="item-list-entry" (click)="searchListClicked(ln.name, itemOption)">
+                                        <span *ngFor="let field of ln.dataSourceAddress.displayList.Fields;let i = index" [attr.data-index]="i">
+                                            <span *ngIf="i > 0"> - </span>
+                                            {{itemOption[field]}}
+                                        </span>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
                 </div>
             </template>
-            <div id="buttons">
+            <div id="buttons" class="form-group">
                 <template [ngIf]="PageType!='dynamicform'">
-                    <button type="submit" [disabled]="!genericForm.form.valid" title="{{'Save' | LocalizationTranslate}}" class="button-standard " *ngIf="PageType != 'view'">
-                        <span class="fa fa-floppy-o fa-lg"></span>
+                    <button type="submit" [disabled]="!genericForm.form.valid"
+                            title="{{'Save' | LocalizationTranslate}}" class="btn btn-td"
+                            *ngIf="PageType != 'view'">
+                        <span class="fa fa-floppy-o"></span>
                         {{"Save" | LocalizationTranslate}}
                     </button>
-                    <button type="button" title="{{'Cancel' | LocalizationTranslate}}" (click)="cancelClicked()" class="button-standard " *ngIf="!IsHideCancel">
-                        <span class="fa fa-ban fa-lg"></span>
+                    <button type="button" title="{{'Cancel' | LocalizationTranslate}}" (click)="cancelClicked()"
+                            class="btn btn-td" *ngIf="!IsHideCancel">
+                        <span class="fa fa-ban"></span>
                         {{"Cancel" | LocalizationTranslate}}
                     </button>
                 </template>
                 <template ngFor let-childButton [ngForOf]="customButtonsList">
-                    <button *ngIf="childButton.visible != undefined ? childButton.visible : true" type="button" title="{{childButton.name | LocalizationTranslate}}"
+                    <button *ngIf="childButton.visible != undefined ? childButton.visible : true" type="button"
+                            title="{{childButton.name | LocalizationTranslate}}"
                             [disabled]="childButton.disabled != undefined ? childButton.disabled : false"
-                            class="button-standard " (click)="customButtonClicked(childButton)">
+                            class="btn btn-td" (click)="customButtonClicked(childButton)">
                         {{childButton.name | LocalizationTranslate}}
                     </button>
                 </template>

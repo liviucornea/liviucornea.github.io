@@ -61,13 +61,14 @@ var Step = (function () {
 }());
 exports.Step = Step;
 var ConfigValueType = (function () {
-    function ConfigValueType(id, unitId, description, template, isMandatory) {
+    function ConfigValueType(id, unitId, description, template, isMandatory, defaultValue) {
         if (isMandatory === void 0) { isMandatory = false; }
         this.id = id;
         this.unitId = unitId;
         this.description = description;
         this.template = template;
         this.isMandatory = isMandatory;
+        this.defaultValue = defaultValue;
     }
     return ConfigValueType;
 }());

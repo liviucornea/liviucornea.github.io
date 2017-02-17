@@ -1,4 +1,3 @@
-
 import {fns} from "./fns";
 import {CalendarService, calendarMode} from "../../../ReusableServices/calendarService";
 
@@ -28,7 +27,7 @@ export interface CalendarEvent {
     actions?: EventAction[];
     allDay?: boolean;
     cssClass?: string;
-    status?:string;
+    status?: string;
 }
 export interface WeekViewEvent {
     event: CalendarEvent;
@@ -80,15 +79,14 @@ export declare const getMonthView: Function;
 export declare const getDayView: Function;
 export declare const getDayViewHourGrid: Function;
 
-export class calendarutils
-{
+export class calendarutils {
     static WEEKEND_DAY_NUMBERS = [0, 6];
     static DAYS_IN_WEEK = 7;
     static HOURS_IN_DAY = 24;
     static MINUTES_IN_HOUR = 60;
-    static eventType:string="Äll";
+    static eventType: string = "Äll";
 
-    static getWeekViewEventSpan (event, offset, startOfWeek) {
+    static getWeekViewEventSpan(event, offset, startOfWeek) {
         var span = 1;
         if (event.end) {
             var begin = event.start < startOfWeek ? startOfWeek : event.start;
@@ -104,15 +102,15 @@ export class calendarutils
         return span;
     }
 
-     static getWeekViewEventOffset(event, startOfWeek) {
+    static getWeekViewEventOffset(event, startOfWeek) {
         var offset = 0;
         if (fns.startOfDay(event.start) > startOfWeek) {
             offset = fns.differenceInDays(fns.startOfDay(event.start), startOfWeek);
         }
         return offset;
-     }
+    }
 
-     public static isEventIsPeriod (_a) {
+    public static isEventInPeriod(_a) {
         var event = _a.event, periodStart = _a.periodStart, periodEnd = _a.periodEnd;
         var eventStart = event.start;
         var eventEnd = event.end || event.start;
@@ -134,11 +132,11 @@ export class calendarutils
         return false;
     }
 
-    static getEventsInPeriod (_a) {
+    static getEventsInPeriod(_a) {
         var events = _a.events, periodStart = _a.periodStart, periodEnd = _a.periodEnd;
         if (events) {
             return events.filter(function (event) {
-                return calendarutils.isEventIsPeriod({event: event, periodStart: periodStart, periodEnd: periodEnd});
+                return calendarutils.isEventInPeriod({event: event, periodStart: periodStart, periodEnd: periodEnd});
             });
         }
         else {
@@ -146,7 +144,7 @@ export class calendarutils
         }
     }
 
-    static getWeekDay (_a) {
+    static getWeekDay(_a) {
         var date = _a.date;
         var today = fns.startOfDay(new Date());
         return {
@@ -158,22 +156,26 @@ export class calendarutils
         };
     }
 
-    public static getWeekViewHeader (_a) {
+    public static getWeekViewHeader(_a) {
         var viewDate = _a.viewDate, weekStartsOn = _a.weekStartsOn;
-        var start = fns.startOfWeek(viewDate, { weekStartsOn: weekStartsOn });
+        var start = fns.startOfWeek(viewDate, {weekStartsOn: weekStartsOn});
         var days = [];
         for (var i = 0; i < calendarutils.DAYS_IN_WEEK; i++) {
             var date = fns.addDays(start, i);
-            days.push(calendarutils.getWeekDay({ date: date }));
+            days.push(calendarutils.getWeekDay({date: date}));
         }
         return days;
     }
 
     public static getWeekView(_a) {
         var events = _a.events, viewDate = _a.viewDate, weekStartsOn = _a.weekStartsOn;
-        var startOfViewWeek = fns.startOfWeek(viewDate, { weekStartsOn: weekStartsOn });
-        var endOfViewWeek = fns.endOfWeek(viewDate, { weekStartsOn: weekStartsOn });
-        var eventsMapped = calendarutils.getEventsInPeriod({ events: events, periodStart: startOfViewWeek, periodEnd: endOfViewWeek }).map(function (event) {
+        var startOfViewWeek = fns.startOfWeek(viewDate, {weekStartsOn: weekStartsOn});
+        var endOfViewWeek = fns.endOfWeek(viewDate, {weekStartsOn: weekStartsOn});
+        var eventsMapped = calendarutils.getEventsInPeriod({
+            events: events,
+            periodStart: startOfViewWeek,
+            periodEnd: endOfViewWeek
+        }).map(function (event) {
             var offset = calendarutils.getWeekViewEventOffset(event, startOfViewWeek);
             var span = calendarutils.getWeekViewEventSpan(event, offset, startOfViewWeek);
             return {
@@ -217,27 +219,27 @@ export class calendarutils
     }
 
 
-    public static getMonthView (_a) {
+    public static getMonthView(_a) {
 
         var type = calendarutils.eventType;
         if (CalendarService.calEvents[type]) {
             var events = CalendarService.calEvents[type], viewDate = _a.viewDate, weekStartsOn = _a.weekStartsOn;
-        }else{
+        } else {
             var events = _a.events, viewDate = _a.viewDate, weekStartsOn = _a.weekStartsOn;
         }
 
 
-        var originalDate= viewDate;
-        var start:any;
-        var end:any
-        switch (CalendarService.selectedSalendarMode){
+        var originalDate = viewDate;
+        var start: any;
+        var end: any
+        switch (CalendarService.selectedSalendarMode) {
             case calendarMode.fourWeeks:
-                start = fns.startOfWeek(fns.removeWeeks(originalDate,2), { weekStartsOn: weekStartsOn });
-                end = fns.endOfWeek(fns.addWeeks(originalDate,2), { weekStartsOn: weekStartsOn });
+                start = fns.startOfWeek(fns.removeWeeks(originalDate, 2), {weekStartsOn: weekStartsOn});
+                end = fns.endOfWeek(fns.addWeeks(originalDate, 2), {weekStartsOn: weekStartsOn});
                 break;
             case calendarMode.standard:
-                start = fns.startOfWeek(fns.startOfMonth(viewDate), { weekStartsOn: weekStartsOn });
-                end = fns.endOfWeek(fns.endOfMonth(viewDate), { weekStartsOn: weekStartsOn });
+                start = fns.startOfWeek(fns.startOfMonth(viewDate), {weekStartsOn: weekStartsOn});
+                end = fns.endOfWeek(fns.endOfMonth(viewDate), {weekStartsOn: weekStartsOn});
                 break;
         }
 
@@ -251,7 +253,7 @@ export class calendarutils
 
         for (var i = 0; i < fns.differenceInDays(end, start) + 1; i++) {
             var date = fns.addDays(start, i);
-            var day:any = calendarutils.getWeekDay({ date: date });
+            var day: any = calendarutils.getWeekDay({date: date});
             var events_1 = calendarutils.getEventsInPeriod({
                 events: eventsInMonth,
                 periodStart: fns.startOfDay(date),
@@ -267,20 +269,26 @@ export class calendarutils
         for (var i = 0; i < rows; i++) {
             rowOffsets.push(i * 7);
         }
+
+        let longEvents = calendarutils.getLongEvents(eventsInMonth);
+
         return {
             rowOffsets: rowOffsets,
-            days: days
+            days: days,
+            longEvents: longEvents
         };
     }
 
 
-    public static getDayView (_a) {
+    public static getDayView(_a) {
         var events = _a.events, viewDate = _a.viewDate, hourSegments = _a.hourSegments, dayStart = _a.dayStart, dayEnd = _a.dayEnd, eventWidth = _a.eventWidth, segmentHeight = _a.segmentHeight;
         var startOfView = fns.setMinutes(fns.setHours(fns.startOfDay(viewDate), dayStart.hour), dayStart.minute);
         var endOfView = fns.setMinutes(fns.setHours(fns.startOfMinute(fns.endOfDay(viewDate)), dayEnd.hour), dayEnd.minute);
         var previousDayEvents = [];
         var dayViewEvents = calendarutils.getEventsInPeriod({
-            events: events.filter(function (event) { return !event.allDay; }),
+            events: events.filter(function (event) {
+                return !event.allDay;
+            }),
             periodStart: startOfView,
             periodEnd: endOfView
         }).sort(function (eventA, eventB) {
@@ -330,10 +338,16 @@ export class calendarutils
                 previousDayEvents.push(dayEvent);
             }
             return dayEvent;
-        }).filter(function (dayEvent) { return dayEvent.height > 0; });
-        var width = Math.max.apply(Math, dayViewEvents.map(function (event) { return event.left + event.width; }));
+        }).filter(function (dayEvent) {
+            return dayEvent.height > 0;
+        });
+        var width = Math.max.apply(Math, dayViewEvents.map(function (event) {
+            return event.left + event.width;
+        }));
         var allDayEvents = calendarutils.getEventsInPeriod({
-            events: events.filter(function (event) { return event.allDay; }),
+            events: events.filter(function (event) {
+                return event.allDay;
+            }),
             periodStart: startOfView,
             periodEnd: endOfView
         });
@@ -363,9 +377,45 @@ export class calendarutils
                 }
             }
             if (segments.length > 0) {
-                hours.push({ segments: segments });
+                hours.push({segments: segments});
             }
         }
         return hours;
+    }
+
+    public static islongEvent(event: any) {
+        let endDay = event.end.getDate();
+        let dayAfterEventStart = event.start.getDate() + 1;
+
+        // check if the event lasts more than one day
+        if (endDay > dayAfterEventStart) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public static getLongEvents(events: any) {
+        var longEvents = [];
+        for (let event of events) {
+            if (event.islongEvent) {
+                longEvents.push(event);
+            }
+        }
+        return longEvents;
+    }
+
+    public static getEventColor(status: string) {
+        switch (status.toLowerCase()) {
+            case 'fatal' :
+                return 'cal-color-fatal';
+            case 'future' :
+                return 'cal-color-future';
+            case 'ok' :
+                return 'cal-color-ok';
+            default:
+                return 'cal-color-standard';
+        }
     }
 }

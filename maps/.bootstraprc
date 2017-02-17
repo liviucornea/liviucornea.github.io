@@ -12,8 +12,8 @@ useFlexbox: true
 styleLoaders:
   - style
   - css
-  - sass
   - postcss
+  - sass
 
 
 # Extract styles to stand-alone css file

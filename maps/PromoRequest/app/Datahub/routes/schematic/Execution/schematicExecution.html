@@ -1,0 +1,39 @@
+<article>
+    <form>
+        <section id="processes" class="flex-container">
+            <!--<div class="flex-container">-->
+                <div class="col-14">
+                  <article>
+                      <!--<div style="border-radius: 15px; background: lightgray; text-align:left; height: 65px; width: 700px; display: inline-block; position: relative; z-index: 3">-->
+                      <div class="tdam-panel">
+                          <label style="border: 55px">Search for schematic:</label>
+                          <typeahead-input [search]="autocompleteInput.searchSchematics" (onSelected)="onSchematicSelected($event)"></typeahead-input>
+                      </div>
+                  </article>
+                </div>
+            <!--</div>-->
+            <!--
+                     <div class="flex-container">
+                         <div class="row">
+                             <div class="col-24">
+                                 <label><strong>Select Schematic:</strong></label>
+                             </div>
+                         </div>
+                         <div class="row">
+                             <div class="col-18">
+                                 <select (change)="SchematicSelected($event.target.value)" class="selectionArea" >
+                                     <option value="0" disabled>Please select...</option>
+                                     <option *ngFor="#schematic of allSchematicsVM" (value)="schematic.schematicId">{{schematic.schematicId}} -- {{schematic.description}}</option>
+                                 </select>
+                             </div>
+                         </div>
+                     </div>
+                         -->
+        </section>
+    <article>
+        <div class="row">
+            <schematicPreview></schematicPreview>
+        </div>
+    </article>
+    </form>
+</article>

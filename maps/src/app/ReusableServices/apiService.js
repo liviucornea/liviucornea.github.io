@@ -1,7 +1,16 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var core_1 = require('@angular/core');
-var httpAbstract_1 = require("./httpAbstract");
-var appSettingsService_1 = require("./appSettingsService");
+var httpAbstract_1 = require('./httpAbstract');
+var appSettingsService_1 = require('./appSettingsService');
 var AuthUser = (function () {
     function AuthUser() {
         this.Id = 0;
@@ -27,14 +36,14 @@ var ApiService = (function () {
         this.httpAbs.setBaseAddress(this.base);
     };
     ApiService.prototype.getArrayFromQuery = function (dataKey, reportOptions) {
-        if (reportOptions === void 0) { reportOptions = "{}"; }
+        if (reportOptions === void 0) { reportOptions = '{}'; }
         return this.httpAbs.fetchWithFilter(this.sqlStatementsUrl + '/' + dataKey, reportOptions, this.contentType);
     };
     ApiService.prototype.getMultipleArrayFromQuery = function (dataKeys) {
         var _this = this;
         dataKeys.forEach(function (x) {
             x.url = _this.sqlStatementsUrl + '/' + x.url;
-            x.body = x.body ? x.body : "{}";
+            x.body = x.body ? x.body : '{}';
         });
         return this.httpAbs.fetchMultiple(dataKeys, this.contentType);
     };
@@ -42,12 +51,12 @@ var ApiService = (function () {
         var _this = this;
         dataKeys.forEach(function (x) {
             x.url = _this.sqlStatementsUrl + '/executenonquery/' + x.url;
-            x.body = x.body ? x.body : "{}";
+            x.body = x.body ? x.body : '{}';
         });
         return this.httpAbs.fetchMultiple(dataKeys, this.contentType);
     };
     ApiService.prototype.executeNonQuery = function (dataKey, reportOptions) {
-        if (reportOptions === void 0) { reportOptions = "{}"; }
+        if (reportOptions === void 0) { reportOptions = '{}'; }
         return this.httpAbs.fetchWithFilter(this.sqlStatementsUrl + '/executenonquery/' + dataKey, reportOptions, this.contentType);
     };
     ApiService.prototype.getAuthCurrentUser = function () {
@@ -75,26 +84,36 @@ var ApiService = (function () {
         return this.httpAbs.insertBulkRecords(apiParams, jsonData, headerKey, headers, this.contentType);
     };
     ApiService.prototype.ExecuteUpdate = function (obj, pagename, primaryKeyColumn) {
-        if (primaryKeyColumn === void 0) { primaryKeyColumn = ""; }
+        if (primaryKeyColumn === void 0) { primaryKeyColumn = ''; }
         switch (pagename.toLowerCase()) {
+            default:
+                break;
         }
     };
     ApiService.prototype.ExecutePageFilter = function (pagename, filterObject) {
         switch (pagename.toLowerCase()) {
+            default:
+                break;
         }
     };
     ApiService.prototype.ExecutePageRefresh = function (pagename, id) {
         if (id === void 0) { id = null; }
         switch (pagename.toLowerCase()) {
+            default:
+                break;
         }
     };
     ApiService.prototype.ExecuteDelete = function (obj, pagename, primaryKeyColumn) {
-        if (primaryKeyColumn === void 0) { primaryKeyColumn = ""; }
+        if (primaryKeyColumn === void 0) { primaryKeyColumn = ''; }
         switch (pagename.toLowerCase()) {
+            default:
+                break;
         }
     };
     ApiService.prototype.ExecuteInsert = function (obj, pagename) {
         switch (pagename.toLowerCase()) {
+            default:
+                break;
         }
     };
     ApiService = __decorate([

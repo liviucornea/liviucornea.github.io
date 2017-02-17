@@ -3,6 +3,8 @@ import {DatePipe, DecimalPipe, PercentPipe, CurrencyPipe, I18nSelectPipe} from "
 import {LocalizationService} from "../../ReusableServices/localizationService";
 import {toUTCDate} from "../../ReusableServices/genericfunctions";
 import * as _ from 'lodash';
+import {_Score} from "../../ReusableServices/rulesSource/_Score";
+import forEach = require("lodash/forEach");
 
 @Pipe({ name: 'formatGridColumn' })
 export class FormatGridColumnPipe implements PipeTransform {
@@ -25,7 +27,7 @@ export class FormatGridColumnPipe implements PipeTransform {
         if(formatType === "select" || formatType === "font-awesome"){
             tokens = args["pattern"];
         }
-        else{
+        else if(args["pattern"]){
             tokens = args["pattern"].split(':');
         }
         switch (formatType) {
@@ -79,6 +81,24 @@ export class FormatGridColumnPipe implements PipeTransform {
                 break;
             case "lowercase":
                 output = value.toLowerCase();
+                break;
+            case "preformatted":
+                // check if value has any URL Encoded Characters
+                var toDecode: boolean = false;
+                _.forEach(['%20', '%09', '%0A', '%0D'],function(item){
+                    if (_.includes(value, item)){
+                        toDecode = true;
+                        return false;
+                    }
+                });
+
+                if(toDecode){
+                    output = '<pre>' + decodeURIComponent(value) + '</pre>';
+                }
+                else{
+                    output = '<pre>' + value + '</pre>';
+                }
+
                 break;
             default:
                 output = value;

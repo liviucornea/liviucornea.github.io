@@ -2,8 +2,17 @@
 // This project is licensed under the terms of the MIT license.
 // https://github.com/akserg/ng2-toasty
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var core_1 = require('@angular/core');
-var toasty_utils_1 = require("../ReusableComponents/standardToasty/toasty.utils");
+var toasty_utils_1 = require('../ReusableComponents/standardToasty/toasty.utils');
 /**
  * Default configuration foa all toats and toasty container
  */
@@ -37,12 +46,6 @@ var CalendarToastyService = (function () {
         this.config = config;
         // Init the counter
         this.uniqueCounter = 0;
-        // ToastData event emitter
-        this.toastsEmitter = new core_1.EventEmitter();
-        // Clear event emitter
-        this.clearEmitter = new core_1.EventEmitter();
-        this.eventsArrival = new core_1.EventEmitter();
-        this.eventTypeChanged = new core_1.EventEmitter();
         this.themes = [{
                 name: 'Default Theme',
                 code: 'default'
@@ -94,6 +97,12 @@ var CalendarToastyService = (function () {
                 name: 'Center Center',
                 code: 'center-center',
             }];
+        this.eventsArrival = new core_1.EventEmitter();
+        this.eventTypeChanged = new core_1.EventEmitter();
+        // ToastData event emitter
+        this.toastsEmitter = new core_1.EventEmitter();
+        // Clear event emitter
+        this.clearEmitter = new core_1.EventEmitter();
     }
     CalendarToastyService.prototype.eventDetailClicked = function () {
         this.clearAll();
@@ -154,6 +163,14 @@ var CalendarToastyService = (function () {
     CalendarToastyService.prototype.warning = function (options) {
         this.add(options, 'warning');
     };
+    // Clear all toasts
+    CalendarToastyService.prototype.clearAll = function () {
+        this.clearEmitter.next(null);
+    };
+    // Clear the specific one
+    CalendarToastyService.prototype.clear = function (id) {
+        this.clearEmitter.next(id);
+    };
     // Add a new toast item
     CalendarToastyService.prototype.add = function (options, type) {
         var toastyOptions;
@@ -201,14 +218,6 @@ var CalendarToastyService = (function () {
         if (toastyOptions.onAdd && toasty_utils_1.isFunction(toastyOptions.onAdd)) {
             toastyOptions.onAdd.call(this, toast);
         }
-    };
-    // Clear all toasts
-    CalendarToastyService.prototype.clearAll = function () {
-        this.clearEmitter.next(null);
-    };
-    // Clear the specific one
-    CalendarToastyService.prototype.clear = function (id) {
-        this.clearEmitter.next(id);
     };
     // Checks whether the local option is set, if not,
     // checks the global config

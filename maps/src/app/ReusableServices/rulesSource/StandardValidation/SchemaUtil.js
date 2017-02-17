@@ -1,9 +1,9 @@
 "use strict";
-var _Score_1 = require("../_Score");
-exports.TYPE_KEY = "type";
-exports.PROPERTIES_KEY = "properties";
-exports.DEFAULT_KEY = "default";
-exports.ARRAY_KEY = "items";
+var _Score_1 = require('../_Score');
+exports.TYPE_KEY = 'type';
+exports.PROPERTIES_KEY = 'properties';
+exports.DEFAULT_KEY = 'default';
+exports.ARRAY_KEY = 'items';
 var SchemaUtil = (function () {
     function SchemaUtil() {
     }
@@ -12,16 +12,16 @@ var SchemaUtil = (function () {
      * The data are initilizied with default values.
      */
     SchemaUtil.InitValues = function (formSchema, data) {
-        var data = data || {};
+        var localData = data || {};
         for (var key in formSchema) {
             var item = formSchema[key];
             var type = item[exports.TYPE_KEY];
-            if (type === "object") {
-                data[key] = {};
-                SchemaUtil.InitValues(item[exports.PROPERTIES_KEY], data[key]);
+            if (type === 'object') {
+                localData[key] = {};
+                SchemaUtil.InitValues(item[exports.PROPERTIES_KEY], localData[key]);
             }
-            else if (type === "array") {
-                data[key] = [];
+            else if (type === 'array') {
+                localData[key] = [];
             }
             else {
                 var defaultValue = item[exports.DEFAULT_KEY];
@@ -51,11 +51,11 @@ var SchemaUtil = (function () {
                     (defaultValue === '')) {
                     defaultValue = null;
                 }
-                //TODO: default value
-                data[key] = defaultValue;
+                // TODO: default value
+                localData[key] = defaultValue;
             }
         }
-        return data;
+        return localData;
     };
     return SchemaUtil;
 }());

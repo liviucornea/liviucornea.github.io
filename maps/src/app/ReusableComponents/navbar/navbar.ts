@@ -8,6 +8,7 @@ import {Router, ActivatedRoute} from "@angular/router";
 import {LocalizationService, SelectedLanguage} from "../../ReusableServices/localizationService";
 import {Location} from '@angular/common';
 import {isNullOrUndefined} from "util";
+import {InterFormsService} from "../../ReusableServices/interFormsService";
 
 @Component({
     selector: 'navBar',
@@ -30,7 +31,7 @@ export class navBar {
     theme: string = "standard";
     httpAbs: HttpAbstract;
     envDetails: Array<any> = [];
-    envDetailsOpen : boolean = false;
+    envDetailsOpen: boolean = false;
     private environmentBaseUrl: string = "/application/configuration/Environment";
 
     @Input() activeClass(item: any): string {
@@ -41,7 +42,7 @@ export class navBar {
     };
 
     constructor(httpAbs: HttpAbstract, apiService: ApiService, private nav: NavigationService, private router: Router
-        , private localizationService: LocalizationService, private alert: AlertService, private loc: Location) {
+        , private localizationService: LocalizationService, private alert: AlertService, private loc: Location, private intFormSvc: InterFormsService) {
         this.apiService = apiService;
         this.httpAbs = httpAbs;
         this.navigation = nav;
@@ -89,8 +90,8 @@ export class navBar {
                     if (res[0]) {
                         currentUser = this.assignUserDetails(currentUser, res[0]);
                     }
-                    if (res[1] && res[1].length) {
-                        this.assignEnvironmentDetails(res[1]);
+                    if (res[1] && res[1].ConfigurationValue) {
+                        this.assignEnvironmentDetails(res[1].ConfigurationValue);
                     }
                 },
                 error => {
@@ -125,28 +126,20 @@ export class navBar {
     }
 
     toggleTheme() {
-        if (this.theme == "standard") {
-            this.theme = "dark";
-            document.getElementById('theme-link').setAttribute('href', 'resources/Datahub/assets/theme_dark.css');
-        }
-        else {
-            this.theme = "standard";
-            document.getElementById('theme-link').setAttribute('href', 'resources/Datahub/assets/theme_standard.css');
-        }
+        this.intFormSvc.toggleTheme();
     }
 
     shrinkAllFont() {
-        var previousFontSize = window.getComputedStyle(document.getElementById("app-html")).getPropertyValue('font-size').split("px")[0];
-        document.getElementById("app-html").style.fontSize = (parseInt(previousFontSize) - 1) + "px";
+        this.intFormSvc.adjustFontSize(-1);
+
     }
 
     expandAllFont() {
-        var previousFontSize = window.getComputedStyle(document.getElementById("app-html")).getPropertyValue('font-size').split("px")[0];
-        document.getElementById("app-html").style.fontSize = (parseInt(previousFontSize) + 1) + "px";
+        this.intFormSvc.adjustFontSize(1);
     }
 
     toggleEnvDetails() {
-       this.envDetailsOpen = !this.envDetailsOpen;
+        this.envDetailsOpen = !this.envDetailsOpen;
     }
 
     private assignUserDetails(user: AuthUser, res: any) {

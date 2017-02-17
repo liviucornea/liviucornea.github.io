@@ -17,7 +17,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="button-standard " (click)="closeAll();"><span class="fa fa-check-square-o fa-lg"></span> OK</button>
+                <button type="button" class="btn btn-td" (click)="closeAll()">
+                    <span class="fa fa-check-square-o"></span> OK
+                </button>
             </div>
         </div>
     </div>
@@ -40,12 +42,12 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="button-standard " name="btnOK" (click)="clickOK(i)">
-                    <span class="fa fa-check-square-o fa-lg"></span>
+                <button class="btn btn-td" name="btnOK" (click)="clickOK(i)">
+                    <span class="fa fa-check-square-o"></span>
                     OK
                 </button>
-                <button class="button-standard " name="btnCancel" (click)="clickCancel(i)">
-                    <span class="fa fa-ban fa-lg"></span>
+                <button class="btn btn-td" name="btnCancel" (click)="clickCancel(i)">
+                    <span class="fa fa-ban"></span>
                     Cancel
                 </button>
             </div>

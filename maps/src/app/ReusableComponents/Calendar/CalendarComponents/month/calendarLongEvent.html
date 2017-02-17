@@ -1,0 +1,22 @@
+<div *ngIf="visible" class="long-event"
+     [style.marginLeft]="marginLeft + '%'"
+     [style.width]="width + '%'">
+    <div class="row">
+        <div class="col-xs-4 text-xs-left">
+            <div class="long-event-status-indicator {{getEventColor(event.status)}}">
+                &nbsp;
+            </div>
+        <span *ngIf="event.start < startOfWeek" class="long-event-start-arrow">
+            <span class="fa fa-arrow-left"></span> {{formatDateShort(event.start)}}
+        </span>
+        </div>
+        <div class="col-xs-4 text-xs-center">
+            <span><strong>{{event.title}}</strong></span>
+        </div>
+        <div class="col-xs-4 text-xs-right">
+        <span *ngIf="event.end >= endOfWeek">
+            {{formatDateShort(event.end)}} <span class="fa fa-arrow-right"></span>
+        </span>
+        </div>
+    </div>
+</div>

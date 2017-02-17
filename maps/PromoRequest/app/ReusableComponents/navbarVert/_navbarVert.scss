@@ -1,0 +1,218 @@
+/*******************************************************/
+/* Left Nav
+/*******************************************************/
+
+#tdam-nav-left {
+  margin: 0px 0 12px 0px;
+  width: 204px;
+  -moz-box-shadow: -2px 4px 12px $almost-white;
+  -webkit-box-shadow: -2px 4px 12px $almost-white;
+  box-shadow: -2px 4px 12px $almost-white;
+  font-family: $font-family-sans-serif;
+}
+
+/* Level 1 */
+#tdam-nav-left ul {
+  margin: 0;
+  padding: 0;
+  background: $navbarvert-bg-color;
+  position: relative;
+  border-top: 10px solid $navbarvert-border-color;
+  list-style: none;
+  border-top: 0px;
+
+  li {
+    margin: 0;
+    margin-bottom: 12px;
+    padding: 0;
+    background-color: $navbarvert-item-bg-color;
+    background-image: none;
+    border: 1px solid $navbarvert-item-border-color;
+    border-bottom: 1px solid $navbarvert-item-border-color;
+    border-top: 1px solid $navbarvert-item-border-color;
+    position: relative;
+    zoom: 1;
+
+    a {
+      color: $navbarvert-link-color;
+      display: block;
+      text-decoration: none;
+      zoom: 1;
+
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+        color: $navbarvert-link-hover-color;
+        background-color: transparent;
+        outline: none
+      }
+    }
+
+    span.tdam-nav-left-label {
+      display: block;
+      padding: 9px 12px 9px 22px;
+      margin: 0;
+      _zoom: 1;
+      position: relative;
+      line-height: 1.1em
+    }
+  }
+}
+
+/* Level 2 */
+#tdam-nav-left ul li ul {
+  padding: 0;
+  margin: 0;
+  border: none;
+  font-size: 11px;
+  background-image: url(../../../app/ReusableComponents/navbarVert/level2-bg.gif);
+  background-position: top left;
+  background-repeat: repeat-y;
+
+  li {
+    margin: 0;
+    border: none;
+    background-color: transparent;
+
+    span.tdam-nav-left-label {
+      padding: 9px 0;
+      border-top: 1px solid $almost-white;
+      border-bottom: none !important;
+      margin: 0 12px 0 21px;
+    }
+
+    &:first-child {
+      background: url(../../../app/ReusableComponents/navbarVert/level2-top-bg.gif) top left no-repeat;
+    }
+
+    &.tdam-nav-left-first-child {
+      background: url(../../../app/ReusableComponents/navbarVert/level2-top-bg.gif) top left no-repeat;
+    }
+
+    &:last-child {
+      background: url(../../../app/ReusableComponents/navbarVert/level2-bottom-bg.gif) bottom left no-repeat;
+      padding-bottom: 3px;
+    }
+
+    &.tdam-nav-left-last-child {
+      background: url(../../../app/ReusableComponents/navbarVert/level2-bottom-bg.gif) bottom left no-repeat;
+      padding-bottom: 3px;
+    }
+  }
+}
+
+/* Level 3 */
+#tdam-nav-left ul li ul li ul {
+  padding: 0 0 4px 0;
+  margin: -4px 0 0 0;
+  border: none;
+  background-image: none;
+  background-color: transparent;
+
+  li {
+    padding: 0;
+    margin: 0;
+    background-image: none !important;
+
+    span.tdam-nav-left-label {
+      margin: 0 12px 0 38px;
+      border: none;
+      padding: 7px 0;
+    }
+
+  }
+}
+
+/* Level 4 */
+#tdam-nav-left ul li ul li ul li ul {
+  padding: 0;
+  margin: 0;
+
+  li {
+
+    span.tdam-nav-left-label {
+      margin: 0 12px 0 55px;
+    }
+
+  }
+
+}
+
+/* Level 5 */
+#tdam-nav-left ul li ul li ul li ul li ul {
+
+  li {
+
+    span.tdam-nav-left-label {
+      margin: 0 12px 0 72px
+    }
+  }
+}
+
+/* On-state indicator (for each level) */
+#tdam-nav-left ul li span.tdam-nav-left-indicator {
+  position: absolute;
+  top: 1em;
+  left: 10px;
+  display: block;
+  width: 7px;
+  height: 7px;
+  font-size: 1;
+  line-height: 1;
+  text-indent: -9999px;
+  background: url(indicator-right.gif) 0 0 no-repeat !important;
+  padding: 0;
+  border: none;
+}
+
+#tdam-nav-left ul li ul li span.tdam-nav-left-indicator {
+  top: 1em;
+  left: -11px
+}
+
+#tdam-nav-left ul li ul li ul li span.tdam-nav-left-indicator {
+  top: .95em;
+  left: -11px;
+}
+
+#tdam-nav-left ul li ul li ul li ul li span.tdam-nav-left-indicator {
+  top: .95em;
+  left: -11px;
+}
+
+/* Active Pages */
+#tdam-nav-left ul li span a.list-group-item-info {
+  font-weight: bold;
+  text-decoration: underline;
+  /*bootstrap override*/
+  background: none;
+}
+
+
+#tdam-nav-left ul li.tdam-nav-left-active ul li {
+  font-weight: normal;
+}
+
+#tdam-nav-left ul li.tdam-nav-left-active ul li.tdam-nav-left-active {
+  font-weight: bold
+}
+
+#tdam-nav-left ul li.tdam-nav-left-active ul li.tdam-nav-left-active ul li {
+}
+
+/* Current Page */
+#tdam-nav-left ul li.tdam-nav-left-currentpage {
+}
+
+#tdam-nav-left ul li.tdam-nav-left-currentpage a {
+}
+
+.tdam-left-content {
+  float: left;
+}
+
+.tdam-left-content + .tdam-main-content {
+  width: calc(100% - 192px);
+  float: left;
+  margin-left: 12px;
+}

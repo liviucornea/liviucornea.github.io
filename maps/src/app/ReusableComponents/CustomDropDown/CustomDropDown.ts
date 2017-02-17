@@ -4,7 +4,7 @@ import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 @Component({
     selector: "customDropDown",
     template:   `
-                <select name="dropdowncontrol" class="form-control" [disabled]="disabled" [(ngModel)]="selectedValue" (change)="EmitSelectedValue($event.target.value)">
+                <select name="dropdowncontrol" [disabled]="disabled" [(ngModel)]="selectedValue" (change)="EmitSelectedValue($event.target.value)">
                     <option *ngFor="let itemOption of DataSource" value="{{itemOption.Value}}" selected = "itemOption.Value == selectedValue">{{itemOption.Description}}</option>
                 </select>
                 `

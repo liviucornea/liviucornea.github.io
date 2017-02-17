@@ -1,8 +1,17 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var core_1 = require('@angular/core');
-var httpAbstract_1 = require("./httpAbstract");
-var alertService_1 = require("./alertService");
-var apiService_1 = require("./apiService");
+var httpAbstract_1 = require('./httpAbstract');
+var alertService_1 = require('./alertService');
+var apiService_1 = require('./apiService');
 var SelectedLanguage = (function () {
     function SelectedLanguage(id, desc, code) {
         this.Id = id;
@@ -21,7 +30,7 @@ var LocalizationService = (function () {
         this.languageList = [];
         this.localizationResourcesList = [];
         this.prefixUrl = '/localization';
-        this.localizationLanguageUrl = this.prefixUrl + "/language";
+        this.localizationLanguageUrl = this.prefixUrl + '/language';
         this.localizationLanguageValueUrl = this.prefixUrl + '/languagevalue';
         this.localizationValueSetUrl = this.prefixUrl + '/valueset';
         this.localizationValueUrl = this.prefixUrl + '/value';
@@ -33,7 +42,7 @@ var LocalizationService = (function () {
         this.getLocalizationLanguagesList().subscribe(function (res) {
             _this.languageList = res;
             if (_this.languageList.length > 0) {
-                var selectedLang = _this.languageList.find(function (p) { return p.LangCode.toLowerCase().substring(0, 2) == 'en'; });
+                var selectedLang = _this.languageList.find(function (p) { return p.LangCode.toLowerCase().substring(0, 2) === 'en'; });
                 if (selectedLang) {
                     _this.selectedLanguage = selectedLang;
                 }
@@ -45,7 +54,7 @@ var LocalizationService = (function () {
     LocalizationService.prototype.setLanguageFromAuthGuard = function (res) {
         this.languageList = res;
         if (this.languageList.length > 0) {
-            var selectedLang = this.languageList.find(function (p) { return p.LangCode.toLowerCase().substring(0, 2) == 'en'; });
+            var selectedLang = this.languageList.find(function (p) { return p.LangCode.toLowerCase().substring(0, 2) === 'en'; });
             if (selectedLang) {
                 this.selectedLanguage = selectedLang;
             }
@@ -53,7 +62,6 @@ var LocalizationService = (function () {
     };
     LocalizationService.prototype.setResourcesByLangIdFromAuthGuard = function (res) {
         this.localizationResourcesList = res;
-        //this.localizationEventEmitter.emit(this.selectedLanguage);
     };
     LocalizationService.prototype.getLocalizationLanguagesList = function () {
         return this.httpAbstract.fetch(this.localizationLanguageUrl);
@@ -61,7 +69,7 @@ var LocalizationService = (function () {
     LocalizationService.prototype.getResourcesByLanguageId = function () {
         var _this = this;
         var tempBaseUrl = this.httpAbstract.baseUrl;
-        if (tempBaseUrl != this.apiService.base) {
+        if (tempBaseUrl !== this.apiService.base) {
             this.httpAbstract.setBaseAddress(this.apiService.base);
         }
         this.httpAbstract.fetch(this.localizationLanguageValueUrl + '/' + this.selectedLanguage.Id).subscribe(function (res) {
@@ -73,12 +81,12 @@ var LocalizationService = (function () {
         this.httpAbstract.setBaseAddress(tempBaseUrl);
     };
     LocalizationService.prototype.toggleSelection = function (langId) {
-        this.selectedLanguage = this.languageList.find(function (p) { return p.Id == langId; });
+        this.selectedLanguage = this.languageList.find(function (p) { return p.Id === langId; });
         this.getResourcesByLanguageId();
     };
     LocalizationService.prototype.getLocalizedValueDescription = function (valueSet) {
         if (this.localizationResourcesList.length) {
-            var tempLocalizationValue = this.localizationResourcesList.find(function (p) { return p.ValueSetDescription.toLowerCase() == valueSet.toString().toLowerCase(); });
+            var tempLocalizationValue = this.localizationResourcesList.find(function (p) { return p.ValueSetDescription.toLowerCase() === valueSet.toString().toLowerCase(); });
             if (tempLocalizationValue) {
                 valueSet = tempLocalizationValue.ValueDescription;
             }
@@ -88,40 +96,48 @@ var LocalizationService = (function () {
     LocalizationService.prototype.ExecutePageRefresh = function (pageName, id) {
         if (id === void 0) { id = null; }
         switch (pageName.toLowerCase()) {
-            case "language":
+            case 'language':
                 return this.getLanguage();
-            case "valueset":
+            case 'valueset':
                 return this.getValueSet();
-            case "valueset_child":
+            case 'valueset_child':
                 return this.getValuesByValueSetId(id);
+            default:
+                return null;
         }
     };
     LocalizationService.prototype.ExecuteInsert = function (obj, pageName) {
         switch (pageName.toLowerCase()) {
-            case "language":
+            case 'language':
                 return this.createLanguage(obj);
-            case "valueset":
+            case 'valueset':
                 return this.createValueSet(obj);
-            case "valueset_child":
+            case 'valueset_child':
                 return this.createValueSetValue(obj);
+            default:
+                return null;
         }
     };
     LocalizationService.prototype.ExecuteUpdate = function (obj, pageName) {
         switch (pageName.toLowerCase()) {
-            case "language":
+            case 'language':
                 return this.updateLanguage(obj);
-            case "valueset":
+            case 'valueset':
                 return this.updateValueSet(obj);
-            case "valueset_child":
+            case 'valueset_child':
                 return this.updateValueSetValue(obj);
+            default:
+                return null;
         }
     };
     LocalizationService.prototype.ExecuteDelete = function (obj, pageName) {
         switch (pageName.toLowerCase()) {
-            case "valueset":
+            case 'valueset':
                 return this.deleteValueSet(obj);
-            case "valueset_child":
+            case 'valueset_child':
                 return this.deleteValueSetValue(obj);
+            default:
+                return null;
         }
     };
     LocalizationService.prototype.getLanguage = function (id) {
@@ -134,11 +150,11 @@ var LocalizationService = (function () {
         }
     };
     LocalizationService.prototype.updateLanguage = function (obj) {
-        return this.httpAbstract.updateWithHeader(this.localizationLanguageUrl + '/' + obj.Id, JSON.stringify(obj), '', '' //empty headers
+        return this.httpAbstract.updateWithHeader(this.localizationLanguageUrl + '/' + obj.Id, JSON.stringify(obj), '', '' // empty headers
         , this.contentType);
     };
     LocalizationService.prototype.createLanguage = function (obj) {
-        return this.httpAbstract.insertWithHeader(this.localizationLanguageUrl, JSON.stringify(obj), '', '' //empty headers
+        return this.httpAbstract.insertWithHeader(this.localizationLanguageUrl, JSON.stringify(obj), '', '' // empty headers
         , this.contentType);
     };
     LocalizationService.prototype.getValueSet = function (id) {
@@ -151,11 +167,11 @@ var LocalizationService = (function () {
         }
     };
     LocalizationService.prototype.updateValueSet = function (obj) {
-        return this.httpAbstract.updateWithHeader(this.localizationValueSetUrl + '/' + obj.Id, JSON.stringify(obj), '', '' //empty headers
+        return this.httpAbstract.updateWithHeader(this.localizationValueSetUrl + '/' + obj.Id, JSON.stringify(obj), '', '' // empty headers
         , this.contentType);
     };
     LocalizationService.prototype.createValueSet = function (obj) {
-        return this.httpAbstract.insertWithHeader(this.localizationValueSetUrl, JSON.stringify(obj), '', '' //empty headers
+        return this.httpAbstract.insertWithHeader(this.localizationValueSetUrl, JSON.stringify(obj), '', '' // empty headers
         , this.contentType);
     };
     LocalizationService.prototype.deleteValueSet = function (obj) {
@@ -165,11 +181,11 @@ var LocalizationService = (function () {
         return this.httpAbstract.fetch(this.localizationValueSetUrl + '/' + id + '/value');
     };
     LocalizationService.prototype.updateValueSetValue = function (obj) {
-        return this.httpAbstract.updateWithHeader(this.localizationValueUrl + '/' + obj.Id, JSON.stringify(obj), '', '' //empty headers
+        return this.httpAbstract.updateWithHeader(this.localizationValueUrl + '/' + obj.Id, JSON.stringify(obj), '', '' // empty headers
         , this.contentType);
     };
     LocalizationService.prototype.createValueSetValue = function (obj) {
-        return this.httpAbstract.insertWithHeader(this.localizationValueUrl, JSON.stringify(obj), '', '' //empty headers
+        return this.httpAbstract.insertWithHeader(this.localizationValueUrl, JSON.stringify(obj), '', '' // empty headers
         , this.contentType);
     };
     LocalizationService.prototype.deleteValueSetValue = function (obj) {

@@ -13,6 +13,9 @@ export class TypeAhead implements AfterViewInit{
     @ViewChildren('theInput') theInput;
     @Input("search") public search:(term:string) => Promise<Array<{ id:string, text:string }>>;
     // public  search: (term: string) => Promise<Array<{ id: string, text: string }>>;
+    @Input() placeholderText = 'Start typing the value you search for here ...'
+    @Output() focused = new EventEmitter();
+    @Output() itemDescriptionChanged = new EventEmitter();
     @Output("onSelected") public selected = new EventEmitter();
     private term = "";
     private listCmp:Array<{ id:string, text:string }> = [];

@@ -171,6 +171,7 @@ exports.ImplementChangePortfolioDisplayGridConfig_2 = {
             "displayName": "Action",
             "dataSourceAddress": undefined,
             "dataSource": undefined,
+            "columnFormat": { format: "preformatted" }
         }, {
             "dbColumnName": "Source",
             "htmlControlType": "text",
@@ -180,6 +181,7 @@ exports.ImplementChangePortfolioDisplayGridConfig_2 = {
             "displayName": "Source",
             "dataSourceAddress": undefined,
             "dataSource": undefined,
+            "columnFormat": { format: "preformatted" }
         }, {
             "dbColumnName": "FMC Objective Code",
             "htmlControlType": "text",
@@ -228,12 +230,13 @@ exports.ImplementChangePortfolioDisplayGridConfig_2 = {
         }, {
             "dbColumnName": "Notes",
             "htmlControlType": "text",
-            "isVisible": false,
+            "isVisible": true,
             "isComplexType": false,
             "isRequired": false,
             "displayName": "Notes",
             "dataSourceAddress": undefined,
             "dataSource": undefined,
+            "columnFormat": { format: "preformatted" }
         }, {
             "dbColumnName": "portfolio_id",
             "htmlControlType": "text",

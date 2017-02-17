@@ -20,6 +20,7 @@ import { CalendarEventTitle as CalendarEventTitlePipe } from '../../Datahub/pipe
 import { CalendarEventTitle as CalendarEventTitleProvider } from './CalendarHelpers/calendarEventTitle.provider';
 import {FormsModule} from "@angular/forms";
 import {CalendarService} from "../../ReusableServices/calendarService";
+import {CalendarLongEventComponent} from "./CalendarComponents/month/calendarLongEvent.component";
 
 @NgModule({
     imports: [CommonModule, FormsModule],
@@ -39,7 +40,8 @@ import {CalendarService} from "../../ReusableServices/calendarService";
         CalendarTooltipWindowComponent,
         CalendarTooltipDirective,
         CalendarDate,
-        CalendarEventTitlePipe
+        CalendarEventTitlePipe,
+        CalendarLongEventComponent
     ],
     exports: [CalendarDayViewComponent,
         CalendarWeekViewComponent,
@@ -56,7 +58,9 @@ import {CalendarService} from "../../ReusableServices/calendarService";
         CalendarTooltipWindowComponent,
         CalendarTooltipDirective,
         CalendarDate,
-        CalendarEventTitlePipe],
+        CalendarEventTitlePipe,
+        CalendarLongEventComponent
+    ],
     entryComponents: [CalendarTooltipWindowComponent],
     providers: [
         CalendarEventTitleProvider,

@@ -7,10 +7,10 @@
             </textarea>
             </div>
             <div>
-                <button (click)="validateClicked()" class="button-standard ">Validate</button>
-                <button [disabled]="!enableInsert" (click)="insertClicked()" class="button-standard ">Insert</button>
-                <button (click)="cancelClicked()" class="button-standard ">Cancel</button>
-                <button (click)="resetClicked()" class="button-standard ">Reset</button>
+                <button (click)="validateClicked()" class="btn btn-td">Validate</button>
+                <button [disabled]="!enableInsert" (click)="insertClicked()" class="btn btn-td">Insert</button>
+                <button (click)="cancelClicked()" class="btn btn-td">Cancel</button>
+                <button (click)="resetClicked()" class="btn btn-td">Reset</button>
             </div>
             <div class="separator"></div>
             <template [ngIf]="showValidation">

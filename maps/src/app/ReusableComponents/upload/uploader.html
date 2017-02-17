@@ -3,10 +3,12 @@
         <div class="col-xs-12">
             <!-- file upload 'button' -->
             <div class="uploader-header">
-                <label id="uploader-button" for="file-upload" class="button-standard  {{disabled ? 'uploader-button-disabled' : ''}}">
-                    <span class="fa fa-folder-open fa-lg"></span>
+                <label id="uploader-button" for="file-upload"
+                       class="btn btn-td {{disabled ? 'uploader-button-disabled' : ''}}">
+                    <span class="fa fa-folder-open"></span>
                     {{"SelectFiles" | LocalizationTranslate}}
-                    <input id="file-upload" type="file" (change)="onChange($event);" [multiple]="multiple" [disabled]="disabled" [options]="options" ngFileSelect>
+                    <input id="file-upload" type="file" (change)="onChange($event);" [multiple]="multiple"
+                           [disabled]="disabled" [options]="options" ngFileSelect>
                 </label>
                 <p>{{"QueueLength" | LocalizationTranslate}}: {{ uploader.queue.length }}</p>
             </div>
@@ -41,12 +43,15 @@
                     </td>
                     <td nowrap>
                         <template [ngIf]="!autoUpload">
-                            <button type="button" title="{{'Upload' | LocalizationTranslate}}" class="button-standard " (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
-                                <span class="fa fa-arrow-circle-o-up fa-lg"></span>
+                            <button type="button" title="{{'Upload' | LocalizationTranslate}}" class="btn btn-td"
+                                    (click)="item.upload()"
+                                    [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                                <span class="fa fa-arrow-circle-o-up"></span>
                             </button>
                         </template>
-                        <button type="button" title="{{'Remove' | LocalizationTranslate}}" class="button-standard " (click)="inlineDeleteClicked(item)">
-                            <span class="fa fa-trash fa-lg"></span>
+                        <button type="button" title="{{'Remove' | LocalizationTranslate}}" class="btn btn-td"
+                                (click)="inlineDeleteClicked(item)">
+                            <span class="fa fa-trash"></span>
                         </button>
                     </td>
                 </tr>
@@ -60,14 +65,14 @@
                     </div>
                 </div>
                 <template [ngIf]="!autoUpload">
-                    <button type="button" title="{{'UploadAll' | LocalizationTranslate}}" class="button-standard "
+                    <button type="button" title="{{'UploadAll' | LocalizationTranslate}}" class="btn btn-td"
                             (click)="uploader.uploadFilesInQueue()" [disabled]="!uploader.getNotUploadedItems().length">
-                        <span class="fa fa-arrow-circle-o-up fa-lg"></span> {{"UploadAll" | LocalizationTranslate}}
+                        <span class="fa fa-arrow-circle-o-up"></span> {{"UploadAll" | LocalizationTranslate}}
                     </button>
                 </template>
-                <button type="button" title="{{'RemoveAll' | LocalizationTranslate}}" class="button-standard "
+                <button type="button" title="{{'RemoveAll' | LocalizationTranslate}}" class="btn btn-td"
                         (click)="deleteAllClicked()" [disabled]="!uploader.queue.length">
-                    <span class="fa fa-trash fa-lg"></span> {{"RemoveAll" | LocalizationTranslate}}
+                    <span class="fa fa-trash"></span> {{"RemoveAll" | LocalizationTranslate}}
                 </button>
             </template>
         </div>

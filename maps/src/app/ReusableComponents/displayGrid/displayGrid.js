@@ -1,4 +1,18 @@
 "use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var core_1 = require('@angular/core');
 var alertService_1 = require("../../ReusableServices/alertService");
 var matrixService_1 = require("../../ReusableServices/matrixService");
@@ -10,15 +24,17 @@ var displayGridUtils_1 = require("./displayGridUtils");
 var interFormsService_1 = require("../../ReusableServices/interFormsService");
 var ruleService_1 = require("../../ReusableServices/ruleService");
 var apiService_1 = require("../../ReusableServices/apiService");
+var excelService_1 = require("../../ReusableServices/excelService");
 var DisplayGridComponent = (function (_super) {
     __extends(DisplayGridComponent, _super);
-    function DisplayGridComponent(intFormSvc, nav, alert, vmMatrix, appSettingsService, crudserv, filterListener, ruleService, apiService) {
+    function DisplayGridComponent(intFormSvc, nav, alert, vmMatrix, appSettingsService, crudserv, filterListener, ruleService, apiService, excelService) {
         _super.call(this, nav, alert, vmMatrix, appSettingsService, crudserv, filterListener);
         this.intFormSvc = intFormSvc;
         this.appSettingsService = appSettingsService;
         this.filterListener = filterListener;
         this.ruleService = ruleService;
         this.apiService = apiService;
+        this.excelService = excelService;
         this.displayGridNotifier = new core_1.EventEmitter();
         this.alert = alert;
         this.vmMatrix = vmMatrix;
@@ -81,6 +97,7 @@ var DisplayGridComponent = (function (_super) {
         }
     };
     DisplayGridComponent.prototype.setDbMatrix = function (databaseRecords, gridSettings) {
+        this.PrimaryKeyColumn = this.vmMatrix.getPrimaryColumnName(this.gridSettings);
         this.masterMatrixForDataTable = this.vmMatrix.extractMatrix(databaseRecords, this.gridSettings);
         //Check for any Business Validations for cells like disabled or css changes for specific rows/columns
         if (this.gridSettings["UseBusinessValidation"]) {
@@ -346,8 +363,7 @@ var DisplayGridComponent = (function (_super) {
     };
     DisplayGridComponent.prototype.DeleteSucceeded = function () {
         var _this = this;
-        var primaryColumnName = this.vmMatrix.getPrimaryColumnName(this.gridSettings);
-        var data = this.vmMatrix.buildJSONObject(this.editViewRowDataTable, primaryColumnName);
+        var data = this.vmMatrix.buildJSONObject(this.editViewRowDataTable, this.PrimaryKeyColumn);
         var IdValue = 0;
         if (this.pageName.indexOf("_child") > 0) {
             var column = this.gridSettings.ColumnConfiguration.find(function (p) { return p.dbColumnName == _this.ForeignKeyColumn; });
@@ -727,8 +743,7 @@ var DisplayGridComponent = (function (_super) {
         var result = true;
         if (customButton.formValidate) {
             this.matrixForDataTable.forEach(function (x) {
-                var primaryColumnName = _this.vmMatrix.getPrimaryColumnName(_this.gridSettings);
-                var plugInValue = _this.vmMatrix.buildJSONObject(x.cells, primaryColumnName);
+                var plugInValue = _this.vmMatrix.buildJSONObject(x.cells, _this.PrimaryKeyColumn);
                 var tempResult = _this.ruleService.validateRulesByRulesConfig(plugInValue, _this.gridSettings["RulesConfig"], x.cells);
                 if (!tempResult)
                     result = false;
@@ -752,8 +767,7 @@ var DisplayGridComponent = (function (_super) {
     DisplayGridComponent.prototype.customRowButtonListClicked = function (customRowButton, selectedRow) {
         var result = true;
         if (customRowButton.formValidate) {
-            var primaryColumnName = this.vmMatrix.getPrimaryColumnName(this.gridSettings);
-            var plugInValue = this.vmMatrix.buildJSONObject(selectedRow.cells, primaryColumnName);
+            var plugInValue = this.vmMatrix.buildJSONObject(selectedRow.cells, this.PrimaryKeyColumn);
             var tempResult = this.ruleService.validateRulesByRulesConfig(plugInValue, this.gridSettings["RulesConfig"], selectedRow.cells);
             if (!tempResult)
                 result = false;
@@ -796,6 +810,9 @@ var DisplayGridComponent = (function (_super) {
             return this.pageName + '_child';
         }
     };
+    DisplayGridComponent.prototype.exportToExcelClicked = function () {
+        this.excelService.exportToExcel(this.gridSettings, this.databaseRecords);
+    };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', String)
@@ -829,7 +846,7 @@ var DisplayGridComponent = (function (_super) {
             template: require("./displayGrid.html"),
             selector: 'displayGrid'
         }), 
-        __metadata('design:paramtypes', [interFormsService_1.InterFormsService, navigationService_1.NavigationService, alertService_1.AlertService, matrixService_1.matrixService, appSettingsService_1.AppSettingsService, crudService_1.crudService, displayGridFilterService_1.DisplayGridFilterService, ruleService_1.RuleService, apiService_1.ApiService])
+        __metadata('design:paramtypes', [interFormsService_1.InterFormsService, navigationService_1.NavigationService, alertService_1.AlertService, matrixService_1.matrixService, appSettingsService_1.AppSettingsService, crudService_1.crudService, displayGridFilterService_1.DisplayGridFilterService, ruleService_1.RuleService, apiService_1.ApiService, excelService_1.ExcelService])
     ], DisplayGridComponent);
     return DisplayGridComponent;
 }(displayGridUtils_1.BaseDisplayGrid));

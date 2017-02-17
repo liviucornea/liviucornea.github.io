@@ -1,0 +1,43 @@
+export var AppConfigurationControlConfig = {
+    ChildType: "edit",
+    ShallHideDeleteButton: false,
+    ShallHideAddButton: false,
+    PaginationPageLimit: 10,
+    ShowFilterRow: true,
+    IsScrollableGrid:true,
+    PrimaryKeyColumn: "Id",
+    ColumnConfiguration: [
+        {
+            "dbColumnName": "Id",
+            "htmlControlType": "text",
+            "isVisible": false,
+            "isRequired": false,
+            "isComplexType": false,
+            "displayName": "Id",
+            "dataSourceAddress": undefined,
+            "dataSource": undefined,
+            "regex": undefined,
+        },
+        {
+            "dbColumnName": "ConfigurationKey",
+            "htmlControlType": "text",
+            "isVisible": true,
+            "isRequired":true,
+            "isComplexType": false,
+            "displayName": "Configuration Key",
+            "dataSourceAddress": undefined,
+            "dataSource": undefined,
+            "regex": undefined,
+        },
+        {
+            "dbColumnName": "ConfigurationValue",
+            "htmlControlType": "text",
+            "isVisible": true,
+            "isRequired":true,
+            "isComplexType": false,
+            "displayName": "Configuration Value",
+            "dataSourceAddress":undefined,
+            "dataSource":undefined,
+            "regex": undefined,
+        }]
+};

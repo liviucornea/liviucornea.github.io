@@ -1,0 +1,12 @@
+﻿<section *ngIf="children.type != 'node'">
+    <formBuilder [NodeClass]="children.nodeClass" [IsHideCancel]="true" [pluginInput]="children.model" [gridSettings]="children.config"></formBuilder>
+</section>
+<!--<section *ngIf="children.type == 'node'">-->
+<article *ngFor ="#child of elementList">
+    <!-- Indentation -->
+    <div *ngIf="child.indent">
+        <div class="col-{{child.indent}}"></div>
+    </div>
+    <formBuilderInlineChildren [children] = "child" [pluginInput]="child.model" [gridSettings]="child.config" ></formBuilderInlineChildren>
+</article>
+

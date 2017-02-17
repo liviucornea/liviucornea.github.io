@@ -6,23 +6,41 @@
     </div>
     <div class="cal-days">
         <div *ngFor="let rowIndex of view.rowOffsets">
-            <div class="cal-cell-row">
-                <mwl-calendar-month-cell
-                        *ngFor="let day of view.days | slice : rowIndex : rowIndex + 7"
-                        [day]="day"
-                        [openDay]="openDay"
-                        [locale]="locale"
-                        [tooltipPlacement]="tooltipPlacement"
-                        (click)="dayClicked.emit({day: day})"
-                        (highlightDay)="toggleDayHighlight($event.event, true)"
-                        (unhighlightDay)="toggleDayHighlight($event.event, false)">
-                </mwl-calendar-month-cell>
+            <div class="cal-bordered-row">
+                <div class="cal-cell-row">
+                    <template ngFor let-day [ngForOf]="view.days | slice : rowIndex : rowIndex + 7">
+                        <div class="cal-cell cal-day-cell cal-cell-wrapper">
+                            <mwl-calendar-month-cell
+                                    [day]="day"
+                                    [openDay]="openDay"
+                                    [locale]="locale"
+                                    [tooltipPlacement]="tooltipPlacement"
+                                    [longEventsShowing]="longEventsShowing"
+                                    (click)="dayClicked.emit({day: day})"
+                                    (highlightDay)="toggleDayHighlight($event.event, true)"
+                                    (unhighlightDay)="toggleDayHighlight($event.event, false)"
+                                    [style.height]="getCalCellHeight(day)">
+                            </mwl-calendar-month-cell>
+                        </div>
+                    </template>
+                    <div class="cal-long-event-row" *ngIf="this.view.longEvents.length > 0 && longEventsShowing">
+                        <template ngFor let-event [ngForOf]="this.view.longEvents">
+                            <!-- check if the event falls in this week -->
+                            <template
+                                    [ngIf]="event.start <= view.days[rowIndex+6].date && event.end >= view.days[rowIndex].date">
+                                <mwl-calendar-long-event [event]="event" [startOfWeek]="view.days[rowIndex].date">
+                                </mwl-calendar-long-event>
+                            </template>
+                        </template>
+                    </div>
+
+                </div>
+                <!--<mwl-calendar-open-day-events
+                  [isOpen]="openRowIndex === rowIndex"
+                  [events]="openDay?.events"
+                  (eventClicked)="eventClicked.emit({event: $event.event})">
+                </mwl-calendar-open-day-events>-->
             </div>
-            <!--<mwl-calendar-open-day-events
-              [isOpen]="openRowIndex === rowIndex"
-              [events]="openDay?.events"
-              (eventClicked)="eventClicked.emit({event: $event.event})">
-            </mwl-calendar-open-day-events>-->
         </div>
     </div>
 </div>

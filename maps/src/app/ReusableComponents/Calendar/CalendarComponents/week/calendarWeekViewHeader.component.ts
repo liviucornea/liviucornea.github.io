@@ -5,7 +5,7 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
   selector: 'mwl-calendar-week-view-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <b>{{ day.date | calendarDate:'weekViewColumnHeader':locale }}</b><br>
+    <strong>{{ day.date | calendarDate:'weekViewColumnHeader':locale }}</strong><br>
     <span>{{ day.date | calendarDate:'weekViewColumnSubHeader':locale }}</span>
   `,
   host: {

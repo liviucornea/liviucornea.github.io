@@ -22,7 +22,7 @@ var _Score = (function () {
     };
     _Score.uniq = function (array) {
         var result = new Array();
-        for (var i = 0, length = array.length; i < length; i++) {
+        for (var i = 0, length_1 = array.length; i < length_1; i++) {
             var value = array[i];
             var ind = result.indexOf(result);
             if (ind < 0) {
@@ -89,9 +89,7 @@ var _Score = (function () {
             return '';
         var result = '';
         while (qty > 0) {
-            if (qty & 1)
-                result += str;
-            qty >>= 1, str += str;
+            result += str;
         }
         return result;
     };

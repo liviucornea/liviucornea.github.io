@@ -1,0 +1,123 @@
+<div>
+
+    <!-- Header info and actions -->
+    <div>
+        <h3>
+            <!--General Info-->
+            <span *ngIf="nlogInstance && nlogInstance.length > 0" class="pull-left">
+                <span class="label label-primary">{{nlogInstance[0].ApplicationId ? nlogInstance[0].ApplicationId : 'N/A'}}</span>
+                <span class="label label-primary">{{nlogInstance[0].Logger}}</span>
+                <span class="label label-primary">{{nlogInstance[0].MachineName}}</span>
+                <span class="label label-primary">{{nlogInstance[0].UserName}}</span>
+            </span>
+
+            <!-- Actions -->
+            <span class="pull-right">
+                <button type="button" class="btn btn-default" aria-label="Left Align"
+                        (click)="refresh();">
+                    <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    Refresh
+                </button>
+                <button type="button" class="btn btn-default" aria-label="Left Align"
+                        (click)="clear();">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    Clear
+                </button>
+            </span>
+        </h3>
+    </div>
+
+    <!-- Lines of the log file -->
+    <table class="table">
+        <thead>
+            <tr>
+                <!--<td>LoggingId</td>-->
+                <td>State</td>
+                <td>Date</td>
+                <td>Level</td>
+                <td>Message</td>
+                <td style="text-align: right;">More Info</td>
+                <!--<td>CallSite</td>
+                <td>Thread</td>
+                <td>Exception</td>
+                <td>Stacktrace</td>-->
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="#row of nlogInstance">
+                <!--<td>{{row.LoggingId}}</td>-->
+                <td>{{row.State}}</td>
+                <td>{{stringAsDate(row.Date) | date:'shortDate'}} {{stringAsDate(row.Date) | date:'shorTime'}}</td>
+                <td>{{row.Level}}</td>
+                <td>{{row.Message}}</td>
+                <td style="text-align: right;">
+                    <button class="btn btn-default" (click)="active = row"><span class="glyphicon glyphicon-info-sign"></span></button>
+                </td>
+                <!--<td>{{row.CallSite}}</td>
+                <td>{{row.Thread}}</td>
+                <td>{{row.Exception}}</td>
+                <td>{{row.Stacktrace}}</td>-->
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Full info Modal -->
+        <div class="modal" tabindex="-1" role="dialog" style="display:block !important;"
+             *ngIf="active">
+            <div class="modal-dialog" style="height: 100%; width: 65%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" (click)="active = null;"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Full Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <table class="table modalWrap">
+                                <tbody>
+                                    <tr>
+                                        <td>Id</td>
+                                        <td>{{active.LoggingId}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>State</td>
+                                        <td>{{active.State}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date</td>
+                                        <td>{{stringAsDate(active.Date) | date:'shortDate'}} {{stringAsDate(active.Date) | date:'shorTime'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Level</td>
+                                        <td>{{active.Level}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Message</td>
+                                        <td>{{active.Message}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>CallSite</td>
+                                        <td>{{active.CallSite}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Thread</td>
+                                        <td>{{active.Thread}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Exception</td>
+                                        <td>{{active.Exception}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Stacktrace</td>
+                                        <td>{{active.Stacktrace}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" (click)="active = null;">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

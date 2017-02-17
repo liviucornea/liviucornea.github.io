@@ -1,0 +1,62 @@
+﻿<article Id="editInlinePage">
+    <div class="row">
+        <form #genericForm="ngForm" (ngSubmit)="saveClicked()">
+            <!--<section class="flex-container" >-->
+            <div *ngFor="#cellNode of columns">
+                <div *ngIf="cellNode.visibility">
+                    <div *ngIf="cellNode.htmlControlType !== 'select' && cellNode.htmlControlType !== 'radio' && cellNode.htmlControlType !== 'checkbox'" class="{{cellNode.columnCss}} flex-container">
+                        <input #name="ngForm" [attr.Id]="cellNode.sequence" type={{cellNode.htmlControlType}}
+                               [(ngModel)]="cellNode.val" checked={{cellNode.val}} (click)="inputClicked(cellNode)">
+                        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                            Valid input for {{cellNode.label}} is required
+                        </div>
+                    </div>
+                    <div *ngIf="cellNode.htmlControlType === 'checkbox'" class="{{cellNode.columnCss}} flex-container">
+                        <div class="formItemControl">
+                            <input #name="ngForm" [attr.Id]="cellNode.sequence" type="checkbox"
+                                   [(ngModel)]="cellNode.val">
+                        </div>
+                        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                            Valid input for {{cellNode.label}} is required
+                        </div>
+                    </div>
+                    <div *ngIf="cellNode.htmlControlType === 'select'" class="{{cellNode.columnCss}} flex-container">
+                        <div class="formItemControl">
+                            <select #name="ngForm" [(ngModel)]="cellNode.val" [attr.Id]="cellNode.sequence" class="tdam-select">
+                                <option *ngFor="#itemOption of cellNode.dataSource" value="{{itemOption}}">
+                                    {{itemOption}}
+                                </option>
+                            </select>
+                        </div>
+                        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                            Valid input for {{cellNode.label}} is required
+                        </div>
+                    </div>
+                    <div *ngIf="cellNode.htmlControlType === 'radio'" class="{{cellNode.columnCss}} flex-container">
+                        <div class="formItemControl">
+                            <span *ngFor="#itemOption of cellNode.dataSource">
+                                <div class="row">
+                                    <input #name="ngForm" name="cellNode.objId" type="radio" [(ngModel)]="cellNode.val"
+                                               value="{{itemOption}}">{{' ' + itemOption}}<br/>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="buttons" class="col-4">
+                <button type="submit" [disabled]="!genericForm.form.valid" class="tdam-button tdam-button-secondary">
+                            <span class="glyphicon glyphicon-save">
+                            </span>
+                    Save
+                </button>
+                <button (click)="cancelClicked()" class="tdam-button tdam-button-secondary">
+                            <span class="glyphicon glyphicon-ban-circle">
+                            </span>
+                    Cancel
+                </button>
+            </div>
+            <!--</section> flex container -->
+        </form>
+    </div>
+</article>

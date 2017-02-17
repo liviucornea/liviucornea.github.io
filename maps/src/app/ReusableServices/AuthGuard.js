@@ -1,11 +1,20 @@
 "use strict";
-var router_1 = require("@angular/router");
-var core_1 = require("@angular/core");
-var apiService_1 = require("./apiService");
-var httpAbstract_1 = require("./httpAbstract");
-var localizationService_1 = require("./localizationService");
-var navigationService_1 = require("./navigationService");
-var interFormsService_1 = require("./interFormsService");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var router_1 = require('@angular/router');
+var core_1 = require('@angular/core');
+var apiService_1 = require('./apiService');
+var httpAbstract_1 = require('./httpAbstract');
+var localizationService_1 = require('./localizationService');
+var navigationService_1 = require('./navigationService');
+var interFormsService_1 = require('./interFormsService');
 var AuthGuard = (function () {
     function AuthGuard(router, apiService, httpAbstract, localizationService, intFormSvc, navigationService) {
         this.router = router;
@@ -19,10 +28,10 @@ var AuthGuard = (function () {
         var _this = this;
         this.intFormSvc.stopSpinner();
         var tempbaseUrl = this.httpAbstract.baseUrl;
-        if (tempbaseUrl != this.apiService.base) {
+        if (tempbaseUrl !== this.apiService.base) {
             this.httpAbstract.setBaseAddress((this.apiService.base));
         }
-        var urlPath = state.url.split(';')[0]; //this.loc.path(false);
+        var urlPath = state.url.split(';')[0];
         if (this.localizationService.selectedLanguage && this.localizationService.localizationResourcesList.length) {
             return this.apiService.checkUserAuthorization(urlPath).map(function (authState) {
                 _this.httpAbstract.setBaseAddress(tempbaseUrl);
@@ -40,7 +49,7 @@ var AuthGuard = (function () {
             return this.apiService.fetchMultipleList(['/localization/language',
                 '/localization/languagevalue/' + langId,
                 '/auth/currentuser/checkpermission?route=' + urlPath,
-                "/profile"]).map(function (res) {
+                '/profile']).map(function (res) {
                 _this.httpAbstract.setBaseAddress(tempbaseUrl);
                 _this.localizationService.setLanguageFromAuthGuard(res[0]);
                 _this.localizationService.setResourcesByLangIdFromAuthGuard(res[1]);

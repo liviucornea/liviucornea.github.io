@@ -16,7 +16,8 @@
     </template>
     <template ngFor let-controlitem [ngForOf]="pageControls">
         <div *ngIf="controlitem.PageType == 'formbuilder' && controlitem.ShowDefault" class="row">
-            <b><div class="col-sm-12" *ngIf="controlitem.ComponentTitle">{{controlitem.ComponentTitle}}</div></b>
+            <div class="col-sm-12" *ngIf="controlitem.ComponentTitle"><strong>{{controlitem.ComponentTitle}}</strong>
+            </div>
             <div class="col-sm-12 col-md-6">
                 <formBuilder [gridSettings]="controlitem.gridSettings"
                              [httpProxy]="controlitem.httpProxy" [pluginInput]="controlitem.data"
@@ -25,14 +26,22 @@
             </div>
         </div>
         <div *ngIf="controlitem.PageType =='assignablelist' && controlitem.ShowDefault" class="row">
-            <b><div class="col-sm-12" *ngIf="controlitem.ComponentTitle">{{controlitem.ComponentTitle}}</div></b>
-            <assignable-list [inputSettings]="controlitem.gridSettings"
-                             [inputList]="controlitem.inputList" [assignedList]="controlitem.assignedList"
-                             [inputTitle]="controlitem.inputTitle" [assignedTitle]="controlitem.assignedTitle"
-                             (listOut)="updateDataFromComponents($event,controlitem.ComponentName)"></assignable-list>
+            <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                    <div class="col-sm-12" *ngIf="controlitem.ComponentTitle">
+                        <strong>{{controlitem.ComponentTitle}}</strong>
+                    </div>
+                    <assignable-list [inputSettings]="controlitem.gridSettings"
+                                     [inputList]="controlitem.inputList" [assignedList]="controlitem.assignedList"
+                                     [inputTitle]="controlitem.inputTitle"
+                                     [assignedTitle]="controlitem.assignedTitle"
+                                     (listOut)="updateDataFromComponents($event,controlitem.ComponentName)"></assignable-list>
+                </div>
+            </div>
         </div>
         <div *ngIf="controlitem.PageType =='displaygrid' && controlitem.ShowDefault" class="row">
-            <b><div class="col-sm-12" *ngIf="controlitem.ComponentTitle">{{controlitem.ComponentTitle}}</div></b>
+            <div class="col-sm-12" *ngIf="controlitem.ComponentTitle"><strong>{{controlitem.ComponentTitle}}</strong>
+            </div>
             <div class="col-sm-12">
                 <displayGrid [inputGridSettings]="controlitem.gridSettings"
                              [inputHttpProxy]="controlitem.httpProxy" [inputPageName]="controlitem.ComponentName"

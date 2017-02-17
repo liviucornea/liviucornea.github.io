@@ -1,0 +1,161 @@
+<div class="flex-container">
+    <div class="col-24">
+        <section id="benchMarkIndexForm" class="formItem">
+            <form #genericForm="ngForm" (ngSubmit)="submitClicked()">
+                <div class="row">
+                    <div class="col-10">
+                        <label>BenchMark Index Reports</label>
+                    </div>
+                    <div class="col-14">
+                        <select name="Reports" (change)="reportsOnChange($event.target.value)">
+                            <option *ngFor="#report of reports" [value] = "report.indexCode">{{report.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10">
+                        <div><label>Report Date</label></div>
+                    </div>
+                    <div class="col-14">
+                        <input name="ReportDate" type="date" [(ngModel)]="dateSelected" [value]="dateSelected" />
+                    </div>
+                </div>
+                <div *ngIf="indexCodeSelected == 180">
+                    <div class="row">
+                        <div class="col-10">
+                            <div><label>TSX Sub Index</label></div>
+                        </div>
+                        <div class="col-14">
+                            <select name="BMONBSubIndexCode" [(ngModel)]="bmonbSubIndexCodeSelected">
+                                <option *ngFor="#item of bmonbItems" [value] = "item.value">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="indexCodeSelected == 171">
+                    <div class="row">
+                        <div class="col-10">
+                            <div class="formItemLabel"><label>Index Type</label></div>
+                        </div>
+                        <div class="col-14">
+                            <select name="IndexTypeSelect" [(ngModel)]="indexTypeSelected" (change)="indexTypeOnChange($event.target)">
+                                <option value = "REGION">Region</option>
+                                <option value = "COUNTRY">Country</option>
+                            </select>
+                            <span *ngIf="indexTypeSelected == 'REGION'">
+                                <select name="IndexTypeRegions" [(ngModel)]="indexTypeRegionsSelected">
+                                    <option *ngFor="#item of regionItems" [value] = "item.value">{{item.name}}</option>
+                                </select>
+                            </span>
+                            <span *ngIf="indexTypeSelected == 'COUNTRY'">
+                                <select name="IndexTypeCountries" [(ngModel)]="indexTypeCountriesSelected">
+                                    <option *ngFor="#item of countryItems" [value] = "item.value">{{item.name}}</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10">
+                            <div class="formItemLabel"><label>To Include</label></div>
+                        </div>
+                        <div class="col-14">
+                            <select name="IncludeIndexTypeSelect" [(ngModel)]="includeIndexTypeSelected" (change)="indexTypeOnChange($event.target)">
+                                <option value = "NONE">None</option>
+                                <option value = "REGION">Region</option>
+                                <option value = "COUNTRY">Country</option>
+                            </select>
+                            <span *ngIf="includeIndexTypeSelected == 'REGION'">
+                                <select name="IncludeIndexTypeRegions" [(ngModel)]="includeIndexTypeRegionsSelected">
+                                    <option *ngFor="#item of regionItems" [value] = "item.value">{{item.name}}</option>
+                                </select>
+                            </span>
+                            <span *ngIf="includeIndexTypeSelected == 'COUNTRY'">
+                                <select name="IncludeIndexTypeCountries" [(ngModel)]="includeIndexTypeCountriesSelected">
+                                    <option *ngFor="#item of countryItems" [value] = "item.value">{{item.name}}</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10">
+                            <div class="formItemLabel"><label>To Exclude</label></div>
+                        </div>
+                        <div class="col-14">
+                            <select name="ExcludeIndexTypeSelect" [(ngModel)]="excludeIndexTypeSelected" (change)="indexTypeOnChange($event.target)">
+                                <option value = "NONE">None</option>
+                                <option value = "REGION">Region</option>
+                                <option value = "COUNTRY">Country</option>
+                            </select>
+                            <span *ngIf="excludeIndexTypeSelected == 'REGION'">
+                                <select name="ExcludeIndexTypeRegions" [(ngModel)]="excludeIndexTypeRegionsSelected">
+                                    <option *ngFor="#item of regionItems" [value] = "item.value">{{item.name}}</option>
+                                </select>
+                            </span>
+                            <span *ngIf="excludeIndexTypeSelected == 'COUNTRY'">
+                                <select name="ExcludeIndexTypeCountries" [(ngModel)]="excludeIndexTypeCountriesSelected">
+                                    <option *ngFor="#item of countryItems" [value] = "item.value">{{item.name}}</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="indexCodeSelected == 172">
+                    <div class="row">
+                        <div class="col-10">
+                            <div><label>S & P Sub Index</label></div>
+                        </div>
+                        <div class="col-14">
+                            <select name="SPSubIndexCode" [(ngModel)]="spSubIndexCodeSelected">
+                                <option *ngFor="#item of spSubIndexItems" [value] = "item.value">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="indexCodeSelected == 173">
+                    <div class="row">
+                        <div class="col-10">
+                            <div><label>Index Name</label></div>
+                        </div>
+                        <div class="col-14">
+                            <select name="IndexCodeName" [(ngModel)]="indexCodeNameSelected">
+                                <option *ngFor="#item of indexCodeNameItems" [value] = "item.value">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10">
+                            <div><label>>Index Description</label></div>
+                        </div>
+                        <div class="col-14">
+                            <select name="IndexDescriptionCode" [(ngModel)]="indexDescriptionCodeSelected">
+                                <option *ngFor="#item of indexDescriptionCodeItems" [value] = "item.value">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="indexCodeSelected == 174">
+                    174
+                </div>
+                <div *ngIf="indexCodeSelected == 200">
+                    200
+                </div>
+                <div *ngIf="indexCodeSelected == 176">
+                    176
+                </div>
+                <div *ngIf="indexCodeSelected == 186">
+                    186
+                </div>
+                <div *ngIf="indexCodeSelected == 0">
+                    0
+                </div>
+                <div id="buttons">
+                    <button type="submit" class="td-button td-button-secondary">
+                        <span class="glyphicon glyphicon-search"></span>
+                        Submit
+                    </button>
+                </div>
+                <div><displayGrid></displayGrid></div>
+            </form>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>ETF Creation Redemption: Trade Analysis</h2>
+
+            <div class="bs-callout bs-callout-info">
+                <h4>Filters<button class="btn btn-info pull-right" (click)="applyFilter()">Apply</button></h4>
+
+                <table style="border-collapse: separate; border-spacing: 0 1em;" width="19%">
+                    <tbody>
+                        <tr>
+                            <td>Trade Date:</td>
+                            <td><strong>{{ tradeDate }}</strong></td>
+                            <td>
+                                <a [routerLink]="['EtfCreationRedemption']">select another date</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Fund Ticker:</td>
+                            <td colspan="2">
+                                <input type="search" class="form-control text-uppercase" placeholder="all" [(ngModel)]="fundTicker">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Show Trades:</td>
+                            <td colspan="2">
+                                <span class="button-checkbox">
+                                    <button class="btn" [ngClass]="showRecommended  ? 'btn-success' : 'btn-default'" (click)="toggleShowTrades()">
+                                        <span class="glyphicon left-of-text" [ngClass]="showRecommended  ? 'glyphicon-check' : 'glyphicon-unchecked'" aria-hidden="true"></span>
+                                        Recommended
+                                    </button>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <nav style="margin-top: 3em; margin-bottom: 1em;">
+                <button class="btn" [ngClass]="viewMode == filter.ByFund ? 'btn-primary' : 'btn-default'" (click)="changeView(filter.ByFund)">By Fund</button>
+                <button class="btn" [ngClass]="viewMode == filter.ByCountry ? 'btn-primary' : 'btn-default'" (click)="changeView(filter.ByCountry)">By Country</button>
+            </nav>
+
+            <trade-details [viewMode]="viewMode" [trades]="trades"></trade-details>
+
+        </div>
+
+    </div>
+</div>

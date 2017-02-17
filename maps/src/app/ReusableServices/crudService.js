@@ -1,9 +1,18 @@
 "use strict";
-var core_1 = require("@angular/core");
-var alertService_1 = require("./alertService");
-var appSettingsService_1 = require("./appSettingsService");
-var ruleService_1 = require("./ruleService");
-var matrixService_1 = require("./matrixService");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = require('@angular/core');
+var alertService_1 = require('./alertService');
+var appSettingsService_1 = require('./appSettingsService');
+var ruleService_1 = require('./ruleService');
+var matrixService_1 = require('./matrixService');
 var crudService = (function () {
     function crudService(alertService, appSettingsSrv, ruleService, matrixService) {
         this.alertService = alertService;
@@ -23,18 +32,18 @@ var crudService = (function () {
     crudService.prototype.updateInlineRecord = function (columns, gridSettings, pageName, httpProxy) {
         var primaryColumnName = this.matrixService.getPrimaryColumnName(gridSettings);
         var pluginValue = this.matrixService.buildJSONObject(columns, primaryColumnName);
-        if (this.ruleService.validateRulesByRulesConfig(pluginValue, gridSettings["RulesConfig"], columns)) {
+        if (this.ruleService.validateRulesByRulesConfig(pluginValue, gridSettings['RulesConfig'], columns)) {
             this.UpdatePage(pluginValue, pageName, gridSettings, httpProxy);
         }
     };
     crudService.prototype.updateInsertFormRecord = function (columns, gridSettings, pageName, pageType, httpProxy) {
-        for (var colInd in columns) {
+        var _loop_1 = function(colInd) {
             var column = columns[colInd];
-            var type = gridSettings.ColumnConfiguration.find(function (x) { return x.dbColumnName == column.name; });
+            var type = gridSettings.ColumnConfiguration.find(function (x) { return x.dbColumnName === column.name; });
             if (type.dataSourceAddress !== undefined) {
-                var lookupColumnName = type.dataSourceAddress.displayColumnName;
+                var lookupColumnName_1 = type.dataSourceAddress.displayColumnName;
                 var lookupRow = type.dataSource.find(function (row) {
-                    if (row[lookupColumnName] === column.val) {
+                    if (row[lookupColumnName_1] === column.val) {
                         return row;
                     }
                 });
@@ -42,66 +51,50 @@ var crudService = (function () {
                     column.val = lookupRow[type.dataSourceAddress.dbColumnName];
                 }
             }
+        };
+        for (var colInd in columns) {
+            _loop_1(colInd);
         }
         var primaryColumnName = this.matrixService.getPrimaryColumnName(gridSettings);
         var pluginValue = this.matrixService.buildJSONObject(columns, primaryColumnName);
         switch (pageType.toLowerCase()) {
-            case "edit":
+            case 'edit':
                 this.UpdatePage(pluginValue, pageName, gridSettings, httpProxy);
                 break;
-            case "add":
+            case 'add':
                 this.InsertPage(pluginValue, pageName, httpProxy);
                 break;
             default:
-                this.OnCrudOperationSuccess.emit("Cancel");
+                this.OnCrudOperationSuccess.emit('Cancel');
         }
     };
     crudService.prototype.delete = function (columns, pageName, primaryColumnName, httpProxy) {
         var _this = this;
         var data = this.matrixService.buildJSONObject(columns, primaryColumnName);
         if (httpProxy) {
-            httpProxy.ExecuteDelete(data, pageName)
+            httpProxy.ExecuteDelete(data, pageName, primaryColumnName)
                 .subscribe(function (res) {
                 _this.alert.addAlert(_this.appSettingsService.appNotificationsMsg.deletionConfirmationMsg);
-                _this.OnCrudOperationSuccess.emit("DeleteSuccess");
+                _this.OnCrudOperationSuccess.emit('DeleteSuccess');
             }, function (error) {
                 _this.alert.error(_this.appSettingsService.appNotificationsMsg.apiMsg.apiDelete + error.status);
             }, function () {
             });
         }
     };
-    /*buildJSONObject(columns,primaryColumnName) {
-        var data = columns;
-        var jsonValue = '{ ';
-        for (var i = 0; i < data.length; i++) {
-            var dbName = data[i].name;
-            var editedValue = JSON.stringify(data[i].val);
-            if(primaryColumnName == dbName && (data[i].val == "" || data[i].val == undefined ))
-            {
-                editedValue = JSON.stringify(0);
-            }
-            (i + 1) == data.length ? jsonValue += "\"" + dbName + "\" : " + editedValue : jsonValue += "\"" + dbName + "\" : " + editedValue + ",";
-        }
-        jsonValue += ' }';
-
-        var returndata = JSON.parse(jsonValue);
-        console.log(returndata);
-        return returndata;
-    }*/
     crudService.prototype.UpdatePage = function (returndata, pageName, gridSettings, httpProxy) {
         var _this = this;
         var PrimaryKeyColumn = undefined;
         if (httpProxy) {
-            if (gridSettings["PrimaryKeyColumn"]) {
-                PrimaryKeyColumn = gridSettings["PrimaryKeyColumn"];
+            if (gridSettings['PrimaryKeyColumn']) {
+                PrimaryKeyColumn = gridSettings['PrimaryKeyColumn'];
             }
             httpProxy.ExecuteUpdate(returndata, pageName, PrimaryKeyColumn)
                 .subscribe(function (res) {
-                //alert("Record updated successfully");
                 _this.alert.addAlert(_this.appSettingsService.appNotificationsMsg.saveConfirmedMsg);
-                _this.OnCrudOperationSuccess.emit("UpdateSucceeded");
+                _this.OnCrudOperationSuccess.emit('UpdateSucceeded');
             }, function (error) {
-                _this.alert.error("async error #" + error.status);
+                _this.alert.error('async error #' + error.status);
             }, function () {
             });
         }
@@ -111,11 +104,10 @@ var crudService = (function () {
         if (httpProxy) {
             httpProxy.ExecuteInsert(data, pageName)
                 .subscribe(function (res) {
-                //  alert("Record inserted successfully");
                 _this.alert.addAlert(_this.appSettingsService.appNotificationsMsg.insertMSG);
-                _this.OnCrudOperationSuccess.emit("InsertSucceeded");
+                _this.OnCrudOperationSuccess.emit('InsertSucceeded');
             }, function (error) {
-                _this.alert.error("async error #" + error.status);
+                _this.alert.error('async error #' + error.status);
             }, function () { });
         }
     };

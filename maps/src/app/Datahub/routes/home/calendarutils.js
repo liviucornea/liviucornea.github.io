@@ -26,7 +26,7 @@ var calendarutils = (function () {
         }
         return offset;
     };
-    calendarutils.isEventIsPeriod = function (_a) {
+    calendarutils.isEventInPeriod = function (_a) {
         var event = _a.event, periodStart = _a.periodStart, periodEnd = _a.periodEnd;
         var eventStart = event.start;
         var eventEnd = event.end || event.start;
@@ -51,7 +51,7 @@ var calendarutils = (function () {
         var events = _a.events, periodStart = _a.periodStart, periodEnd = _a.periodEnd;
         if (events) {
             return events.filter(function (event) {
-                return calendarutils.isEventIsPeriod({ event: event, periodStart: periodStart, periodEnd: periodEnd });
+                return calendarutils.isEventInPeriod({ event: event, periodStart: periodStart, periodEnd: periodEnd });
             });
         }
         else {
@@ -83,7 +83,11 @@ var calendarutils = (function () {
         var events = _a.events, viewDate = _a.viewDate, weekStartsOn = _a.weekStartsOn;
         var startOfViewWeek = fns_1.fns.startOfWeek(viewDate, { weekStartsOn: weekStartsOn });
         var endOfViewWeek = fns_1.fns.endOfWeek(viewDate, { weekStartsOn: weekStartsOn });
-        var eventsMapped = calendarutils.getEventsInPeriod({ events: events, periodStart: startOfViewWeek, periodEnd: endOfViewWeek }).map(function (event) {
+        var eventsMapped = calendarutils.getEventsInPeriod({
+            events: events,
+            periodStart: startOfViewWeek,
+            periodEnd: endOfViewWeek
+        }).map(function (event) {
             var offset = calendarutils.getWeekViewEventOffset(event, startOfViewWeek);
             var span = calendarutils.getWeekViewEventSpan(event, offset, startOfViewWeek);
             return {
@@ -170,9 +174,11 @@ var calendarutils = (function () {
         for (var i = 0; i < rows; i++) {
             rowOffsets.push(i * 7);
         }
+        var longEvents = calendarutils.getLongEvents(eventsInMonth);
         return {
             rowOffsets: rowOffsets,
-            days: days
+            days: days,
+            longEvents: longEvents
         };
     };
     calendarutils.getDayView = function (_a) {
@@ -181,7 +187,9 @@ var calendarutils = (function () {
         var endOfView = fns_1.fns.setMinutes(fns_1.fns.setHours(fns_1.fns.startOfMinute(fns_1.fns.endOfDay(viewDate)), dayEnd.hour), dayEnd.minute);
         var previousDayEvents = [];
         var dayViewEvents = calendarutils.getEventsInPeriod({
-            events: events.filter(function (event) { return !event.allDay; }),
+            events: events.filter(function (event) {
+                return !event.allDay;
+            }),
             periodStart: startOfView,
             periodEnd: endOfView
         }).sort(function (eventA, eventB) {
@@ -231,10 +239,16 @@ var calendarutils = (function () {
                 previousDayEvents.push(dayEvent);
             }
             return dayEvent;
-        }).filter(function (dayEvent) { return dayEvent.height > 0; });
-        var width = Math.max.apply(Math, dayViewEvents.map(function (event) { return event.left + event.width; }));
+        }).filter(function (dayEvent) {
+            return dayEvent.height > 0;
+        });
+        var width = Math.max.apply(Math, dayViewEvents.map(function (event) {
+            return event.left + event.width;
+        }));
         var allDayEvents = calendarutils.getEventsInPeriod({
-            events: events.filter(function (event) { return event.allDay; }),
+            events: events.filter(function (event) {
+                return event.allDay;
+            }),
             periodStart: startOfView,
             periodEnd: endOfView
         });
@@ -267,6 +281,39 @@ var calendarutils = (function () {
             }
         }
         return hours;
+    };
+    calendarutils.islongEvent = function (event) {
+        var endDay = event.end.getDate();
+        var dayAfterEventStart = event.start.getDate() + 1;
+        // check if the event lasts more than one day
+        if (endDay > dayAfterEventStart) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    calendarutils.getLongEvents = function (events) {
+        var longEvents = [];
+        for (var _i = 0, events_2 = events; _i < events_2.length; _i++) {
+            var event_1 = events_2[_i];
+            if (event_1.islongEvent) {
+                longEvents.push(event_1);
+            }
+        }
+        return longEvents;
+    };
+    calendarutils.getEventColor = function (status) {
+        switch (status.toLowerCase()) {
+            case 'fatal':
+                return 'cal-color-fatal';
+            case 'future':
+                return 'cal-color-future';
+            case 'ok':
+                return 'cal-color-ok';
+            default:
+                return 'cal-color-standard';
+        }
     };
     calendarutils.WEEKEND_DAY_NUMBERS = [0, 6];
     calendarutils.DAYS_IN_WEEK = 7;

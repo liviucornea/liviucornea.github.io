@@ -139,8 +139,8 @@ export class Drive {
 
     //properties for UI usage
     public ChartType: string = 'pie';
-    public ChartLabels: string[] = [];
-    public ChartData: number[] = [];
+    public ChartLabels: string[] = ['UsedDiskSpaceInGB', 'FreeDiskSpaceInGB'];
+    public ChartData: number[] = [0,0];
     public ChartOptions: any = {
         legend: {
             display: true,

@@ -9,21 +9,19 @@
     "removeComments": false,
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
-    "noEmitHelpers": true,
     "strictNullChecks": false,
     "baseUrl": "./Scripts",
     "allowJs": true,
+
     "paths": {
     }
   }
   ,
   "exclude": [
-    "node_modules"
+    "node_modules", "dist"
   ],
   "awesomeTypescriptLoaderOptions": {
     "forkChecker": true,
     "useWebpackText": true
   }
 }
-
-

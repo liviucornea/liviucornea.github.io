@@ -1,11 +1,15 @@
 "use strict";
+function replaceAll(str, find, replace) {
+    return str.replace(new RegExp(find, 'g'), replace);
+}
+exports.replaceAll = replaceAll;
 function getIdValue(obj, primaryKeyColumn) {
     var Id;
     if (!primaryKeyColumn) {
-        primaryKeyColumn = "Id";
+        primaryKeyColumn = 'Id';
     }
     for (var i = 0; i < Object.keys(obj).length; i++) {
-        if (Object.keys(obj)[i] === primaryKeyColumn || Object.keys(obj)[i] === "Id") {
+        if (Object.keys(obj)[i] === primaryKeyColumn || Object.keys(obj)[i] === 'Id') {
             Id = obj[Object.keys(obj)[i]];
             break;
         }
@@ -15,8 +19,8 @@ function getIdValue(obj, primaryKeyColumn) {
 exports.getIdValue = getIdValue;
 function toDateString(date) {
     return (date.getUTCFullYear().toString() + '-' +
-        ("0" + (date.getUTCMonth() + 1)).slice(-2) + '-' +
-        ("0" + (date.getUTCDate())).slice(-2));
+        ('0' + (date.getUTCMonth() + 1)).slice(-2) + '-' +
+        ('0' + (date.getUTCDate())).slice(-2));
 }
 exports.toDateString = toDateString;
 function toUTCDate(date) {

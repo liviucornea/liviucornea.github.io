@@ -1,0 +1,51 @@
+<div>
+    <span  (click)="expanded = !expanded">{{title}}</span>
+    <div  *ngIf="expanded" >
+        <div>
+            <table id="editList">
+                <tr *ngFor="#item of Items">
+                    <td class="tdUl"><ul><li></li></ul></td>
+                    <td class="tdLeft"><span>{{item.label}}</span></td>
+                    <td class="tdMiddle">
+                        <input *ngIf="item.objType =='textbox'" #theValue readonly="{{item.readOnly}}" type="text" class="neutral sizedInpt" [ngClass]="{neutral: !item.isChanged, changed: item.isChanged}" [(ngModel)]="item.value" (keyup)="checkIt($event, item)" (ngModelChange)="itemChanged(item)">
+
+                        <select *ngIf="item.objType =='dropdown'" class="sizedSelect" #theValue [ngClass]="{neutral: !item.isChanged, changed: item.isChanged}" [(ngModel)]="item.value" (ngModelChange)="itemChanged(item)">
+                            <option  *ngFor="#itemOption of item.listValues"  value="{{itemOption}}">{{itemOption}}</option>
+                        </select>
+                    </td>
+                    <td class="tdRight">
+                        <button style="height: 25px;" *ngIf="showEdit" type="button" class="tdam-button tdam-button-secondary" (click)="removeItem(item)">
+                            <span  class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div>
+            <button *ngIf="showEdit && hierarchyLvl != 3" class="tdam-button tdam-button-secondary" (click)="adding = true"><span class="glyphicon glyphicon-plus-sign"></span>New Property</button>
+            <button class="tdam-button tdam-button-secondary" (click)="resetAll()" *ngIf="!formIsClean && showEdit">Reset All</button>
+        </div>
+
+    </div>
+    <div *ngIf="adding">
+        <br>
+        <span *ngIf="hasValidTemplate"><input type="checkbox" [(ngModel)]="fromPredefined" value="true" (click)="usePredefinedKeys()"> Use template Values<br></span>
+        <span *ngIf="fromPredefined">
+                <select class="addNewSelect" [(ngModel)]="newKey" #objKey (change)="showOptionsForKeyValue(objKey.value)">
+                    <option *ngFor="#itemOption of preDefinedJsonKeys"  value="{{itemOption}}">{{itemOption}}</option>
+                </select>
+        </span>
+
+        <input class="addNewInput" *ngIf="!fromPredefined" #objKey placeholder="json key" [(ngModel)]="newKey" (keyup)="cleanIt(objKey)"/>
+
+        <input class="addNewInput" *ngIf="keyValueTypeObj == 'textbox'" #objValue placeholder="value" [(ngModel)]="newKeyValue" (keyup)="cleanIt(objValue)" />
+        <select class="addNewSelect" *ngIf="keyValueTypeObj =='dropdown'" [(ngModel)]="newKeyValue">
+            <option  *ngFor="#itemOption of keyValueTypeOptions"  value="{{itemOption}}">{{itemOption}}</option>
+        </select>
+        <button *ngIf="showEdit"  class="tdam-button tdam-button-secondary" (click)="saveNewProp(newKey ,newKeyValue)"><span class="glyphicon glyphicon-save"></span></button>
+        <button *ngIf="showEdit"  class="tdam-button tdam-button-secondary" (click)="adding = false"><span class="glyphicon glyphicon-ban-circle"></span></button>
+    </div>
+
+
+</div>

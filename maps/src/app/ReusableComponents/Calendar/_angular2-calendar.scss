@@ -2,6 +2,9 @@
 // Month View
 // ------------------------
 
+$cal-cell-top-height: 50px;
+$long-event-height: 20px;
+
 .cal-month-view {
 
   .cal-cell {
@@ -32,14 +35,17 @@
     display: -ms-flexbox;
     -js-display: flex;
     display: flex;
+    position: relative;
   }
 
   .cal-cell-top {
-    min-height: 62px;
+    min-height: $cal-cell-top-height;
+    text-align: left;
   }
 
   .cal-day-cell {
-    min-height: 100px;
+    //min-height: 100px;
+    //min-height: 155px;
 
     &.cal-in-month.cal-has-events {
       cursor: pointer;
@@ -76,7 +82,7 @@
     border-bottom: 0;
 
     .cal-cell-row {
-      border-bottom: 1px solid;
+      //border-bottom: 1px solid;
     }
   }
 
@@ -269,7 +275,7 @@
 // Badges
 // ------------------------
 
-.cal-day-badge {
+.cal-badge {
   border-radius: 10px;
   display: inline-block;
   // font-size
@@ -281,54 +287,51 @@
   min-width: 10px;
   padding: 3px 7px;
   text-align: center;
-  vertical-align: middle;
   white-space: nowrap;
 }
 
-.cal-day-badge-fatal {
-  border-radius: 10px;
-  display: inline-block;
-  // font-size
-  @include em(12px);
-  font-weight: 700;
-  line-height: 1;
-  margin-top: 18px;
-  margin-left: 10px;
-  min-width: 10px;
-  padding: 3px 7px;
-  text-align: center;
-  vertical-align: bottom;
-  white-space: nowrap;
+.cal-long-event-row {
+  max-height: 134px;
+  /* accomplished by link */
+  overflow: hidden;
+  position: absolute;
+  //bottom: 0;
+  //left: 0;
+  padding-top: $cal-cell-top-height;
+  width: 100%;
 }
 
-.cal-day-badge-future {
-  border-radius: 10px;
-  display: inline-block;
-  // font-size
-  @include em(12px);
-  font-weight: 700;
-  line-height: 1;
-  margin-top: 18px;
-  margin-left: 10px;
-  min-width: 10px;
-  padding: 3px 7px;
-  text-align: center;
-  vertical-align: bottom;
-  white-space: nowrap;
+.cal-long-event-row-many-events {
+  bottom: 0;
 }
 
-.cal-day-badge-ok {
-  border-radius: 10px;
-  display: inline-block;
-  // font-size
-  @include em(12px);
-  font-weight: 700;
-  line-height: 1;
-  margin-top: 18px;
-  margin-left: 10px;
-  min-width: 10px;
-  padding: 3px 7px;
-  text-align: center;
-  vertical-align: bottom;
-  white-space: nowrap;
+.long-event {
+  border: 1px solid;
+  border-radius: $border-radius-minor;
+  @include em(11px);
+  height: $long-event-height;
+  margin-bottom: 1px;
+  max-height: 21px;
+  overflow: hidden;
+}
+
+.long-event-status-indicator {
+  height: $long-event-height;
+  width: 10px;
+}
+
+.cal-bordered-row {
+  border-bottom: 1px solid;
+}
+
+.additional-events-arrow {
+  position: absolute;
+  bottom: 0;
+  margin-left: -15px;
+  padding-bottom: 3px;
+  padding-right: 5px;
+}
+
+.cal-cell-wrapper:not(:last-child) {
+    border-right: 1px solid;
 }

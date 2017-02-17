@@ -4,9 +4,16 @@
             <form #genericForm="ngForm" (ngSubmit)="saveClicked()">
                 <template ngFor let-ln [ngForOf]="editViewRowDataTable">
                     <div class="form-group">
-                        <label [attr.for]="ln.sequence"><strong>{{ln.label | LocalizationTranslate}}:</strong></label>
                         <template [ngIf]="ln.htmlControlType == 'text'">
-                            <input name={{ln.label}} class="form-control" #name="ngModel" [attr.Id]="ln.sequence" type={{ln.htmlControlType}} [(ngModel)]="ln.val" checked={{ln.val}} [disabled]="!ln.visibility || ln.readOnly">
+                            <mat-input>
+                                <label [attr.for]="ln.sequence" class="form-label">
+                                    <strong>{{ln.label | LocalizationTranslate}}:</strong>
+                                </label>
+                                <input name={{ln.label}}  #name="ngModel"
+                                       [attr.Id]="ln.sequence"
+                                       type={{ln.htmlControlType}} [(ngModel)]="ln.val" checked={{ln.val}}
+                                       [disabled]="!ln.visibility || ln.readOnly">
+                            </mat-input>
                             <template ngFor let-er [ngForOf]="ln.errors">
                                 <div class="alert alert-danger">
                                     {{er | LocalizationTranslate}}
@@ -14,7 +21,12 @@
                             </template>
                         </template>
                         <template [ngIf]="ln.htmlControlType === 'checkbox'">
-                            <input name={{ln.label}} class="form-control" #name="ngModel" [attr.Id]="ln.sequence" type="checkbox" [(ngModel)]="ln.val" [disabled]="!ln.visibility || ln.readOnly" (click)="inputClicked(ln)">
+                            <label [attr.for]="ln.sequence" class="form-label">
+                                <strong>{{ln.label | LocalizationTranslate}}:</strong>
+                            </label>
+                            <input name={{ln.label}} class="form-control" #name="ngModel" [attr.Id]="ln.sequence"
+                                   type="checkbox" [(ngModel)]="ln.val" [disabled]="!ln.visibility || ln.readOnly"
+                                   (click)="inputClicked(ln)">
                             <template ngFor let-er [ngForOf]="ln.errors">
                                 <div class="alert alert-danger">
                                     {{er | LocalizationTranslate}}
@@ -22,9 +34,18 @@
                             </template>
                         </template>
                         <template [ngIf]="ln.htmlControlType === 'select'">
-                            <select name={{ln.label}} class="form-control" #name="ngModel" [(ngModel)]="ln.val" [attr.Id]="ln.sequence" [disabled]="!ln.visibility || ln.readOnly">
-                                <option *ngFor="let itemOption of ln.dataSource" value="{{itemOption.Value}}" selected="ln.val == itemOption.Value">{{itemOption.Description | LocalizationTranslate}}</option>
-                            </select>
+                            <mat-input>
+                                <label [attr.for]="ln.sequence" class="form-label">
+                                    <strong>{{ln.label | LocalizationTranslate}}:</strong>
+                                </label>
+                                <select name={{ln.label}} #name="ngModel" [(ngModel)]="ln.val"
+                                        [attr.Id]="ln.sequence" [disabled]="!ln.visibility || ln.readOnly">
+                                    <option *ngFor="let itemOption of ln.dataSource" value="{{itemOption.Value}}"
+                                            selected="ln.val == itemOption.Value">{{itemOption.Description |
+                                        LocalizationTranslate}}
+                                    </option>
+                                </select>
+                            </mat-input>
                             <template ngFor let-er [ngForOf]="ln.errors">
                                 <div class="alert alert-danger">
                                     {{er | LocalizationTranslate}}
@@ -32,7 +53,13 @@
                             </template>
                         </template>
                         <template [ngIf]="ln.htmlControlType === 'customselect'">
-                            <customDropDown [DataSource]="ln.customdataSource" [selectedValue]="ln.val" (DropDownEmitter)="getDropDownResult($event,ln)"></customDropDown>
+                            <mat-input>
+                                <label [attr.for]="ln.sequence" class="form-label">
+                                    <strong>{{ln.label | LocalizationTranslate}}:</strong>
+                                </label>
+                                <customDropDown [DataSource]="ln.customdataSource" [selectedValue]="ln.val"
+                                                (DropDownEmitter)="getDropDownResult($event,ln)"></customDropDown>
+                            </mat-input>
                             <template ngFor let-er [ngForOf]="ln.errors">
                                 <div class="alert alert-danger">
                                     {{er | LocalizationTranslate}}
@@ -40,9 +67,14 @@
                             </template>
                         </template>
                         <template [ngIf]="ln.htmlControlType === 'radio'">
+                            <label [attr.for]="ln.sequence" class="form-label">
+                                <strong>{{ln.label | LocalizationTranslate}}:</strong>
+                            </label>
                             <template ngFor let-itemOption [ngForOf]="ln.dataSource">
                                 <div class="row">
-                                    <input name="ln.objId" type="radio" [(ngModel)]="ln.val" [disabled]="!ln.visibility || ln.readOnly" value="{{itemOption}}"><span class="float-xs-left">{{' ' + (itemOption | LocalizationTranslate) + '    '}}</span>
+                                    <input name="ln.objId" type="radio" [(ngModel)]="ln.val"
+                                           [disabled]="!ln.visibility || ln.readOnly" value="{{itemOption}}"><span
+                                        class="float-xs-left">{{' ' + (itemOption | LocalizationTranslate) + '    '}}</span>
                                 </div>
                             </template>
                             <template ngFor let-er [ngForOf]="ln.errors">
@@ -53,13 +85,14 @@
                         </template>
                     </div>
                 </template>
-                <div id="buttons">
-                    <button type="submit" title="{{'Save' | LocalizationTranslate}}" class="button-standard ">
-                        <span class="fa fa-floppy-o fa-lg"></span>
+                <div id="buttons" class="form-group">
+                    <button type="submit" title="{{'Save' | LocalizationTranslate}}" class="btn btn-td">
+                        <span class="fa fa-floppy-o"></span>
                         {{"Save" | LocalizationTranslate}}
                     </button>
-                    <button type="button" title="{{'Cancel' | LocalizationTranslate}}" (click)="cancelClicked()" class="button-standard " *ngIf="!IsHideCancel">
-                        <span class="fa fa-ban fa-lg"></span>
+                    <button type="button" title="{{'Cancel' | LocalizationTranslate}}" (click)="cancelClicked()"
+                            class="btn btn-td" *ngIf="!IsHideCancel">
+                        <span class="fa fa-ba"></span>
                         {{"Cancel" | LocalizationTranslate}}
                     </button>
                 </div>

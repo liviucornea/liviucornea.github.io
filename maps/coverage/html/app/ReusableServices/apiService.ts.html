@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for app\ReusableServices\apiService.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">app/ReusableServices/</a> apiService.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">36.84% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>28/76</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/19</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">8.33% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>2/24</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">39.39% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>26/66</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { HttpAbstract } from './httpAbstract';
+import { AppSettingsService } from './appSettingsService';
+&nbsp;
+export class AuthUser {
+&nbsp;
+    CostCentre: string;
+<span class="cstat-no" title="statement not covered" >    Id: number = 0;</span>
+    Login: string;
+    Name: string;
+    LoginName: string;
+&nbsp;
+<span class="fstat-no" title="function not covered" >    constructor() {</span>
+    }
+}
+&nbsp;
+@Injectable()
+export class ApiService {
+    httpAbs: HttpAbstract;
+<span class="cstat-no" title="statement not covered" >    prefixurl: string = '/auth';</span>
+<span class="cstat-no" title="statement not covered" >    contentType: string = 'application/json; charset=utf-8';</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    base: string = this.appSettingsService.appSettings.apiSettings.apiURL_BASE + '/api/tdam/datahub/ae';</span>
+<span class="cstat-no" title="statement not covered" >    currentuserbaseurl: string = this.prefixurl + '/currentuser';</span>
+<span class="cstat-no" title="statement not covered" >    logbaseurl: string = '/log';</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    sqlStatementsUrl: string = '/application/sqlstatementdetail';</span>
+    CurrentUser: AuthUser;
+&nbsp;
+    constructor(private <span class="cstat-no" title="statement not covered" >abstractHttp: HttpAbstract,</span> private <span class="cstat-no" title="statement not covered" >appSettingsService: AppSettingsService<span class="fstat-no" title="function not covered" >)</span> {</span>
+<span class="cstat-no" title="statement not covered" >        this.httpAbs = abstractHttp;</span>
+<span class="cstat-no" title="statement not covered" >        this.httpAbs.setBaseAddress(this.base);</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    setApplicationsBaseUrl() {</span>
+<span class="cstat-no" title="statement not covered" >        this.httpAbs = this.abstractHttp;</span>
+<span class="cstat-no" title="statement not covered" >        this.httpAbs.setBaseAddress(this.base);</span>
+    }
+&nbsp;
+    getArrayFromQuery(dataKey: string, <span class="cstat-no" title="statement not covered" >reportOptions: string = '{}'<span class="fstat-no" title="function not covered" >)</span>: Observable&lt;any&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        return this.httpAbs.fetchWithFilter(this.sqlStatementsUrl + '/' + dataKey</span>
+            , reportOptions
+            , this.contentType);
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    getMultipleArrayFromQuery(dataKeys: Array&lt;any&gt;<span class="fstat-no" title="function not covered" >): Observable&lt;any&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >        dataKeys.forEach(x<span class="fstat-no" title="function not covered" > =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >            x.url = this.sqlStatementsUrl + '/' + x.url;</span>
+<span class="cstat-no" title="statement not covered" >            x.body = x.body ? x.body : '{}';</span>
+        });
+<span class="cstat-no" title="statement not covered" >        return this.httpAbs.fetchMultiple(dataKeys, this.contentType);</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    executeMultipleNonQuery(dataKeys: Array&lt;any&gt;<span class="fstat-no" title="function not covered" >): Observable&lt;any&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >        dataKeys.forEach(x<span class="fstat-no" title="function not covered" > =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >            x.url = this.sqlStatementsUrl + '/executenonquery/' + x.url;</span>
+<span class="cstat-no" title="statement not covered" >            x.body = x.body ? x.body : '{}';</span>
+        });
+<span class="cstat-no" title="statement not covered" >        return this.httpAbs.fetchMultiple(dataKeys, this.contentType);</span>
+    }
+&nbsp;
+    executeNonQuery(dataKey: string, <span class="cstat-no" title="statement not covered" >reportOptions: string = '{}'<span class="fstat-no" title="function not covered" >)</span>: Observable&lt;any&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        return this.httpAbs.fetchWithFilter(this.sqlStatementsUrl + '/executenonquery/' + dataKey</span>
+            , reportOptions
+            , this.contentType);
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    getAuthCurrentUser() {</span>
+<span class="cstat-no" title="statement not covered" >        return this.httpAbs.fetch(this.currentuserbaseurl);</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    getAuthCurrentUserRoles() {</span>
+<span class="cstat-no" title="statement not covered" >        return this.httpAbs.fetch(this.currentuserbaseurl + '/role');</span>
+    }
+&nbsp;
+    checkUserAuthorization(routepath: string<span class="fstat-no" title="function not covered" >) {</span>
+<span class="cstat-no" title="statement not covered" >        return this.httpAbs.fetch(this.currentuserbaseurl + '/checkpermission?route=' + routepath);</span>
+    }
+&nbsp;
+    fetchMultipleList(urlList: Array&lt;any&gt;<span class="fstat-no" title="function not covered" >) {</span>
+<span class="cstat-no" title="statement not covered" >        return this.httpAbs.fetchMultiple(urlList);</span>
+    }
+&nbsp;
+    fetchMultipleListWithBody(urldataList: Array&lt;any&gt;<span class="fstat-no" title="function not covered" >) {</span>
+<span class="cstat-no" title="statement not covered" >        return this.httpAbs.fetchMultiple(urldataList, this.contentType);</span>
+    }
+&nbsp;
+    updateBulkRecords(apiParams: string, jsonData: string, headerKey?: string, headers?: string<span class="fstat-no" title="function not covered" >) {</span>
+<span class="cstat-no" title="statement not covered" >        return this.httpAbs.updateBulkRecords(apiParams, jsonData, headerKey, headers, this.contentType);</span>
+    }
+&nbsp;
+    removeBulkRecords(apiParams: string, jsonData: string, headerKey?: string, headers?: string<span class="fstat-no" title="function not covered" >) {</span>
+<span class="cstat-no" title="statement not covered" >        return this.httpAbs.removeBulkRecords(apiParams, jsonData, headerKey, headers, this.contentType);</span>
+    }
+&nbsp;
+    insertBulkRecords(apiParams: string, jsonData: string, headerKey?: string, headers?: string<span class="fstat-no" title="function not covered" >) {</span>
+<span class="cstat-no" title="statement not covered" >        return this.httpAbs.insertBulkRecords(apiParams, jsonData, headerKey, headers, this.contentType);</span>
+    }
+&nbsp;
+    ExecuteUpdate(obj, pagename, <span class="cstat-no" title="statement not covered" >primaryKeyColumn = ''<span class="fstat-no" title="function not covered" >)</span> {</span>
+<span class="cstat-no" title="statement not covered" >        switch (pagename.toLowerCase()) {</span>
+            default:
+<span class="cstat-no" title="statement not covered" >                break;</span>
+        }
+    }
+&nbsp;
+    ExecutePageFilter(pagename, filterObject: string<span class="fstat-no" title="function not covered" >) {</span>
+<span class="cstat-no" title="statement not covered" >        switch (pagename.toLowerCase()) {</span>
+            default:
+<span class="cstat-no" title="statement not covered" >                break;</span>
+        }
+    }
+&nbsp;
+&nbsp;
+    ExecutePageRefresh(pagename, <span class="cstat-no" title="statement not covered" >id = null<span class="fstat-no" title="function not covered" >)</span> {</span>
+<span class="cstat-no" title="statement not covered" >        switch (pagename.toLowerCase()) {</span>
+            default:
+<span class="cstat-no" title="statement not covered" >                break;</span>
+        }
+    }
+&nbsp;
+    ExecuteDelete(obj, pagename, <span class="cstat-no" title="statement not covered" >primaryKeyColumn = ''<span class="fstat-no" title="function not covered" >)</span> {</span>
+<span class="cstat-no" title="statement not covered" >        switch (pagename.toLowerCase()) {</span>
+            default:
+<span class="cstat-no" title="statement not covered" >                break;</span>
+        }
+    }
+&nbsp;
+    ExecuteInsert(obj, pagename<span class="fstat-no" title="function not covered" >) {</span>
+<span class="cstat-no" title="statement not covered" >        switch (pagename.toLowerCase()) {</span>
+            default:
+<span class="cstat-no" title="statement not covered" >                break;</span>
+        }
+    }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Feb 10 2017 20:37:00 GMT-0500 (Eastern Standard Time)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

@@ -1,0 +1,267 @@
+/*******************************************************/
+/* Header
+/*******************************************************/
+
+.tdam-layout-row#tdam-layout-header {
+  clear: both
+}
+
+#tdam-logo {
+  margin: 0 0 0px 0;
+  font-size: 1px;
+  line-height: 1
+}
+
+#tdam-logo a:hover, #tdam-logo a:focus {
+  background-color: transparent;
+}
+
+#tdam-layout-nav-main.tdam-logo-top-nav {
+  top: -12px
+}
+
+.tdam-logo-top-nav #tdam-nav-level2 #tdam-logo {
+  margin: 0 -27px 0 0;
+  min-width: 100px;
+  position: relative;
+  z-index: 10;
+}
+
+.tdam-logo-top-nav #tdam-logo img {
+  left: 10px;
+  margin-left: 3px;
+  position: absolute;
+  top: -32px;
+}
+
+.tdam-logo-top-nav #tdam-nav-level2.tdam-nav-level2-fullwidth ul {
+  display: block
+}
+
+.tdam-logo-top-nav #tdam-nav-level2.tdam-nav-level2-fullwidth li {
+  display: inline-block;
+  min-width: inherit;
+}
+
+.tdam-logo-top-nav #tdam-nav-level2 li span.tdam-nav-level2-label {
+  cursor: default
+}
+
+#tdam-nav-level2.tdam-nav-level2-tall ul li span.tdam-nav-level2-label {
+  font-size: 16px;
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    background: $navbar-link-hover-bg-color;
+    background: -moz-linear-gradient(top, $almost-white 0%, $white 25%, $white 25%, $white 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $almost-white), color-stop(25%, $white), color-stop(25%, $white), color-stop(100%, $white));
+    background: -webkit-linear-gradient(top, $almost-white 0%, $white 25%, $white 25%, $white 100%);
+    background: -o-linear-gradient(top, $almost-white 0%, $white 25%, $white 25%, $white 100%);
+    background: -ms-linear-gradient(top, $almost-white 0%, $white 25%, $white 25%, $white 100%);
+    background: linear-gradient(top, $almost-white 0%, $white 25%, $white 25%, $white 100%);
+    -pie-background: linear-gradient(top, $almost-white 0%, $white 25%, $white 100%);
+    border-bottom: 4px solid $white;
+    z-index: 2;
+    color: $text-color;
+  }
+
+}
+
+.tdam-logo-top-nav #tdam-search-li {
+  border: none;
+  margin-left: 15px;
+}
+
+.tdam-logo-top-nav #tdam-website-shortcuts-li, .tdam-logo-top-nav #tdam-logout-button-li {
+  border: medium none;
+}
+
+/*******************************************************/
+/* Top Nav
+/*******************************************************/
+.tdam-layout-row#tdam-layout-nav-main {
+  position: relative;
+  z-index: 3;
+  margin-bottom: 12px;
+}
+
+/* Level 2 */
+#tdam-nav-level2 {
+  font-size: 13px;
+  line-height: 1.5em;
+  border: 1px solid $navbar-border-color;
+  border-top: none;
+  padding: 0 12px;
+  margin: 0 -24px;
+  _margin: 0;
+  position: relative;
+  background-color: $navbar-bg-color;
+  -moz-box-shadow: 0 4px 12px $almost-white;
+  -webkit-box-shadow: 0 4px 12px $almost-white;
+  box-shadow: 0 4px 12px $almost-white;
+  z-index: 2
+}
+
+#tdam-nav-level2.tdam-nav-level2-unassisted {
+  border-top: 1px solid $navbar-border-color;
+  border-right: 1px solid $navbar-vertical-border-color;
+  border-left: 1px solid $navbar-vertical-border-color;
+}
+
+#tdam-nav-level2 ul {
+  margin: 0;
+  padding: 0 0 0 10px;
+  list-style: none
+}
+
+#tdam-nav-level2 ul li {
+  position: relative;
+  float: left;
+  padding: 0;
+  margin: 0;
+  background: none;
+  vertical-align: middle;
+}
+
+#tdam-nav-level2 ul li span.tdam-nav-level2-label {
+  display: -moz-inline-box;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  padding: 7px 12px 5px 12px;
+  margin: 0;
+  position: relative;
+  border-bottom: 4px solid transparent;
+  _filter: chroma(color=pink);
+  color: $navbar-link-color;
+}
+
+#tdam-nav-level2 ul li span.tdam-nav-level2-label a:hover, #tdam-nav-level2 ul li span.tdam-nav-level2-label a:focus {
+  text-decoration: underline;
+  background-color: transparent
+}
+
+#tdam-nav-level2 ul li a.list-group-item-info {
+  font-weight: bold;
+  border-bottom: 4px solid $navbar-list-group-item-color;
+  position: relative;
+  /* bootstrap override */
+  background: none;
+}
+
+#tdam-nav-level2 ul li span.tdam-nav-level2-indicator {
+  font-size: 1;
+  line-height: 1;
+  position: absolute;
+  left: -9999px;
+}
+
+/* Level 2 full width */
+#tdam-nav-level2.tdam-nav-level2-fullwidth {
+  width: 100%;
+  display: table;
+  padding: 0;
+  margin: 0;
+}
+
+.tdam-layout-grid15 #tdam-nav-level2.tdam-nav-level2-fullwidth {
+  width: 994px
+}
+
+#tdam-nav-level2.tdam-nav-level2-fullwidth ul {
+  display: table-row;
+  padding: 0 0 0 10px;
+  list-style: none
+}
+
+#tdam-nav-level2.tdam-nav-level2-fullwidth ul li {
+  min-width: 100px;
+  display: table-cell;
+  position: relative;
+  float: none;
+  padding: 0;
+  margin: 0;
+  background: none;
+  text-align: center;
+}
+
+#tdam-nav-level2.tdam-nav-level2-fullwidth ul li span.tdam-nav-level2-label {
+  display: -moz-inline-box;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+
+* html #tdam-nav-level2.tdam-nav-level2-fullwidth ul li {
+  float: left
+}
+
+* + html #tdam-nav-level2.tdam-nav-level2-fullwidth ul li {
+  float: left
+}
+
+/* Tall nav */
+#tdam-nav-level2.tdam-nav-level2-tall ul li { /*margin:0 12px 0 0;*/
+  margin: 0 4px 0 0;
+}
+
+#tdam-nav-level2.tdam-nav-level2-tall ul li span.tdam-nav-level2-label {
+  padding-top: 8px;
+  padding-bottom: 7px;
+  font-size: 16px
+}
+
+ul.tdam-list-links.menu-gridlist-col-1 {
+  -webkit-column-count: 1;
+  -moz-column-count: 1;
+  column-count: 1;
+  li {
+    display: inline-block;
+  }
+}
+
+ul.tdam-list-links.menu-gridlist-col-2 {
+  -webkit-column-count: 2;
+  -moz-column-count: 2;
+  column-count: 2;
+  li {
+    display: inline-block;
+  }
+}
+
+ul.tdam-list-links.menu-gridlist-col-3 {
+  -webkit-column-count: 3;
+  -moz-column-count: 3;
+  column-count: 3;
+  li {
+    display: inline-block;
+  }
+}
+
+#navbar-alerts {
+  background-color: $navbar-alerts-bg-color;
+  border: 1px solid $navbar-alerts-border-color;
+  margin-top: 15px;
+  padding: 12px;
+  height: 100px;
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+
+  /*scroll bar*/
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  font-size: 14px;
+
+  img {
+    display: block;
+    margin: 0 auto;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+#account-link {
+  color: $navbar-account-link-color;
+}

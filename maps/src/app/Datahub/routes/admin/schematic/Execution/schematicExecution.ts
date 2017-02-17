@@ -199,7 +199,7 @@ export class SchematicExecution implements OnInit, OnDestroy {
         if (self.pageContentType === 'schematic') {
             self.signalr.executeSchematic(self.selectedSchematic.id, obj.runtimeValue);
         } else {
-            self.selectedPipeline.pipelineRuntimeValue += '"' + obj.id + '":' + obj.runtimeValue + ';';
+            self.selectedPipeline.pipelineRuntimeValue += '"' + obj.id + '":' + obj.runtimeValue + ',';
             let idToRemove = self.selectedPipeline.idForSchematics.find(x => x == obj.id);
             if (idToRemove) {
                 self.selectedPipeline.idForSchematics.splice(self.selectedPipeline.idForSchematics.indexOf(idToRemove), 1)

@@ -394,6 +394,7 @@ export class MpdbAdministration {
             {Name: "@PortfolioNumber", Value: portfoliosSelected.join(",")},
             {Name: "@ToUser", Value: toUserSelected}]})).subscribe(
             res=>{
+                this.formBuilder.data.find(p=>p.name =='Portfolios').val=[];
                 this.populatePortfolios(groupTypeSelected, userSelected);
                 this.alert.addAlert("User Edited Successfully.");
             },

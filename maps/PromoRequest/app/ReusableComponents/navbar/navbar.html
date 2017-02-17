@@ -1,0 +1,23 @@
+    <nav id="tdam-nav-level2" class="tdam-nav-level2-unassisted tdam-nav-level2-tall tdam-nav-level2-fullwidth" role="navigation">
+        <ul>
+             <li id="tdam-logo">
+                 <a [routerLink]="['Home']">
+                    <img alt="TD" src="//www.tdstandards.com/assets-tdos/images/logos/td_shield_nowhitespace.gif">
+                 </a>
+             </li>
+             <li *ngFor="#node of links"><a [routerLink]="node.RouteLink"><span class="tdam-nav-level2-label">{{node.Name}}</span></a></li>
+             <li><a id="account-link"><span class="glyphicon glyphicon-user"></span> {{userName}}</a></li>
+         </ul>
+    </nav>
+<!--</div>-->
+
+<div id="navbar-alerts" tabindex="-1" class="row" style="display:block; align-items:center;align-content:center" *ngIf="canShowAlert">
+    <div class="row">
+        <img id="icon-warning" alt="!" src="td-icon-info.png">
+    </div>
+    <div class="modalWrap " *ngFor="#alert1 of alertInfo">
+        <!--<div class="col-md-4"> </div>-->
+        <!--<div class="col-md-4 center-block formItemLabel navbar-alert">-->
+        <div class="col-md-12 center-block formItemLabel">{{alert1.Description}}</div>
+    </div>
+</div>

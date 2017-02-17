@@ -50,7 +50,12 @@ import {AccordionBodyContent} from "./accordion/accordionBodyContent.directive";
 import {AccordionHeaderContent} from "./accordion/accordionHeaderContent.directive";
 import {AssignableListItems} from "./assignableListItems/assignableListItems";
 import {CheckBoxListComponent} from "./checkBoxList/checkBoxList";
-import {MultiSelectSearchFilter} from "../Datahub/pipes/searchFilterPipe";
+import {SearchFilterPipe} from "../Datahub/pipes/searchFilterPipe";
+import {MultiSelectSearchFilterPipe} from "../Datahub/pipes/multiSelectSearchFilterPipe";
+import {MatInputComponent} from "./matInput/matInput.component";
+import {FocusForwarder} from "../ReusableDirectives/focusForwarder/focusForwarder.directive";
+import {ExcelService} from "../ReusableServices/excelService";
+
 
 @NgModule({
     imports: [
@@ -60,18 +65,18 @@ import {MultiSelectSearchFilter} from "../Datahub/pipes/searchFilterPipe";
         Accordion, AccordionBodyContent, AccordionHeaderContent, SpinnerComponent, sqlQueryBuilder, navBar, NavBarVert, CustomDropDown, FormBuilder, FormBuilderInline,
         inlineEditForm, LastItem, JsonEdit, Notification, TableEditConfig, ExpandCollapseTrigger, MiniGridComponenet,
         TypeAhead, Pagination, DisplayGridComponent, UPLOAD_DIRECTIVES, CustomUploader, BreadCrumb, TabBuilder, TileView,
-        FormatGridColumnPipe, TokenFilterPipe, LocalizationTranslatePipe, AssignableListItems, CheckBoxListComponent, MultiSelectSearchFilter
+        FormatGridColumnPipe, TokenFilterPipe, LocalizationTranslatePipe, AssignableListItems, CheckBoxListComponent, SearchFilterPipe, MultiSelectSearchFilterPipe, MatInputComponent, FocusForwarder
     ],
     declarations: [
         Accordion, AccordionBodyContent, AccordionHeaderContent, SpinnerComponent, sqlQueryBuilder, navBar, NavBarVert, CustomDropDown, FormBuilder, FormBuilderInline,
         inlineEditForm, LastItem, JsonEdit, Notification, TableEditConfig, ExpandCollapseTrigger, MiniGridComponenet,
         TypeAhead, Pagination, DisplayGridComponent, UPLOAD_DIRECTIVES, CustomUploader, BreadCrumb, TabBuilder, TileView,
-        FormatGridColumnPipe, TokenFilterPipe, LocalizationTranslatePipe, AssignableListItems, CheckBoxListComponent, MultiSelectSearchFilter
+        FormatGridColumnPipe, TokenFilterPipe, LocalizationTranslatePipe, AssignableListItems, CheckBoxListComponent, SearchFilterPipe, MultiSelectSearchFilterPipe , MatInputComponent, FocusForwarder
     ],
     entryComponents: [sqlQueryBuilder, DisplayGridComponent, FormBuilder],
     providers: [HttpAbstract, SampleService, NavigationService, Notification, AppSettingsService, HttpAbstract, AlertService, ApiService, AuthGuard,
         RuleService, crudService, matrixService, MiniMatrixService,
-        InterFormsService, Ng2Uploader, LocalizationService, DisplayGridFilterService, ImportExportService
+        InterFormsService, Ng2Uploader, LocalizationService, DisplayGridFilterService, ImportExportService, ExcelService
     ],
 })
 export class SharedModule {

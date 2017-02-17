@@ -1,0 +1,10 @@
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h4>NSCC Basket
+            <span class="badge"><span class="glyphicon glyphicon-info-sign left-of-text" aria-hidden="true"></span>{{ basketDate }}</span>
+            <file-import></file-import>
+            <span class="label label-{{ statusColour }} pull-right">{{ status }}</span>
+            <button class="btn btn-default btn-xs pull-right" style="margin-right: 5px;" [disabled]="!exists"><span class="glyphicon glyphicon-eye-open left-of-text" aria-hidden="true"></span>Preview</button>
+        </h4>
+    </div>
+</div>

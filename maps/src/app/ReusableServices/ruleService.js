@@ -1,10 +1,19 @@
 "use strict";
-var core_1 = require("@angular/core");
-var BasicValidators_1 = require("./rulesSource/StandardValidation/BasicValidators");
-var Validation_1 = require("./rulesSource/StandardValidation/Validation");
-var DateCompareValidator_1 = require("./rulesSource/CustomValidation/DateCompareValidator");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = require('@angular/core');
+var BasicValidators_1 = require('./rulesSource/StandardValidation/BasicValidators');
+var Validation_1 = require('./rulesSource/StandardValidation/Validation');
+var DateCompareValidator_1 = require('./rulesSource/CustomValidation/DateCompareValidator');
 var _ = require('lodash');
-var GenericValidator_1 = require("./rulesSource/CustomValidation/GenericValidator");
+var GenericValidator_1 = require('./rulesSource/CustomValidation/GenericValidator');
 var RuleService = (function () {
     function RuleService() {
         this.minlengthValue = 1;
@@ -33,20 +42,20 @@ var RuleService = (function () {
     RuleService.prototype.validateRulesByRulesConfig = function (jsonData, rulesConfig, editViewRowDataTable) {
         var result = true;
         this.errorsResultSet = [];
-        editViewRowDataTable.forEach(function (p) { return p["errors"] = []; });
+        editViewRowDataTable.forEach(function (p) { return p['errors'] = []; });
         if (rulesConfig && rulesConfig.length) {
-            var modelName = rulesConfig[0].apiObject ? rulesConfig[0].apiObject : "";
+            var modelName = rulesConfig[0].apiObject ? rulesConfig[0].apiObject : '';
             var tempJsonData = {};
             tempJsonData[modelName] = jsonData;
             if (!this.checkIfRulesSatisfied(tempJsonData, rulesConfig)) {
                 if (this.errorsResultSet && this.errorsResultSet.length > 0) {
                     this.errorsResultSet.forEach(function (x) {
-                        var tempRowTable = editViewRowDataTable.find(function (p) { return p.name == x.name; });
-                        if (!tempRowTable["errors"]) {
-                            tempRowTable["errors"] = [];
+                        var tempRowTable = editViewRowDataTable.find(function (p) { return p.name === x.name; });
+                        if (!tempRowTable['errors']) {
+                            tempRowTable['errors'] = [];
                         }
                         if (tempRowTable && x.message.length > 0) {
-                            tempRowTable["errors"].push(x.name + "_" + x.message);
+                            tempRowTable['errors'].push(x.name + '_' + x.message);
                             result = false;
                         }
                     });
@@ -58,7 +67,7 @@ var RuleService = (function () {
     RuleService.prototype.AddSpecificRules = function (ruleName, columns, ruleValue, data) {
         var _this = this;
         switch (ruleName.toLowerCase()) {
-            case "requiredtarget":
+            case 'requiredtarget':
                 columns.forEach(function (x) {
                     if (_.isArray(ruleValue.targets)) {
                         ruleValue.targets.forEach(function (y) {
@@ -74,7 +83,7 @@ var RuleService = (function () {
                     }
                 });
                 break;
-            case "required":
+            case 'required':
                 columns.forEach(function (x) {
                     var newValidator = new Validation_1.AbstractValidator();
                     _this.requiredValidator = new BasicValidators_1.RequiredValidator();
@@ -82,8 +91,8 @@ var RuleService = (function () {
                     _this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "minlength":
-            case "childminlength":
+            case 'minlength':
+            case 'childminlength':
                 columns.forEach(function (x) {
                     var newValidator = new Validation_1.AbstractValidator();
                     _this.minlengthValidator = new BasicValidators_1.MinLengthValidator(ruleValue);
@@ -91,7 +100,7 @@ var RuleService = (function () {
                     _this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "maxlength":
+            case 'maxlength':
                 columns.forEach(function (x) {
                     var newValidator = new Validation_1.AbstractValidator();
                     _this.maxlengthValidator = new BasicValidators_1.MaxLengthValidator(ruleValue);
@@ -99,7 +108,7 @@ var RuleService = (function () {
                     _this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "email":
+            case 'email':
                 columns.forEach(function (x) {
                     var newValidator = new Validation_1.AbstractValidator();
                     _this.emailValidator = new BasicValidators_1.EmailValidator();
@@ -107,7 +116,7 @@ var RuleService = (function () {
                     _this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "date":
+            case 'date':
                 columns.forEach(function (x) {
                     var newValidator = new Validation_1.AbstractValidator();
                     _this.dateValidator = new BasicValidators_1.DateValidator();
@@ -115,13 +124,13 @@ var RuleService = (function () {
                     _this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "datecompare":
+            case 'datecompare':
                 columns.forEach(function (x) {
                     var newValidator = new Validation_1.AbstractValidator();
                     _this.dateCompareValidator = new DateCompareValidator_1.DateCompareValidator();
                     var compareTo = ruleValue.CompareTo;
                     if (isNaN(Date.parse(compareTo))) {
-                        var modelName = x.apiObject ? x.apiObject : "";
+                        var modelName = x.apiObject ? x.apiObject : '';
                         _this.getTargetObjects(data, modelName);
                         var dataObj = _this.targetObjects;
                         var tempData = dataObj.find(function (x) { return x[ruleValue.CompareTo]; });
@@ -134,16 +143,16 @@ var RuleService = (function () {
                     _this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "range":
+            case 'range':
                 columns.forEach(function (x) {
                     var newValidator = new Validation_1.AbstractValidator();
-                    var validatorData = [parseInt(ruleValue[0]), parseInt(ruleValue[1])];
+                    var validatorData = [parseInt(ruleValue[0], 10), parseInt(ruleValue[1], 10)];
                     _this.rangeValidator = new BasicValidators_1.RangeValidator(validatorData);
                     newValidator.RuleFor(x, _this.rangeValidator);
                     _this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "zipcode":
+            case 'zipcode':
                 columns.forEach(function (x) {
                     var newValidator = new Validation_1.AbstractValidator();
                     _this.zipCodeValidator = new BasicValidators_1.ZipCodeValidator();
@@ -151,7 +160,7 @@ var RuleService = (function () {
                     _this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "number":
+            case 'number':
                 columns.forEach(function (x) {
                     var newValidator = new Validation_1.AbstractValidator();
                     _this.numberValidator = new BasicValidators_1.NumberValidator();
@@ -159,7 +168,7 @@ var RuleService = (function () {
                     _this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "letter":
+            case 'letter':
                 columns.forEach(function (x) {
                     var newValidator = new Validation_1.AbstractValidator();
                     _this.lettersOnlyValidator = new BasicValidators_1.LettersOnlyValidator();
@@ -167,7 +176,7 @@ var RuleService = (function () {
                     _this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "phone":
+            case 'phone':
                 columns.forEach(function (x) {
                     var newValidator = new Validation_1.AbstractValidator();
                     _this.phoneValidator = new BasicValidators_1.PhoneOnlyValidator();
@@ -175,7 +184,7 @@ var RuleService = (function () {
                     _this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "alphanumeric":
+            case 'alphanumeric':
                 columns.forEach(function (x) {
                     var newValidator = new Validation_1.AbstractValidator();
                     _this.alphanumericValidator = new BasicValidators_1.AlphaNumericValidator();
@@ -183,14 +192,14 @@ var RuleService = (function () {
                     _this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "inputmask":
+            case 'inputmask':
                 columns.forEach(function (x) {
                     var newValidator = new Validation_1.AbstractValidator();
                     newValidator.RuleFor(x, new BasicValidators_1.PatternValidator(ruleValue));
                     _this.allValidators.push({ name: x, validator: newValidator });
                 });
                 break;
-            case "genericvalidation":
+            case 'genericvalidation':
                 columns.forEach(function (x) {
                     var newValidator = new Validation_1.AbstractValidator();
                     var genValidator = new GenericValidator_1.GenericValidator();
@@ -199,6 +208,8 @@ var RuleService = (function () {
                     newValidator.RuleFor(x, genValidator);
                     _this.allValidators.push({ name: x, validator: newValidator });
                 });
+                break;
+            default:
                 break;
         }
     };
@@ -215,17 +226,17 @@ var RuleService = (function () {
                 var result = rule.Validate(data);
                 _this.resultSet.push({ name: x.name, result: result.HasErrors, message: result.ErrorMessage });
                 if (result.HasErrors)
-                    errors.push(x.name + ": " + result.ErrorMessage);
+                    errors.push(x.name + ': ' + result.ErrorMessage);
             });
         });
         var collectiveResult;
         switch (ruleType) {
-            case "OneOf":
+            case 'OneOf':
                 collectiveResult = this.resultSet.find(function (x) { return x.result === false; }) ? false : true;
                 if (!collectiveResult)
                     errors = [];
                 break;
-            case "AllOf":
+            case 'AllOf':
                 collectiveResult = this.resultSet.find(function (x) { return x.result === true; }) ? true : false;
                 break;
             default:
@@ -241,7 +252,7 @@ var RuleService = (function () {
             rulesConfig.forEach(function (x) {
                 var ruleType = x.ruleType;
                 var applicationMode = x.applyTo;
-                var modelName = x.apiObject ? x.apiObject : "";
+                var modelName = x.apiObject ? x.apiObject : '';
                 _this.clearExistingValidations();
                 _this.associateRule(x, jsonObject);
                 var result = _this.validateRules(jsonObject, modelName, ruleType, applicationMode);

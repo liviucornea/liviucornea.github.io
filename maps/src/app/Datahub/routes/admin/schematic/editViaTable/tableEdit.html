@@ -2,76 +2,103 @@
     <div class="card-header">
         <ul>
             <li style="display: inline-block">
-                <span class="node">{{documentTitle}}</span>
+                <span><strong>{{documentTitle}}</strong></span>
                 <template [ngIf]="availableSections.length > 0">
                     <button style="height:25px" (click)="addNewSection(newOption.value)">Add New Section</button>
                     <select #newOption style="width: 150px;height:23px">
                         <option>Choose a section</option>
-                        <option *ngFor="let itemOption of availableSections" value="{{itemOption}}">{{itemOption}}</option>
+                        <option *ngFor="let itemOption of availableSections" value="{{itemOption}}">{{itemOption}}
+                        </option>
                     </select>
                 </template>
             </li>
         </ul>
     </div>
-    <div class="listArea">
+    <div class="card-block">
         <template ngFor let-section [ngForOf]="mainArray">
-            <div class="col-md-11">
-                <span (click)="toggle(section)" class="node">{{section.sectionName}}</span>
-                <img src="/app/Datahub/img/collapse_expand.png" (click)="toggle(section)" class="expandCollapseBtn">
-            </div>
-            <div class="col-md-1">
-                <button (click)="removeSection(section)" class="button-standard " style="float: right"><span class="fa fa-trash fa-lg"></span></button>
-            </div>
-            <table id="tblList" *ngIf="section.expanded">
-                <tr style="border: 1px solid black; background-color: #f4f5f3; height: 30px">
-                    <th class="text-xs-center" style="border: 1px solid black;" *ngFor="let item of headerList">
-                        <span><strong>{{item}}</strong></span>
-                    </th>
-                    <th>
-                        <span><strong>Ops available</strong></span>
-                    </th>
-                </tr>
-                <tr *ngFor="let rowArray of section" style="nth-child(2n) {background-color: #00AA00}; border: 1px solid black; height: 35px;">
-                    <td *ngFor="let item of rowArray" style="width:50px; padding: 5px; border: 1px solid black" class="text-xs-center">
-                        <input style="height:23px;" *ngIf="item.objType == 'textbox' " #theValue readonly="{{item.readOnly}}"
-                               type="text"
-                               [ngClass]="{neutral: !item.isChanged, changed: item.isChanged}" [(ngModel)]="item.value"
-                               (ngModelChange)="itemChanged(item, section)" (keyup)="checkIt($event, item)">
-                        <input *ngIf="item.objType =='checkbox'" #theValue readonly="{{item.readOnly}}" type="checkbox"
-                               [(ngModel)]="item.value" (keyup)="checkIt($event, item)" (ngModelChange)="itemChanged(item,section)">
-
-
-                        <select *ngIf="item.objType =='dropdown'" class="full-width" #theValue
-                                [ngClass]="{neutral: !item.isChanged, changed: item.isChanged}"
-                                [(ngModel)]="item.value" style="height:23px;">
-                            <option *ngFor="let itemOption of item.listValues" value="{{itemOption}}">{{itemOption}}
-                            </option>
-                        </select>
-                    </td>
-                    <td class="text-xs-center" style="width: 550px;">
-                        <div class="expandable">
-                            <div style="display: inline">
-                                <button class="button-standard" (click)="removeRowItem(rowArray, section)"><span class="fa fa-trash fa-lg"></span></button>
-                                <button class="button-standard" (click)="addNewRow(rowArray, section)" data-toggle="tooltip" title="Insert new row bellow."><span class="fa fa-plus fa-lg"></span></button>
-                                <button class="button-standard" *ngIf="section.indexOf(rowArray) > 0" (click)="moveRow(rowArray, section, 'up')" data-toggle="tooltip" title="Move row up." style="float: right;height: 20px;">
-                                    <span class="fa fa-arrow-up fa-lg"></span>
-                                </button>
-                                <button class="button-standard " *ngIf="section.indexOf(rowArray) < section.length-1" (click)="moveRow(rowArray, section, 'down')" data-toggle="tooltip" title="Move row down." style="float: right;height: 20px;">
-                                    <span class="fa fa-arrow-down fa-lg"></span>
-                                </button>
+            <accordion [title]="section.sectionName">
+                <accordionHeaderContent>
+                    <button (click)="removeSection(section)" class="btn btn-sm btn-td float-xs-right">
+                        <span class="fa fa-trash"></span>
+                    </button>
+                </accordionHeaderContent>
+                <accordionBodyContent>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-scroll-wrapper">
+                                <table class="table table-bordered table-hover table-striped">
+                                    <tr>
+                                        <th class="text-xs-center" *ngFor="let item of headerList">
+                                            <span><strong>{{item}}</strong></span>
+                                        </th>
+                                        <th>
+                                            <span><strong>Ops available</strong></span>
+                                        </th>
+                                    </tr>
+                                    <tr *ngFor="let rowArray of section">
+                                        <td *ngFor="let item of rowArray" class="text-xs-center">
+                                            <input *ngIf="item.objType == 'textbox' " #theValue
+                                                   readonly="{{item.readOnly}}"
+                                                   type="text" class="form-control-sm full-width"
+                                                   [ngClass]="{neutral: !item.isChanged, changed: item.isChanged}"
+                                                   [(ngModel)]="item.value"
+                                                   (ngModelChange)="itemChanged(item, section)"
+                                                   (keyup)="checkIt($event, item)">
+                                            <input *ngIf="item.objType =='checkbox'" #theValue
+                                                   readonly="{{item.readOnly}}"
+                                                   type="checkbox"
+                                                   [(ngModel)]="item.value" (keyup)="checkIt($event, item)"
+                                                   (ngModelChange)="itemChanged(item,section)">
+                                            <select *ngIf="item.objType =='dropdown'" class="form-control-sm full-width"
+                                                    #theValue
+                                                    [ngClass]="{neutral: !item.isChanged, changed: item.isChanged}"
+                                                    [(ngModel)]="item.value">
+                                                <option *ngFor="let itemOption of item.listValues"
+                                                        value="{{itemOption}}">
+                                                    {{itemOption}}
+                                                </option>
+                                            </select>
+                                        </td>
+                                        <td class="text-xs-center">
+                                            <button class="btn btn-sm btn-td"
+                                                    (click)="removeRowItem(rowArray, section)">
+                                                <span class="fa fa-fw fa-trash"></span>
+                                            </button>
+                                            <button class="btn btn-sm btn-td"
+                                                    (click)="addNewRow(rowArray, section)"
+                                                    data-toggle="tooltip" title="Insert new row below.">
+                                                <span class="fa fa-fw fa-plus"></span>
+                                            </button>
+                                            <button class="btn btn-sm btn-td"
+                                                    *ngIf="section.indexOf(rowArray) > 0"
+                                                    (click)="moveRow(rowArray, section, 'up')"
+                                                    data-toggle="tooltip"
+                                                    title="Move row up.">
+                                                <span class="fa fa-fw fa-arrow-up"></span>
+                                            </button>
+                                            <button class="btn btn-sm btn-td"
+                                                    *ngIf="section.indexOf(rowArray) < section.length-1"
+                                                    (click)="moveRow(rowArray, section, 'down')"
+                                                    data-toggle="tooltip"
+                                                    title="Move row down.">
+                                                <span class="fa fa-fw fa-arrow-down"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
-                    </td>
-                </tr>
-            </table>
+                    </div>
+                </accordionBodyContent>
+            </accordion>
         </template>
     </div>
-    <div class="bottomBttns text-xs-left">
-        <button id="saveTop" class="button-standard " (click)="doSave()"><span
-                class="fa fa-floppy-o fa-lg"></span> Apply Changes
+    <div class="card-block">
+        <button id="saveTop" class="btn btn-td" (click)="doSave()">
+            <span class="fa fa-floppy-o"></span> Apply Changes
         </button>
-        <button class="button-standard " (click)="cancelClicked()"><span
-                class="fa fa-ban fa-lg"></span> Cancel
+        <button class="btn btn-td" (click)="cancelClicked()">
+            <span class="fa fa-ban"></span> Cancel
         </button>
     </div>
 </div>

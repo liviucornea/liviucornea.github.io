@@ -1,0 +1,192 @@
+/*
+  SCSS styling for TDAM notifications
+*/
+
+@mixin callout-background-gradient($borderColor, $gradientColor, $direction: top) {
+  background: $white;
+  background: -moz-linear-gradient($direction, $white 0%, $white 75%, $white 75%, $gradientColor 100%);
+  background: -webkit-linear-gradient($direction, $white 0%, $white 75%, $white 75%, $gradientColor 100%);
+  background: -o-linear-gradient($direction, $white 0%, $white 75%, $white 75%, $gradientColor 100%);
+  background: -ms-linear-gradient($direction, $white 0%, $white 75%, $white 75%, $gradientColor 100%);
+  background: linear-gradient($direction, $white 0%, $white 75%, $white 75%, $gradientColor 100%);
+  -pie-background: linear-gradient($direction, $white 0%, $white 75%, $gradientColor 100%);
+}
+
+/*******************************************************/
+/* Callouts
+/*******************************************************/
+
+/* EXTENDS */
+%callout-icon-position {
+  padding:12px 12px 12px 67px;
+  background-position: 12px 12px;
+  background-repeat: no-repeat;
+  height: 67px;
+}
+
+/* MIXINS */
+
+@mixin evergreen-callout-primary($borderColor, $borderHoverColor, $gradientColor, $direction: top) {
+  border: 1px solid $borderColor;
+  @include callout-background-gradient($borderColor, $gradientColor, $direction);
+  &:hover.tdam-callouthover {
+    @include callout-background-gradient($borderColor, $gradientColor, bottom);
+    border: 1px solid $borderHoverColor;
+  }
+  -moz-box-shadow: 0 2px 4px $light-gray;
+  -webkit-box-shadow: 0 2px 4px $light-gray;
+  box-shadow: 0 2px 4px $light-gray;
+  &.tdam-background-top, &.tdam-background-top-pullleft { @include callout-background-gradient($borderColor, $gradientColor, top); }
+  &.tdam-background-right, &.tdam-background-right-pullup { @include callout-background-gradient($borderColor, $gradientColor, right); }
+  &.tdam-background-bottom, &.tdam-background-bottom-pullright { @include callout-background-gradient($borderColor, $gradientColor, bottom); }
+  &.tdam-background-left, &.tdam-background-left-pulldown { @include callout-background-gradient($borderColor, $gradientColor, left); }
+}
+@mixin evergreen-callout-secondary($borderColor, $borderHoverColor) {
+  border: 1px solid $borderColor;
+  &:hover.tdam-callouthover {
+    border: 1px solid $borderHoverColor;
+  }
+  background: $white;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+@mixin evergreen-callout-horizontal-topleft($level) {
+  border: 0;
+  background-image: url(#{$image-dir}/dividers/fade-horizontal-left-#{$level}.png);
+  background-position: top right;
+  background-repeat: no-repeat;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+@mixin evergreen-callout-horizontal-topright($level) {
+  border: 0;
+  background-image: url(#{$image-dir}/dividers/fade-horizontal-right-#{$level}.png);
+  background-position: top left;
+  background-repeat: no-repeat;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+@mixin evergreen-callout-tertiary-left() {
+  border: 0;
+  background-image: url(#{$image-dir}/dividers/fade-vertical-top-primary.png);
+  background-position: 0 14px;
+  background-repeat: no-repeat;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+@mixin evergreen-callout-tertiary-right() {
+  border: 0;
+  background-image: url(#{$image-dir}/dividers/fade-vertical-top-primary.png);
+  background-position: 100% 14px;
+  background-repeat: no-repeat;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  text-align: right;
+}
+@mixin evergreen-callout-storybox($backgroundColor, $borderHoverColor) {
+  border: 1px solid $backgroundColor;
+  &:hover.tdam-callouthover {
+    border: 1px solid $borderHoverColor;
+  }
+  background: $backgroundColor;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.tdam-callouthover:hover {
+  -moz-box-shadow: 0 3px 12px $gray;
+  -webkit-box-shadow: 0 3px 12px $gray;
+  box-shadow: 0 3px 12px $gray;
+}
+
+// evergreen-specific class names
+.tdam-background-primary-primary { @include evergreen-callout-primary($primary-border, $primary-border-hover, $primary-bg-gradient-color); }
+.tdam-background-primary-secondary { @include evergreen-callout-primary($secondary-border, $secondary-border-hover, $secondary-bg-gradient-color); }
+.tdam-background-dark-gray,
+.tdam-background-primary-tertiary { @include evergreen-callout-primary($tertiary-border, $tertiary-border-hover, $tertiary-bg-gradient-color); }
+.tdam-background-yellow,
+.tdam-background-primary-warning { @include evergreen-callout-primary($warning-border, $warning-border-hover, $warning-bg-gradient-color); }
+.tdam-background-red,
+.tdam-background-primary-danger { @include evergreen-callout-primary($danger-border, $danger-border-hover, $danger-bg-gradient-color); }
+.tdam-background-soft { // like primary-tertiary but no border
+  @include evergreen-callout-primary(rgba(0,0,0,0), $tertiary-border-hover, $tertiary-bg-gradient-color);
+  -moz-box-shadow: 0 2px 4px $input-border;
+  -webkit-box-shadow: 0 2px 4px $input-border;
+  box-shadow: 0 2px 4px $input-border;
+}
+.tdam-background-white,
+.tdam-background-secondary-primary { @include evergreen-callout-secondary($primary-border, $primary-border-hover); }
+.tdam-background-green,
+.tdam-background-secondary-secondary { @include evergreen-callout-secondary($secondary-border, $secondary-border-hover); }
+.tdam-background-light-gray,
+.tdam-background-secondary-tertiary { @include evergreen-callout-secondary($tertiary-border, $tertiary-border-hover); }
+.tdam-background-secondary-warning { @include evergreen-callout-secondary($warning-border, $warning-border-hover); }
+.tdam-background-secondary-danger { @include evergreen-callout-secondary($danger-border, $danger-border-hover); }
+.tdam-background-tertiary-tertiary-topleft { @include evergreen-callout-horizontal-topleft(tertiary); }
+.tdam-background-tertiary-tertiary-topright { @include evergreen-callout-horizontal-topright(tertiary); }
+.tdam-background-light-green,
+.tdam-background-tertiary-primary-topleft { @include evergreen-callout-horizontal-topleft(primary); }
+.tdam-background-tertiary-primary-topright { @include evergreen-callout-horizontal-topright(primary); }
+.tdam-background-tertiary-tertiary-left { @include evergreen-callout-tertiary-left(); }
+.tdam-background-tertiary-tertiary-right { @include evergreen-callout-tertiary-right(); }
+.tdam-background-darkgreen,
+.tdam-background-storybox-primary { @include evergreen-callout-storybox($primary-bg-color, $primary-border-hover); }
+.tdam-background-storybox-secondary { @include evergreen-callout-storybox($secondary-bg-color, $secondary-border-hover); }
+.tdam-background-storybox-tertiary { @include evergreen-callout-storybox($tertiary-bg-color, $tertiary-border-hover); }
+.tdam-background-storybox-warning { @include evergreen-callout-storybox($warning-bg-color, $warning-border-hover); }
+.tdam-background-storybox-danger { @include evergreen-callout-storybox($danger-bg-color, $danger-border-hover); }
+.tdam-background-transparent,
+.tdam-background-none { @include evergreen-callout-storybox(transparent, transparent); }
+
+/********* CALLOUTS *********/
+
+#modal-dialog {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tdam-callout {
+  position: relative;
+  padding:12px;
+  margin-bottom: $margin-bottom-default;
+
+  width: 425px;
+
+  figure {
+    @include rem(margin-bottom, 10px);
+  }
+  &.success-icon {
+    @extend %callout-icon-position;
+    background-image: url(#{$image-dir}/icons/td-icon-success.png);
+  }
+  &.help-icon {
+    @extend %callout-icon-position;
+    background-image: url(#{$image-dir}/icons/td-icon-help.png);
+  }
+  &.error-icon {
+    @extend %callout-icon-position;
+    background-image: url(#{$image-dir}/icons/td-icon-error-large.png);
+  }
+  &.info-icon {
+    @extend %callout-icon-position;
+    background-image: url(#{$image-dir}/icons/td-icon-info.png);
+  }
+  &.warning-icon {
+    @extend %callout-icon-position;
+    background-image: url(#{$image-dir}/icons/td-icon-warning.png);
+  }
+}
+
+/* Bootstrap Override */
+.modal-header,
+.modal-body,
+.modal-body div table tbody tr td,
+.modal-footer  {
+  border: none;
+}

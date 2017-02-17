@@ -14,8 +14,11 @@
             <!--<accordion [title]="nodeTitle + ' ' + item.title">-->
             <accordion [title]="item.title ? nodeTitle + ' ' + item.title : nodeTitle">
                 <accordionBodyContent>
-                    <button class="button-standard" (click)="addNewNode(item)">Add New</button>
-                    <br><br>
+                    <div class="form-group">
+                        <button class="btn btn-td" (click)="addNewNode(item)">
+                            <span class="fa fa-plus"></span> Add New
+                        </button>
+                    </div>
                     <json-edit [inputJson]='item' [isRoot]='false' [parentStep]="parentStep"
                                [PredefinedJsonValues]="PredefinedJsonValues"
                                [hierarchyLvl]="hierarchyLvl"></json-edit>
@@ -30,16 +33,16 @@
     </template>
     <template [ngIf]="isRoot">
         <div class="card-block">
-            <button id="saveTop" class="button-standard " (click)="doSave()" *ngIf="showSave">
-                <span class="fa fa-floppy-o fa-lg"></span> Apply Changes
+            <button id="saveTop" class="btn btn-td" (click)="doSave()" *ngIf="showSave">
+                <span class="fa fa-floppy-o"></span> Apply Changes
             </button>
             <!--
             <button class="tdam-button tdam-button-secondary" (click)="createTableView()" *ngIf="showSave">
                 {{tableViewBttn}}
             </button>
             -->
-            <button class="button-standard " (click)="cancelClicked()">
-                <span class="fa fa-ban fa-lg"></span> Cancel
+            <button class="btn btn-td" (click)="cancelClicked()">
+                <span class="fa fa-ban"></span> Cancel
             </button>
         </div>
         <!--

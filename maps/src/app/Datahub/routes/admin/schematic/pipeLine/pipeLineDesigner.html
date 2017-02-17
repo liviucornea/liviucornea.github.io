@@ -1,14 +1,19 @@
 <div class="card-block">
     <div class="form-group row">
         <div class="col-md-12 col-lg-6">
-            <label>Search for pipeline: </label>
-            <typeahead-input [search]="autocompleteInput.searchPipelines" (onSelected)="onPipeLineSelected($event)"></typeahead-input>
+            <mat-input>
+                <label class="form-label">
+                    <strong>Search for Pipeline</strong>
+                </label>
+                <typeahead-input [search]="autocompleteInput.searchPipelines" (onSelected)="onPipeLineSelected($event)"
+                                 [placeholderText]="''"></typeahead-input>
+            </mat-input>
         </div>
     </div>
     <div class="form-group row">
         <div class="col-md-12">
-            <button (click)="newPipeline()" class="button-standard ">
-                <span class="fa fa-plus fa-lg"></span> New Pipeline
+            <button (click)="newPipeline()" class="btn btn-td">
+                <span class="fa fa-plus"></span> New Pipeline
             </button>
         </div>
     </div>
@@ -26,11 +31,13 @@
                     <div class="card-block">
                         <div class="form-group">
                             <label for="plDescription"><strong>Description:</strong></label>
-                            <input type="text" id="plDescription" class="form-control" [(ngModel)]="currentPipeLine.description" placeholder="Enter your description here">
+                            <input type="text" id="plDescription" class="form-control"
+                                   [(ngModel)]="currentPipeLine.description" placeholder="Enter your description here">
                         </div>
                         <div class="form-group">
                             <label for="chkboxPLActive"><strong>Is Active</strong></label>
-                            <input type="checkbox" id="chkboxPLActive" class="form-control" [(ngModel)]="currentPipeLine.isActive">
+                            <input type="checkbox" id="chkboxPLActive" class="form-control"
+                                   [(ngModel)]="currentPipeLine.isActive">
                         </div>
                         <table class="full-width table table-bordered table-hover table-striped">
                             <tr>
@@ -50,20 +57,31 @@
                                   <td class="bordered">{{pipeLineSchematic.pipeLineId}}</td>
                                   -->
                                 <td>{{pipeLineSchematic.schematicId}}</td>
-                                <td><a (click)="navigateToSchematic(pipeLineSchematic.schematicId)">{{pipeLineSchematic.description}}</a></td>
-                                <td><input class="form-control-sm full-width" type="text" [(ngModel)]="pipeLineSchematic.sequenceNumber" disabled></td>
-                                <td><input type="checkbox" id="chkStopOnFailure" [(ngModel)]="pipeLineSchematic.stopPipelineOnFailure"></td>
-                                <td><input type="checkbox" id="chkisActive" [(ngModel)]="pipeLineSchematic.isActive"></td>
+                                <td><a (click)="navigateToSchematic(pipeLineSchematic.schematicId)">{{pipeLineSchematic.description}}</a>
+                                </td>
+                                <td><input class="form-control-sm full-width" type="text"
+                                           [(ngModel)]="pipeLineSchematic.sequenceNumber" disabled></td>
+                                <td><input type="checkbox" id="chkStopOnFailure"
+                                           [(ngModel)]="pipeLineSchematic.stopPipelineOnFailure"></td>
+                                <td><input type="checkbox" id="chkisActive" [(ngModel)]="pipeLineSchematic.isActive">
+                                </td>
                                 <td>
-                                    <button class="button-standard" (click)="removePipeLineSchematic(pipeLineSchematic, currentPipeLine)">
-                                        <span class="fa fa-trash fa-lg"></span>
+                                    <button class="btn btn-sm btn-td"
+                                            (click)="removePipeLineSchematic(pipeLineSchematic, currentPipeLine)">
+                                        <span class="fa fa-trash fa-fw"></span>
                                     </button>
-                                    <button class="button-standard" *ngIf="currentPipeLine.pipeLineSchematics.indexOf(pipeLineSchematic) > 0" (click)="moveRow(pipeLineSchematic, currentPipeLine.pipeLineSchematics, 'up')" data-toggle="tooltip" title="Move row up.">
-                                        <span class="fa fa-arrow-up fa-lg"></span>
+                                    <button class="btn btn-sm btn-td"
+                                            *ngIf="currentPipeLine.pipeLineSchematics.indexOf(pipeLineSchematic) > 0"
+                                            (click)="moveRow(pipeLineSchematic, currentPipeLine.pipeLineSchematics, 'up')"
+                                            data-toggle="tooltip" title="Move row up.">
+                                        <span class="fa fa-arrow-up fa-fw"></span>
                                     </button>
-                                    <button class="button-standard" *ngIf="currentPipeLine.pipeLineSchematics.indexOf(pipeLineSchematic) < currentPipeLine.pipeLineSchematics.length-1" (click)="moveRow(pipeLineSchematic, currentPipeLine.pipeLineSchematics, 'down')" data-toggle="tooltip"
+                                    <button class="btn btn-sm btn-td"
+                                            *ngIf="currentPipeLine.pipeLineSchematics.indexOf(pipeLineSchematic) < currentPipeLine.pipeLineSchematics.length-1"
+                                            (click)="moveRow(pipeLineSchematic, currentPipeLine.pipeLineSchematics, 'down')"
+                                            data-toggle="tooltip"
                                             title="Move row down.">
-                                        <span class="fa fa-arrow-down fa-lg"></span>
+                                        <span class="fa fa-arrow-down fa-fw"></span>
                                     </button>
                                 </td>
                             </tr>
@@ -71,11 +89,11 @@
                     </div>
                     <div class="card-block">
                         <div class="col-md-12 text-md-center">
-                            <button (click)="doSave(currentPipeLine)" class="button-standard ">
-                                <span class="fa fa-floppy-o fa-lg"></span> Save
+                            <button (click)="doSave(currentPipeLine)" class="btn btn-td">
+                                <span class="fa fa-floppy-o"></span> Save
                             </button>
-                            <button (click)="cancel()" class="button-standard ">
-                                <span class="fa fa-ban fa-lg"></span> Cancel
+                            <button (click)="cancel()" class="btn btn-td">
+                                <span class="fa fa-ban"></span> Cancel
                             </button>
                         </div>
                     </div>
@@ -86,13 +104,17 @@
                     <div class="card-block">
                         <div class="form-group">
                             <label><strong>List of schematics:</strong></label>
-                            <input type="text" class="form-control" [(ngModel)]="schematicFilter" placeholder="..enter the value to filter by." (change)="0">
+                            <input type="text" class="form-control" [(ngModel)]="schematicFilter"
+                                   placeholder="..enter the value to filter by." (change)="0">
                         </div>
                         <div class="form-group">
-                            <div class="processList">
-                                <div *ngFor="let schematic of allSchematicsForUI | schematicsByIdOrDesc:schematicFilter">
-                                    <span class="itemList" (dblclick)="insertSchematicIntoPipeLine(schematic)">{{schematic.id}} - {{schematic.description}}</span>
-                                </div>
+                            <div class="item-list">
+                                <template ngFor let-schematic
+                                          [ngForOf]="allSchematicsForUI | schematicsByIdOrDesc:schematicFilter">
+                                    <div class="item-list-entry" (dblclick)="insertSchematicIntoPipeLine(schematic)">
+                                        {{schematic.id}} - {{schematic.description}}
+                                    </div>
+                                </template>
                             </div>
                         </div>
                     </div>

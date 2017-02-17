@@ -37,7 +37,7 @@ export class RunningProcessesComponent implements OnInit, OnDestroy {
         });
 
         self.httpService.getColorThresholds().subscribe((res) => {
-            self.colorThresholdList = _.sortBy(JSON.parse(res), ['TimeInMinute']);
+            self.colorThresholdList = _.sortBy(JSON.parse(res.ConfigurationValue), ['TimeInMinute']);
             self.startRefresh$.next();
 
         });

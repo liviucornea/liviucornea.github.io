@@ -28,6 +28,9 @@ export class SchematicDesigner extends ISchematicDesigner implements OnInit, OnD
     initialDataAnouncedSource: Subject<string>;
     initialDataAnounced$: Observable<string>;
 
+    focused = false;
+    itemDescription = '';
+
     constructor(private processService: SchematicApiService, private elementRef: ElementRef
         , private appSettings: AppSettingsService, private alert: AlertService, private route: ActivatedRoute) {
         super();
@@ -117,7 +120,6 @@ export class SchematicDesigner extends ISchematicDesigner implements OnInit, OnD
         if (this.selectedSchematic.schematicId) {
             this.SchematicSelected(this.selectedSchematic.schematicId);
         }
-        ;
 
     }
 
@@ -139,7 +141,7 @@ export class SchematicDesigner extends ISchematicDesigner implements OnInit, OnD
         let newconfigs = new Array<any>();
         this.allConfigValueTypes.forEach(function (x) {
             if (x.UnitId === unitId) {
-                let newObj = new ConfigValueType(x.ConfigValueTypeId, x.UnitId, x.LookupKey, x.Template ? x.Template : '', x.IsMandatory);
+                let newObj = new ConfigValueType(x.ConfigValueTypeId, x.UnitId, x.LookupKey, x.Template ? x.Template : '', x.IsMandatory, x.DefaultConfigValue);
                 newconfigs.push(newObj)
             }
         });
@@ -170,23 +172,23 @@ export class SchematicDesigner extends ISchematicDesigner implements OnInit, OnD
     configValueTypeSelected(selectedValue: string, step: any) {
         step.isAddingJSON = false;
         step.selectedConfigValue = null;
-        var lcConfigValFounded = this.allConfigValueTypesVM.find((x) => {
+        var lcConfigValFound = this.allConfigValueTypesVM.find((x) => {
             return x.description.toLowerCase().replace(/\s+/g, '') == selectedValue.toLowerCase().replace(/\s+/g, '');
         });
-        if (lcConfigValFounded) {
+        if (lcConfigValFound) {
             try {
-                if (!lcConfigValFounded.template || lcConfigValFounded.template.length == 0) {
+                if (!lcConfigValFound.template || lcConfigValFound.template.length == 0) {
                     step.selectedConfigValue = '';
-                    step.selectedConfigType = lcConfigValFounded;
+                    step.selectedConfigType = lcConfigValFound;
                 } else {
-                    let type = JSON.parse(lcConfigValFounded.template)['#Type#'];
+                    let type = JSON.parse(lcConfigValFound.template)['#Type#'];
                     if (type) {
-                        step.selectedConfigType = lcConfigValFounded;
+                        step.selectedConfigType = lcConfigValFound;
                         if (type.toUpperCase() == 'ARRAYLIKE') {
-                            step.selectedConfigValue = '[[' + jsonToDoc(lcConfigValFounded.template, step) + ']]';
+                            step.selectedConfigValue = '[[' + jsonToDoc(lcConfigValFound.template, step) + ']]';
                             step.isArrayLike = true;
                         } else {
-                            step.selectedConfigValue = jsonToDoc(lcConfigValFounded.template, step);
+                            step.selectedConfigValue = jsonToDoc(lcConfigValFound.template, step);
                             step.isArrayLike = false;
                         }
 
@@ -195,6 +197,9 @@ export class SchematicDesigner extends ISchematicDesigner implements OnInit, OnD
                         }, 50);
 
                     }
+                }
+                if (lcConfigValFound.defaultValue && lcConfigValFound.defaultValue.length > 0) {
+                    step.selectedConfigValue = lcConfigValFound.defaultValue;
                 }
 
             } catch (err) {
@@ -1067,5 +1072,34 @@ export class SchematicDesigner extends ISchematicDesigner implements OnInit, OnD
 
     refreshPage() {
         this.setPageType(false);
+    }
+
+    private expandAll() {
+        for (let step of this.allStepsVM) {
+            step.isCollapsed = false;
+        }
+    }
+
+    private collapseAll() {
+        for (let step of this.allStepsVM) {
+            step.isCollapsed = true;
+        }
+    }
+
+    private isAnyExpanded() {
+        let expandedSteps = this.allStepsVM.find((x) => {
+            if (x.isCollapsed == false) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        });
+        if (expandedSteps == undefined) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 }

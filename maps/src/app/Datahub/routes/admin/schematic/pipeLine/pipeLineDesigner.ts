@@ -8,7 +8,6 @@ import {SchematicFilter} from './Schematics.pipe'
 
 @Component({
     template: require('./pipeLineDesigner.html'),
-    styles: [require('./pipeLine.scss')]
 })
 
 export class PipeLineDesigner implements OnInit {
