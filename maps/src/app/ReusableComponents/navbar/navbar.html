@@ -1,0 +1,85 @@
+<nav id="main-nav" class="navbar" role="navigation">
+    <!-- responsive button -->
+    <button class="navbar-toggler hidden-md-up" type="button" data-toggle="collapse" data-target="#navbar-responsive" aria-controls="navbar-responsive" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+    <div class="collapse navbar-toggleable-sm" id="navbar-responsive">
+        <ul class="nav navbar-nav">
+            <li id="main-nav-logo" class="hidden-sm-down">
+                <a [routerLink]="['']">
+                    <img alt="TD" src="//www.tdstandards.com/assets-tdos/images/logos/td_shield_nowhitespace.gif">
+                </a>
+            </li>
+            <template ngFor let-node [ngForOf]="links" let-i="index">
+                <template [ngIf]="node.Children.length > 0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="supportedContentDropdown-{{i}}" aria-haspopup="true" aria-expanded="false">{{node.Title}}</a>
+                        <div class="dropdown-menu" [attr.aria-labelledby]="'supportedContentDropdown-' + i">
+                            <a *ngFor="let childNode of node.Children" [routerLink]="childNode.RouteLink" class="dropdown-item">{{childNode.Title}}</a>
+                        </div>
+                    </li>
+                </template>
+                <template [ngIf]="node.Children.length == 0">
+                    <li class="nav-item">
+                        <a [routerLink]="node.RouteLink" class="nav-link">{{node.Title}}&nbsp;</a>
+                    </li>
+                </template>
+            </template>
+            <li id="account-link" class="float-md-right nav-item right-menu-item">
+                <a class="nav-link" [routerLink]="['/Datahub/UserProfile']">
+                    <span class="fa fa-user fa-lg"></span> {{userName}}
+                </a>
+            </li>
+            <!-- Theme switcher -->
+            <li id="theme-toggle" class="float-md-right nav-item right-menu-item">
+                <a class="nav-link">
+                    <span *ngIf="theme == 'standard'" class="fa fa-adjust fa-lg" title="Dark Theme" (click)="toggleTheme()"></span>
+                    <span *ngIf="theme == 'dark'" class="fa fa-adjust fa-lg rotate-180" title="Light Theme" (click)="toggleTheme()"></span>
+                </a>
+            </li>
+            <!-- Language switcher (new) -->
+            <li id="language-switcher" class="float-md-right nav-item dropdown right-menu-item">
+                <a class="nav-link dropdown-toggle">
+                    <span class="fa fa-globe fa-lg"></span>
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" *ngFor="let itemOption of langList" (click)="updateSelectedLanguage(itemOption.Id)">{{itemOption.Description}}
+                        <span *ngIf="itemOption.Id == selectedLangId" class="fa fa-check text-success"></span>
+                    </a>
+                </div>
+            </li>
+            <li id="font-shrinker" class="float-md-right nav-item right-menu-item" (click)="shrinkAllFont()">
+                <a class="nav-link">
+                    <span class="fa fa-font"></span>
+                </a>
+            </li>
+            <li id="font-expander" class="float-md-right nav-item right-menu-item" (click)="expandAllFont()">
+                <a class="nav-link">
+                    <span class="fa fa-font fa-lg"></span>
+                </a>
+            </li>
+            <li class="float-md-right nav-item dropdown right-menu-item" [ngClass]="envDetailsOpen ? 'open' : ''">
+                <a class="nav-link">
+                    <span class="fa fa-laptop fa-lg"></span>
+                </a>
+                <div class="dropdown-menu" (click)="toggleEnvDetails()">
+                    <a class="dropdown-item" *ngFor="let detail of envDetails"><strong>{{detail.name}}:</strong> {{detail.value}}</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<navBarVert></navBarVert>
+<breadcrumb></breadcrumb>
+
+<template [ngIf]="canShowAlert">
+    <div id="navbar-alerts" tabindex="-1" class="row">
+        <div class="row">
+            <img id="icon-warning" alt="!" src="../../Datahub/img/td-icon-info.png">
+        </div>
+        <template ngFor let-alert1 [ngForOf]="alertInfo">
+            <!--<div class="col-md-4"> </div>-->
+            <!--<div class="col-md-4 center-block formItemLabel navbar-alert">-->
+            <div class="col-md-12">{{alert1.Description | LocalizationTranslate}}</div>
+        </template>
+    </div>
+</template>

@@ -1,0 +1,8 @@
+<accordion [title]="title" [collapsed]="collapsed">
+    <accordionHeaderContent>
+        <span *ngIf="dataContent && dataContent !== undefined" class="float-lg-right"><span class="tag tag-pill tag-info">{{ dataContent.length }}</span></span>
+    </accordionHeaderContent>
+    <accordionBodyContent>
+        <displayGrid></displayGrid>
+    </accordionBodyContent>
+</accordion>

@@ -1,0 +1,69 @@
+﻿<article Id="editConfigPage" *ngIf="visiblePlugin">
+    <div class="{{nodeClass}}">
+        <section Id="editForm">
+            <form #genericForm="ngForm" (ngSubmit)="saveClicked()">
+                <template ngFor let-ln [ngForOf]="editViewRowDataTable">
+                    <div class="form-group">
+                        <label [attr.for]="ln.sequence"><strong>{{ln.label | LocalizationTranslate}}:</strong></label>
+                        <template [ngIf]="ln.htmlControlType == 'text'">
+                            <input name={{ln.label}} class="form-control" #name="ngModel" [attr.Id]="ln.sequence" type={{ln.htmlControlType}} [(ngModel)]="ln.val" checked={{ln.val}} [disabled]="!ln.visibility || ln.readOnly">
+                            <template ngFor let-er [ngForOf]="ln.errors">
+                                <div class="alert alert-danger">
+                                    {{er | LocalizationTranslate}}
+                                </div>
+                            </template>
+                        </template>
+                        <template [ngIf]="ln.htmlControlType === 'checkbox'">
+                            <input name={{ln.label}} class="form-control" #name="ngModel" [attr.Id]="ln.sequence" type="checkbox" [(ngModel)]="ln.val" [disabled]="!ln.visibility || ln.readOnly" (click)="inputClicked(ln)">
+                            <template ngFor let-er [ngForOf]="ln.errors">
+                                <div class="alert alert-danger">
+                                    {{er | LocalizationTranslate}}
+                                </div>
+                            </template>
+                        </template>
+                        <template [ngIf]="ln.htmlControlType === 'select'">
+                            <select name={{ln.label}} class="form-control" #name="ngModel" [(ngModel)]="ln.val" [attr.Id]="ln.sequence" [disabled]="!ln.visibility || ln.readOnly">
+                                <option *ngFor="let itemOption of ln.dataSource" value="{{itemOption.Value}}" selected="ln.val == itemOption.Value">{{itemOption.Description | LocalizationTranslate}}</option>
+                            </select>
+                            <template ngFor let-er [ngForOf]="ln.errors">
+                                <div class="alert alert-danger">
+                                    {{er | LocalizationTranslate}}
+                                </div>
+                            </template>
+                        </template>
+                        <template [ngIf]="ln.htmlControlType === 'customselect'">
+                            <customDropDown [DataSource]="ln.customdataSource" [selectedValue]="ln.val" (DropDownEmitter)="getDropDownResult($event,ln)"></customDropDown>
+                            <template ngFor let-er [ngForOf]="ln.errors">
+                                <div class="alert alert-danger">
+                                    {{er | LocalizationTranslate}}
+                                </div>
+                            </template>
+                        </template>
+                        <template [ngIf]="ln.htmlControlType === 'radio'">
+                            <template ngFor let-itemOption [ngForOf]="ln.dataSource">
+                                <div class="row">
+                                    <input name="ln.objId" type="radio" [(ngModel)]="ln.val" [disabled]="!ln.visibility || ln.readOnly" value="{{itemOption}}"><span class="float-xs-left">{{' ' + (itemOption | LocalizationTranslate) + '    '}}</span>
+                                </div>
+                            </template>
+                            <template ngFor let-er [ngForOf]="ln.errors">
+                                <div class="alert alert-danger">
+                                    {{er | LocalizationTranslate}}
+                                </div>
+                            </template>
+                        </template>
+                    </div>
+                </template>
+                <div id="buttons">
+                    <button type="submit" title="{{'Save' | LocalizationTranslate}}" class="button-standard ">
+                        <span class="fa fa-floppy-o fa-lg"></span>
+                        {{"Save" | LocalizationTranslate}}
+                    </button>
+                    <button type="button" title="{{'Cancel' | LocalizationTranslate}}" (click)="cancelClicked()" class="button-standard " *ngIf="!IsHideCancel">
+                        <span class="fa fa-ban fa-lg"></span>
+                        {{"Cancel" | LocalizationTranslate}}
+                    </button>
+                </div>
+            </form>
+        </section>
+    </div>
+</article>

@@ -1,0 +1,58 @@
+.mat-input-wrapper {
+}
+
+.mat-editing {
+  color: #008000;
+}
+
+.mat-input-element {
+  border: none;
+  height: initial;
+  width: 100%;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.mat-input-infix {
+  position: relative;
+}
+
+.mat-input-table {
+  display: inline-table;
+  vertical-align: bottom;
+  width: 100%;
+
+  > * {
+    display: table-cell;
+  }
+}
+
+.mat-input-placeholder {
+  left: 0;
+  margin-bottom: 0;
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+}
+
+.mat-input-placeholder-floating {
+  padding-bottom: 5px;
+  transform: translateY(-75%);
+  transition-duration: 0.4s;
+}
+
+.mat-input-placeholder:not(.mat-input-placeholder-floating) {
+  cursor: text;
+  transform: translateY(0%);
+  transition-duration: 0.4s;
+}
+
+.mat-input-underline {
+  border-top-width: 1px;
+  border-top-style: solid;
+  height: 1px;
+  margin-top: 4px;
+  width: 100%;
+}

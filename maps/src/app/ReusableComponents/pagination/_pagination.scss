@@ -1,0 +1,18 @@
+//
+// Pagination
+// --------------------------------------------------
+.pagination {
+
+  a:hover {
+    text-decoration: none;
+  }
+
+  .page-link {
+    cursor: pointer;
+  }
+
+  .page-item.disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+}

@@ -1,0 +1,39 @@
+"use strict";
+var core_1 = require("@angular/core");
+var displayGrid_1 = require("../../../../../ReusableComponents/displayGrid/displayGrid");
+var alertService_1 = require("../../../../../ReusableServices/alertService");
+var scheduleService_1 = require("../scheduleService");
+var controlConfig_1 = require("./controlConfig");
+var common_1 = require("@angular/common");
+var navigationService_1 = require("../../../../../ReusableServices/navigationService");
+var Config = (function () {
+    function Config(schedulesApi, alert, navService, location) {
+        this.schedulesApi = schedulesApi;
+        this.alert = alert;
+        this.navService = navService;
+        this.location = location;
+        this.searchKey = "";
+        this.controlConfig = controlConfig_1.ControlConfig;
+        //navService.setCurrentPage(location.path(false));
+    }
+    Config.prototype.ngAfterViewInit = function () {
+        this.refreshConfigs();
+    };
+    Config.prototype.refreshConfigs = function () {
+        this.dataTable.GetParentPageDetails(this.controlConfig, this.schedulesApi, "config");
+    };
+    __decorate([
+        core_1.ViewChild(displayGrid_1.DisplayGridComponent), 
+        __metadata('design:type', displayGrid_1.DisplayGridComponent)
+    ], Config.prototype, "dataTable", void 0);
+    Config = __decorate([
+        core_1.Component({
+            template: "<div><displayGrid></displayGrid></div>",
+            providers: [scheduleService_1.SchedulesApiService]
+        }), 
+        __metadata('design:paramtypes', [scheduleService_1.SchedulesApiService, alertService_1.AlertService, navigationService_1.NavigationService, common_1.Location])
+    ], Config);
+    return Config;
+}());
+exports.Config = Config;
+//# sourceMappingURL=config.js.map

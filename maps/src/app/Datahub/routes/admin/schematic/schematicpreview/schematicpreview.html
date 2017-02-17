@@ -1,0 +1,155 @@
+<article>
+    <br/>
+    <!--
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-18">
+                <div *ngIf="isExecutePage" class="tdam-connection-panel">
+                    <table cellpadding="10" cellspacing="10" width="100%">
+                        <tr>
+                            <td colspan="4"><b> {{connectionStatus}} </b></td>
+                        </tr>
+                        <tr><td>&nbsp;</td></tr>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td colspan="2" align="right">
+                                <input type="checkbox" (click)="schematic.stepConfigToggleAll($event.target.checked)" [(ngModel)]="schematic.showAllStepConfig" />Config
+                                <input type="checkbox" (click)="schematic.stepResultToggleAll($event.target.checked)" [(ngModel)]="schematic.showAllStepMessage" />Message
+                            </td>
+                        </tr>
+                  -->
+
+    <!--
+    <tr>
+        <td>Requested Date</td>
+        <td><input type="date" [(ngModel)]="schematic.userRunTimeValues.BusinessDate" placeholder="yyyy-MM-dd" /></td>
+    </tr>
+    <tr>
+        <td>Runtime Value</td>
+        <td><input type="text" placeholder="mask" [(ngModel)]="runtimeMask" /></td>
+        <td><input type="text" placeholder="value" [(ngModel)]="runtimeValue" /></td>
+        <td><button class="tdam-button tdam-button-secondary" rightAlign (click)="schematic.addRuntimeValue(runtimeMask, runtimeValue)">Add</button></td>
+    </tr>
+    -->
+    <!--
+                        <tr *ngFor="let runtimevalue of schematic.userRunTimeValues.RuntimeValues">
+                            <td></td>
+                            <td>{{runtimevalue.Key}}</td>
+                            <td>{{runtimevalue.Value}}</td>
+                            <td><label (click)="schematic.removeRuntimeValue(runtimevalue.Key)">X</label></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+      <spinner [isRunning]="isSpinnerRunning"></spinner>
+        -->
+
+    <!--<article>
+        &lt;!&ndash;
+        <button id="btnTopExec" (click)="executeSchematicClicked()" class="btn tdam-button-secondary" *ngIf="isExecutePage" [disabled]="!executeStatus">
+            <span class="fa fa-floppy-o fa-lgd"></span>
+            Execute
+        </button>
+
+        <span class="schematicState"> {{schematic.schematicState}} </span>
+            &ndash;&gt;
+    </article>-->
+    <template ngFor let-step [ngForOf]="schematic.allStepsVM">
+        <div class="card">
+            <!-- header -->
+            <div class="card-header">
+                <table width="100%" cellpadding="5" cellspacing="5">
+                    <tr>
+                        <td width="3%" align="center"><span><input type="checkbox" *ngIf="isExecutePage" [(ngModel)]="step.Active"/></span></td>
+                        <td width="47%" align="left"><span> # {{step.StepNumber}}  {{step.UnitName}}</span></td>
+                        <td width="40%" align="left">
+                            <span *ngIf="isExecutePage"><input type="checkbox" (click)="schematic.stepConfigToggle(step.StepNumber)" [(ngModel)]="step.StepConfigVisibility"/>Config</span>
+                            <span *ngIf="isExecutePage"><input type="checkbox" (click)="schematic.stepMessageToggle(step.StepNumber)" [(ngModel)]="step.StepMessageVisibility"/>Message</span>
+                        </td>
+                        <td width="10%" align="left">
+                            <div innerHTML="{{schematic.getStepState(step.StepNumber)}}"></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="card-block">
+                <!-- step config -->
+                <div id="stepConfig" *ngIf="!isExecutePage || step.StepConfigVisibility">
+                    <ul class="list-group">
+                        <li *ngFor="let asset of step.StepAssets" class="list-group-item">
+                            <template [ngIf]="!asset.editByComponent">
+                                <span class="ntooltip" >
+                                    {{getStepConfigName(asset.ConfigValueTypeLookupKey) }}
+                                    <span class="ntooltiptext">Use ESC to reverse to initial value!</span>
+                                </span>
+                            </template>
+                            <span *ngIf="asset.editByComponent">
+                                        {{getStepConfigName(asset.ConfigValueTypeLookupKey) }}
+                                    </span>
+                            <span *ngIf="asset.editByComponent">
+                                        (JSON element) {{':'}}
+                                    </span>
+                            <button *ngIf="!asset.isVisible" (click)="asset.isVisible=!asset.isVisible" class="button-standard ">
+                                <span class="fa fa-plus fa-lg"></span>
+                            </button>
+                            <button *ngIf="asset.isVisible" (click)="asset.isVisible=!asset.isVisible" class="button-standard ">
+                                <span class="fa fa-minus-circle fa-lg"></span>
+                            </button>
+                            <template [ngIf]="!asset.editByComponent && asset.isVisible">
+                                <textarea id="execution-textarea" rows="1" cols="25" [(ngModel)]="asset.RuntimeConfigurationValue" [ngClass]="{neutral: !asset.isChanged, changed: asset.isChanged}" (keyup)="checkIt($event, asset)" (ngModelChange)="assetChanged(asset)"></textarea>
+                            </template>
+                            <template [ngIf]="asset.editByComponent && asset.isVisible">
+                                <json-edit *ngIf="asset.componentType == 'JsonLike'" [inputJson]='asset.ConfigurationValue'
+                                           [PredefinedJsonValues]="asset.Template" [isRoot]='true' (out)="getJson($event, asset, step)"
+                                           (cancelChanges)="jsonCanceled($event,asset)"></json-edit>
+                                <table-edit-config *ngIf="asset.componentType == 'ARRAYLIKE' && asset.isVisible"
+                                                   [inputArray]='asset.ConfigurationValue'
+                                                   [PredefinedJsonValues]="asset.Template"
+                                                   [parentStep]='step'
+                                                   (cancelChanges)="jsonCanceled($event,asset)"
+                                                   (out)="getJson($event, asset, step)"></table-edit-config>
+                            </template>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- uncomment bellow div if you want messages to be showed by step and not all together -->
+            <!-- execution result for this step
+            <div id="stepResult" *ngIf="step.StepMessageVisibility && isExecutePage">
+                <ul id="stepMsg" name="stepMsg" size="5" style="width: 100%; max-width: 100%;" *ngIf="showMsg">
+                    <li [ngClass]="msg.class" *ngFor="#msg of step.ExecutionMessage" highlightlast>{{msg.date | date:"MM/dd/yy hh:mm" }}  - {{msg.message}}</li>
+                </ul>
+            </div>
+            -->
+        </div>
+
+    </template>
+    <!-- comment next article if you don't want to show all messages in same place -->
+    <!--
+    <article *ngIf="schematic.toggleListMessage && showMsg">
+        <div class="tdam-steps-panel" >
+            <ul id="stepMessages"  size="5" style="width: 100%; max-width: 100%;" >
+            <span *ngFor="let step of schematic.allStepsVM">
+                <span *ngIf="step.StepMessageVisibility">
+                <li [ngClass]="msg.class" *ngFor="let msg of step.ExecutionMessage" highlightlast> {{msg.date | date:"MM/dd/yy hh:mm" }} - {{'Step ' + msg.stepId}} - {{msg.message}}</li>
+                </span>
+            </span>
+            </ul>
+        </div>
+        <br>
+    </article>
+       -->
+    <article>
+        <!--
+        <button (click)="executeSchematicClicked()" class="btn tdam-button-secondary" *ngIf="isExecutePage" [disabled]="!executeStatus">
+            <span class="fa fa-floppy-o fa-lgd"></span>
+            Execute
+        </button>
+        -->
+        <span><strong>{{schematic.schematicState}} </strong></span>
+    </article>
+</article>
+
+

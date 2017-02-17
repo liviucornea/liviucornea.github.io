@@ -1,0 +1,65 @@
+﻿<article Id="editConfigPage">
+    <div class="col-md-12">
+        <section Id="editForm">
+            <form #genericformInline="ngForm" (ngSubmit)="saveClicked()">
+                <template ngFor let-ln [ngForOf]="editViewRowDataTable">
+                    <div class="form-group">
+                        <label [attr.for]="ln.sequence">{{ln.label}}:</label>
+                        <div *ngIf="ln.htmlControlType !== 'select' && ln.htmlControlType !== 'radio' && ln.htmlControlType !== 'checkbox'">
+                            <input name={{ln.label}} #name="ngModel" [attr.Id]="ln.sequence" type={{ln.htmlControlType}} [(ngModel)]="ln.val" checked={{ln.val}}
+                                   (click)="inputClicked(ln)" [disabled]="!ln.isVisible || ln.readOnly" [required]="ln.isRequired && !gridSettings['RulesConfig']">
+                            <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                                Valid input for {{ln.label}} is required
+                            </div>
+                            <div>
+                                <formBuilder></formBuilder>
+                            </div>
+                        </div>
+                        <div *ngIf="ln.htmlControlType === 'checkbox'">
+                            <input name={{ln.label}} #name="ngModel" [attr.Id]="ln.sequence" type="checkbox" [(ngModel)]="ln.val" [disabled]="!ln.isVisible || ln.readOnly" (click)="inputClicked(ln)" [required]="ln.isRequired">
+                        </div>
+                        <div *ngIf="ln.htmlControlType === 'select'">
+                            <select name={{ln.label}} #name="ngModel" [(ngModel)]="ln.val" [attr.Id]="ln.sequence" [required]="ln.isRequired && !gridSettings['RulesConfig']" [disabled]="!ln.isVisible || ln.readOnly">
+                                <option *ngFor="let itemOption of ln.dataSource" value="{{itemOption.Value}}">{{itemOption.Description}}</option>
+                            </select>
+                            <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                                Valid input for {{ln.label}} is required
+                            </div>
+                        </div>
+                        <div *ngIf="ln.htmlControlType === 'radio'">
+                                <span *ngFor="let itemOption of ln.dataSource">
+                                    <div class="row">
+                                        <input name="ln.objId" type="radio" [(ngModel)]="ln.val" [disabled]="!ln.isVisible || ln.readOnly" value="{{itemOption}}"><span class="float-xs-left">{{' ' + itemOption + '    '}}</span><br/>
+                                    </div>
+                                </span>
+                                <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                                    Valid input for {{ln.label}} is required
+                                </div>
+                        </div>
+                        <template ngFor let-er [ngForOf]="ln.errors">
+                            <div class="alert alert-danger">
+                                {{er | LocalizationTranslate}}
+                            </div>
+                        </template>
+                    </div>
+                </template>
+                <div id="buttons">
+                    <!--[disabled]="!genericformInline.form.valid"-->
+                    <button type="submit" [disabled]="!genericformInline.form.valid" class="button-standard " *ngIf="PageType != 'view'">
+                        <span class="fa fa-floppy-o fa-lg"></span>
+                        Save
+                    </button>
+                    <button type="button" (click)="cancelClicked()" class="button-standard ">
+                        <span class="fa fa-ban fa-lg"></span>
+                        Cancel
+                    </button>
+                </div>
+
+            </form>
+        </section>
+    </div>
+</article>
+<!--
+<article id="pluginSection">
+    <div #dynamicplugin></div>
+</article>-->

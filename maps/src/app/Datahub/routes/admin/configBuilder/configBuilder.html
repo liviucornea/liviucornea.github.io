@@ -1,0 +1,34 @@
+<section class="row">
+    <template [ngIf]="isPageForm">
+        <configBuilderAddEditForm [originalInput]="pageEditViewRowDataTable" [pageType]="selectedPageType" [pluginInput]="pageEditViewRowDataTable" [gridSettings]="config"></configBuilderAddEditForm>
+    </template>
+    <template [ngIf]="isColumnForm">
+        <configBuilderAddEditForm [originalInput]="columnEditViewRowDataTable" [pageType]="selectedPageType" [pluginInput]="pageEditViewRowDataTable" [gridSettings]="config"></configBuilderAddEditForm>
+    </template>
+    <article>
+        <div>
+            <button class="button-standard " (click)="addPageClicked()">Add Page</button>
+            <button class="button-standard " (click)="addColumnClicked()">Add Column</button>
+            <button class="button-standard " (click)="previewClicked()">Preview Form</button>
+        </div>
+        <div>
+            <input type="text" [(ngModel)]="deleteColumnValue"/>
+            <button class="button-standard " (click)="deleteColumnClicked()">Delete Column</button>
+        </div>
+    </article>
+</section>
+<section>
+    <article Id="ConfigBuilderResult">
+        <label>JSON Output</label>
+        <div><textarea>{{jsonResult}}</textarea></div>
+        <label>Validation Result</label>
+        <div><textarea>{{schemaValidationResult}}</textarea></div>
+    </article>
+    <article Id="ConfigBuilderPreview">
+        <div *ngIf="IsPreview" class="row">
+            <div class="col-sm-12 col-md-6">
+                <formBuilder [IsHideCancel]="true" [pluginInput]="previewEditViewRowTable" [gridSettings]="objectResult"></formBuilder>
+            </div>
+        </div>
+    </article>
+</section>

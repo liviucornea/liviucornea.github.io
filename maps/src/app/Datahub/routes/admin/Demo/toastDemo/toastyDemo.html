@@ -1,0 +1,51 @@
+<ng2-toasty [position]="position"></ng2-toasty>
+
+<div class="col-md-8 offset-md-2">
+    <form class="form-inline">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input class="form-control-sm" type="text" id="title" [(ngModel)]="options.title" name="title">
+            <label for="msg">Message</label>
+            <input class="form-control-sm" type="text" id="msg" [(ngModel)]="options.msg" name="msg">
+            <label for="theme">Theme</label>
+            <select class="form-control-sm" [(ngModel)]="options.theme" id="theme" name="theme">
+                <option *ngFor="let theme of themes" [value]="theme.code">{{theme.name}}</option>
+            </select>
+            <label for="type">Type</label>
+            <select class="form-control-sm" [(ngModel)]="options.type" id="type" name="type">
+                <option *ngFor="let type of types" [value]="type.code">{{type.name}}</option>
+            </select>
+            <label for="position">Position</label>
+            <select class="form-control-sm" id="position" [ngModel]="position" (ngModelChange)="changePosition($event)" name="position">
+                <option *ngFor="let pos of positions" [value]="pos.code">{{pos.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="timeout">Timeout</label>
+            <input type="text" class="form-control-sm" id="timeout" [(ngModel)]="options.timeout" placeholder="5000" name="timeout"/>
+            <label for="showclose">Show Close Icon</label>
+            <input type="checkbox" id="showclose" [(ngModel)]="options.showClose" name="showClose"/>
+        </div>
+    </form>
+    <div class="form-group">
+         <pre>
+            <code>toastyService<span ng-if="options.type != 'default'">.{{ options.type }}</span>({{ '{' }}
+                title: "{{ options.title }}",
+                msg: "{{ options.msg }}",
+                showClose: {{ options.showClose }},
+                timeout: {{ options.timeout || false }},
+                theme: "{{ options.theme }}"
+            {{ '}' }});
+            </code>
+            <code>toastyConfig({{ '{' }}
+                position: "{{ position }}"
+            {{ '}' }});
+            </code>
+        </pre>
+    </div>
+    <div class="form-group">
+        <button class="button-standard" (click)="clearToasties()">Clear All</button>
+        <button class="button-standard" (click)="newCountdownToast()">Countdown</button>
+        <button class="button-standard" (click)="newToast()">Add</button>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+/****************************************
+   Utility properties
+*****************************************/
+
+.rotate-180 {
+  @include rotate(180deg);
+}
+
+.hidden {
+  display: none;
+}
+
+.full-width {
+  width: 100%;
+}

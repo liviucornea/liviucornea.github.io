@@ -1,0 +1,32 @@
+.global-spinner {
+  height: 100%;
+  position: fixed;
+  width: 100%;
+  /* arbitrarily large */
+  z-index: 1000000;
+  left: 0;
+  top: 0;
+
+  .spinner-wrapper {
+    margin: auto;
+    margin-top: 300px;
+    padding: 10px;
+    width: 15em;
+  }
+}
+
+// new, simpler spinner
+.standard-spinner {
+  animation: spin 2s linear infinite;
+  border: 16px solid;
+  border-top: 16px solid;
+  border-radius: 50%;
+  height: 100px;
+  margin: auto;
+  width: 100px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

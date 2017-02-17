@@ -1,0 +1,35 @@
+<div>
+    <!--Navigation and padding-->
+    <navBar></navBar>
+    <!--<navBarVert></navBarVert>-->
+
+    <!--Alert container-->
+    <tdamNotifications></tdamNotifications>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!--<div class="col-md-1"></div>-->
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">{{navService.pageTitle}}</h4>
+                    </div>
+                    <div class="card-block">
+                       <spinner></spinner>
+                        <router-outlet></router-outlet>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 text-md-center">
+                TDAM DataHub <br/>
+                <a href="mailto:tdam-ops-sys@tdam.com?subject=TDAM DataHub Web Support">Support</a>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+</div>
+
+

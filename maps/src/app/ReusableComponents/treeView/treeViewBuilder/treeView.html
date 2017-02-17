@@ -1,0 +1,12 @@
+<article>
+    <br/>
+    <ul>
+        <li *ngFor="let errordata of ruleErrors">{{errordata}}</li>
+    </ul>
+    <!--</div>-->
+    <section class="row"><!--*ngIf="showTreeViewdata"-->
+        <div class="col-md-12">
+            <treeViewMain [maintreeViewInput]="maintreeViewInput"></treeViewMain>
+        </div>
+    </section>
+</article>

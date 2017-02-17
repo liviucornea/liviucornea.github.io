@@ -1,0 +1,48 @@
+<!--Edit Header + lookup boxes-->
+<article Id="mainConfigPage">
+    <table id="dataGridBody" *ngFor="let set of headersAndDataSets">
+        <thead Id="dataGridHeader">
+        <tr>
+            <th *ngFor="let headerRow of set.headerSet">
+                <div *ngIf="headerRow.isVisible" class="{{headerRow.columnCss}}">
+                    {{headerRow.val}}<span class="{{headerRow.sortCss}}"></span>
+                </div>
+        </tr>
+        </thead>
+        <tbody Id="dataGrid-spreadSheet">
+        <tr *ngFor="let row of set.dataSet">
+            <td *ngFor="let col of row.cells">
+                <template [ngIf]="col.isAllowGridLevelEdit">
+                    <template [ngIf]="!(col.htmlControlType ==='select' || col.htmlControlType === 'checkbox')">
+                        <div *ngIf="col.isVisible" class="{{col.columnCss}}">
+                            <ec-trigger *ngIf="col.isToggleable" [collapsed]="row.collapsed" [owner]="row" class="cell-contents"></ec-trigger>
+                            <input class="cell-contents" [attr.Id]="col.sequence" type={{col.htmlControlType}} [(ngModel)]="col.val" (click)="inputClicked(col)">
+                        </div>
+                    </template>
+                    <template [ngIf]="col.htmlControlType ==='checkbox'">
+                        <div *ngIf="col.isVisible" class="{{col.columnCss}}">
+                            <ec-trigger *ngIf="col.isToggleable" [collapsed]="row.collapsed" [owner]="row" class="toggleItem"></ec-trigger>
+                            <input class="cell-contents" [attr.Id]="col.sequence" type='checkbox' [(ngModel)]="col.val" (click)="inputClicked(col)">
+                        </div>
+                    </template>
+                    <template [ngIf]="col.htmlControlType === 'select'">
+                        <div class="{{col.columnCss}}">
+                            <ec-trigger *ngIf="col.isToggleable" [collapsed]="row.collapsed" [owner]="row"></ec-trigger>
+                            <select [(ngModel)]="col.val" [attr.Id]="col.sequence">
+                                <option *ngFor="let itemOption of col.dataSource" value="{{itemOption}}">{{itemOption}}</option>
+                            </select>
+                        </div>
+                    </template>
+                </template>
+                <template [ngIf]="!col.isAllowGridLevelEdit">
+                    <div *ngIf="col.isVisible" class="{{col.columnCss}}">
+                        <ec-trigger *ngIf="col.isToggleable" [collapsed]="row.collapsed" [owner]="row" class="toggleItem"></ec-trigger>
+                        <div *ngIf="col.isVisible" class="cell-contents">{{col.val}}</div>
+                    </div>
+                </template>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</article>
+

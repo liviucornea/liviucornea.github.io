@@ -1,0 +1,9 @@
+<div [hidden]="!isDelayedRunning" class="spinner-background" [ngClass]="{'global-spinner' : scope == 'page'}">
+    <div class="spinner-wrapper text-xs-center">
+        <div class="standard-spinner"></div>
+        <br>
+        <div class="spinner-text" *ngIf="scope == 'page' && text != ''">
+            <span>{{text}}</span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+<section Id="editForm">
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <form #genericForm="ngForm" (ngSubmit)="saveClicked()">
+                <template [ngIf]="pageView == 'edit'">
+                    <div class="form-group">
+                        <label><strong>Select Root Model Name:</strong></label>
+                        <select name="cboSchema" class="form-control" [(ngModel)]="selectedTreeModelMetadataId" (change)="populateSelectedSchema($event.target.value)">
+                            <option *ngFor="let itemOption of treeModelMetadataList" value="{{itemOption.TreeModelMetadataId}}" selected="itemOption.TreeModelMetadataId == selectedTreeModelMetadataId">{{itemOption.RootModelName}}</option>
+                        </select>
+                    </div>
+                </template>
+                <template [ngIf]="showControls">
+                    <div class="form-group">
+                        <label><strong>Menu Item:</strong></label>
+                        <input type="text" name="MenuItemName" #name="ngModel" class="form-control" [(ngModel)]="selectedTreeModelMetadata.MenuItemName" [disabled]="!showPublishButton && pageView != 'add'" (blur)="checkMenuItem()" [required]="true"/>
+                        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                            Valid input for RootModelName is required
+                        </div>
+                        <div [hidden]="!menuItemExists" class="alert alert-danger">
+                            Menu Item already Exists. Please select different one
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Root Model Name:</strong></label>
+                        <input type="text" name="RootModelName" class="form-control" #name="ngModel" [(ngModel)]="selectedTreeModelMetadata.RootModelName" [disabled]="!showPublishButton && pageView != 'add'" [required]="true"/>
+                        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                            Valid input for RootModelName is required
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Connection String:</strong></label>
+                        <input type="text" name="ConnectionString" class="form-control" #name="ngModel" [(ngModel)]="selectedTreeModelMetadata.ConnectionString"/>
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Route:</strong></label>
+                        <input type="text" name="Route" class="form-control" #name="ngModel" [(ngModel)]="selectedTreeModelMetadata.Route" [disabled]="selectedTreeModelMetadata.MenuItemId > 0" [required]="true"/>
+                        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                            Valid input for Route is required
+                        </div>
+                    </div>
+                    <template [ngIf]="pageView != 'add'">
+                        <div class="form-group">
+                            <label><strong>Published Date:</strong></label>
+                            <input type="datetime-local" name="PublishDate" class="form-control" #name="ngModel" [(ngModel)]="selectedTreeModelMetadata.PublishDate" disabled/>
+                        </div>
+                    </template>
+                    <div class="form-group">
+                        <label><strong>Metadata JSON:</strong></label>
+                        <textarea name="MetadataJson" #name="ngModel" [(ngModel)]="selectedTreeModelMetadata.MetadataJSON" required></textarea> <!--[disabled] = "!showPublishButton && pageView != 'add'"-->
+                        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                            Valid input for MetadataJson is required
+                        </div>
+                    </div>
+                    <div id="buttons">
+                        <button type="button" *ngIf="pageView != 'add'" (click)="addClicked()" class="button-standard ">
+                            <span class="fa fa-plus fa-lg"></span>
+                            Add
+                        </button>
+                        <button *ngIf="showControls" type="submit" [disabled]="!genericForm.form.valid || menuItemExists" class="button-standard ">
+                            <span class="fa fa-floppy-o fa-lg"></span>
+                            Save
+                        </button>
+                        <button type="button" *ngIf="showControls && pageView == 'add'" (click)="cancelClicked()" class="button-standard ">
+                            <span class="fa fa-ban fa-lg"></span>
+                            Cancel
+                        </button>
+                        <button type="button" *ngIf="showControls && pageView != 'add' && showPublishButton" (click)="deleteClicked()" class="button-standard ">
+                            <span class="fa fa-eraser fa-lg"></span>
+                            Delete
+                        </button>
+                        <button type="button" *ngIf="showControls && pageView != 'add' && showPublishButton" (click)="publishClicked()" class="button-standard ">
+                            <span class="fa fa-thumbs-o-up fa-lg"></span>
+                            Publish
+                        </button>
+                    </div>
+                </template>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <displayGrid *ngIf="selectedTreeModelMetadata != undefined && selectedTreeModelMetadata.MenuItemId > 0"
+                         [inputGridSettings]="menuRoleItemcontrolConfig" [inputHttpProxy]="adminApiService" [inputPageName]="menuPageName"
+                         [ParentIdInputValue]="selectedTreeModelMetadata.MenuItemId"></displayGrid>
+        </div>
+    </div>
+</section>

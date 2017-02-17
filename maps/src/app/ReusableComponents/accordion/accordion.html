@@ -1,0 +1,21 @@
+<div class="accordion" role="tablist" aria-multiselectable="true">
+    <div class="card">
+        <!-- Header -->
+        <div class="card-header" role="tab">
+            <h5 class="accordion-header mb-0 float-xs-left" (click)="collapsed = !collapsed; collapsedChange.emit(collapsed)">
+                <!-- accordion does not use Bootstrap.js -->
+                <a class="accordion-header-link" [attr.aria-expanded]="collapsed == false">
+                    <span class="fa fa-chevron-down" [ngClass]="collapsed == true ? 'fa-rotate-270' : ''"></span>
+                    <span class="title" aria-hidden="true"><strong>{{ title }}</strong></span>
+                </a>
+            </h5>
+            <ng-content select="accordionHeaderContent"></ng-content>
+        </div>
+        <!-- Body -->
+        <div class="collapse" role="tabpanel" [ngClass]="collapsed == false ? 'in' : ''">
+            <div class="card-block">
+                <ng-content select="accordionBodyContent"></ng-content>
+            </div>
+        </div>
+    </div>
+</div>

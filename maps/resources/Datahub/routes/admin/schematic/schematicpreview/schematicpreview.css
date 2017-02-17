@@ -1,0 +1,28 @@
+.ntooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+  /* If you want dots under the hoverable text */ }
+
+/* Tooltip text */
+.ntooltip .ntooltiptext {
+  visibility: hidden;
+  background-color: rgba(92, 239, 21, 0.97);
+  color: #2b0d21;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 10; }
+
+.ntooltip:hover .ntooltiptext {
+  visibility: visible; }
+
+.ntooltip .ntooltiptext {
+  width: 320px;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px; }
+
+#stepConfig {
+  background-color: #f4f7f4; }

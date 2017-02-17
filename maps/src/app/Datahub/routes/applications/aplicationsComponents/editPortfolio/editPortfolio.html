@@ -1,0 +1,14 @@
+<div class="form-group">
+    <label><strong>Search for portfolio:</strong></label>
+    <input type="text" class="form-control" [(ngModel)]="portfolioFilter" placeholder="..enter the value to filter by." (change)="0">
+</div>
+<div class="form-group">
+    <div class="processList">
+        <div *ngFor="let portfolio of allPortfolios | portfoliosByNumberOrName:portfolioFilter:true">
+            <span class="itemList" (dblclick)="getPortfolio(portfolio)">{{portfolio.number}} - {{portfolio.name}}</span>
+        </div>
+    </div>
+</div>
+<formBuilder [gridSettings]="gridSettings"
+             [httpProxy]="httpProxy" [pluginInput]="inputData"
+             (formBuilderNotifier)="updateDataFromComponents($event, componentName)"></formBuilder>

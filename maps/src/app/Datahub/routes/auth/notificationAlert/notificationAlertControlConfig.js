@@ -1,0 +1,112 @@
+System.register([], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var NotificationAlertControlConfig;
+    return {
+        setters:[],
+        execute: function() {
+            exports_1("NotificationAlertControlConfig", NotificationAlertControlConfig = {
+                ChildType: "edit",
+                ShallHideDeleteButton: true,
+                ShallHideAddButton: false,
+                ColumnConfiguration: [{
+                        "dbColumnName": "Id",
+                        "htmlControlType": "text",
+                        "isVisible": false,
+                        "isRequired": false,
+                        "isComplexType": false,
+                        "displayName": "Id",
+                        "dataSourceAddress": undefined,
+                        "dataSource": undefined,
+                        "regex": undefined,
+                        "columnCss": undefined,
+                    },
+                    {
+                        "dbColumnName": "Description",
+                        "htmlControlType": "text",
+                        "isVisible": true,
+                        "isRequired": false,
+                        "isComplexType": false,
+                        "displayName": "Description",
+                        "dataSourceAddress": undefined,
+                        "dataSource": undefined,
+                        "regex": "^[a-zA-Z.]{2,30}$",
+                        "columnCss": "col-5",
+                    },
+                    {
+                        "dbColumnName": "StartDate",
+                        "htmlControlType": "datetime-local",
+                        "isVisible": true,
+                        "isRequired": false,
+                        "isComplexType": false,
+                        "displayName": "Start Date",
+                        "dataSourceAddress": undefined,
+                        "dataSource": undefined,
+                        "regex": undefined,
+                        "columnCss": "col-3",
+                    },
+                    {
+                        "dbColumnName": "EndDate",
+                        "htmlControlType": "datetime-local",
+                        "isVisible": true,
+                        "isRequired": false,
+                        "isComplexType": false,
+                        "displayName": "End Date",
+                        "dataSourceAddress": undefined,
+                        "dataSource": undefined,
+                        "regex": undefined,
+                        "columnCss": "col-3",
+                    },
+                    {
+                        "dbColumnName": "IsActive",
+                        "htmlControlType": "checkbox",
+                        "isVisible": true,
+                        "isComplexType": false,
+                        "isRequired": false,
+                        "displayName": "Active",
+                        "dataSourceAddress": undefined,
+                        "dataSource": undefined,
+                        "regex": undefined,
+                        "columnCss": "col-2",
+                    },
+                    {
+                        "dbColumnName": "RoleId",
+                        "htmlControlType": "select",
+                        "isVisible": true,
+                        "isComplexType": false,
+                        "isRequired": false,
+                        "displayName": "Role",
+                        "dataSourceAddress": { tableName: "/auth/role", dbColumnName: "Id", displayColumnName: "Description" },
+                        "dataSource": undefined,
+                        "regex": undefined,
+                        "columnCss": "col-2",
+                    },
+                    {
+                        "dbColumnName": "CreatedBy",
+                        "htmlControlType": "select",
+                        "isVisible": true,
+                        "isComplexType": false,
+                        "isRequired": false,
+                        "displayName": "CreatedBy",
+                        "dataSourceAddress": { tableName: "/auth/User", dbColumnName: "Id", displayColumnName: "Login" },
+                        "dataSource": undefined,
+                        "regex": undefined,
+                        "columnCss": "col-2",
+                    },
+                    {
+                        "dbColumnName": "VersionStamp",
+                        "htmlControlType": "text",
+                        "isVisible": false,
+                        "isComplexType": false,
+                        "isRequired": false,
+                        "displayName": "VersionStamp",
+                        "dataSourceAddress": undefined,
+                        "dataSource": undefined,
+                        "regex": undefined,
+                        "columnCss": undefined,
+                    }]
+            });
+        }
+    }
+});
+//# sourceMappingURL=notificationAlertControlConfig.js.map

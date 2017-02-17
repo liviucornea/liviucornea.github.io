@@ -1,0 +1,12 @@
+﻿<article Id="editConfigPage" *ngIf="visiblePlugin">
+    <div class="col-md-12">
+        <div *ngFor="let ln of editViewRowDataTable" class="row">
+            <div class="col-md-3">
+                <label [attr.for]="ln.sequence">{{ln.label | LocalizationTranslate}}:</label>
+            </div>
+            <div class="col-md-9">
+                {{ln.val | LocalizationTranslate}}
+            </div>
+        </div>
+    </div>
+</article>

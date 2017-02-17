@@ -1,0 +1,66 @@
+<tabBuilder [tabsList]="tabsListData" [messages] = "customMessages"
+            (tabEmitter)="showSpecificTab($event)"
+            (tabContentEmitter)="doActionFromChildTab($event)">
+</tabBuilder>
+<div class="modal" tabindex="-1" role="dialog" style="display:block !important;" *ngIf="showCustomizeFields">
+    <div class="modal-dialog" style="height: 100%; width: 40%;">
+        <div class="modal-content standard-callout-background">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="closeCustomizeFields();"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{customizeFieldsTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <b>{{customizeFieldsInstructions}}</b>
+                <br/><br/>
+                <assignable-list [inputSettings]="assignableList.gridSettings"
+                                 [inputList]="assignableList.inputList" [assignedList]="assignableList.assignedList"
+                                 [inputTitle]="assignableList.inputTitle" [assignedTitle]="assignableList.assignedTitle"
+                                 (listOut)="saveSelectedFields($event)"></assignable-list>
+                <br/><br/>
+                <b>{{customizeFieldsResult}}</b>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="modal" tabindex="-1" role="dialog" style="display:block !important;" *ngIf="showAddIssue">
+        <div class="modal-dialog" style="height: 100%; width: 40%;">
+            <div class="modal-content standard-callout-background">
+                <div class="modal-header">
+                    <button type="button" class="close" (click)="closeAddIssue();"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{{addIssueTitle}}</h4>
+                </div>
+                <div class="modal-body">
+                    <b>{{addIssueInstructions}}</b>
+                    <br/><br/>
+                    <table border="0">
+                        <tr>
+                            <td>Settlement Issue</td>
+                            <td>Cycle 9</td>
+                            <td>Settlement Issue Notes</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select [(ngModel)]="selectedIssueType">
+                                    <option *ngFor="let issueType of issueTypesList" value="{{issueType.id}}">{{issueType.Description}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="checkbox" [(ngModel)]="cycleNine" style="width:70px; text-align: center">
+                            </td>
+                            <td>
+                                <input type="text" [(ngModel)]="issueNotes">
+                            </td>
+                        </tr>
+                    </table>
+                    <br/><br/>
+                    <b>{{addIssueResult}}</b>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="button-standard " (click)="addIssue();"><span class="fa fa-save"></span>Save</button>
+                    <button type="button" class="button-standard " (click)="closeAddIssue();"><span class="fa fa-check-square-o fa-lg"></span>Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

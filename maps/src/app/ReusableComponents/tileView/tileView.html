@@ -1,0 +1,9 @@
+<div id="tileview-options">
+    <div class="row">
+        <div *ngFor="let childItem of menuItemsList" (click)="gotoChildItem(childItem)" class="col-md-4">
+            <div class="card card-block text-xs-center">
+                <h6 class="card-title mb-0">{{childItem.LookupKey | LocalizationTranslate}}</h6>
+            </div>
+        </div>
+    </div>
+</div>

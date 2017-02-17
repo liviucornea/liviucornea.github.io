@@ -1,0 +1,289 @@
+<!--Edit Header + lookup boxes-->
+<template [ngIf]="!(viewDetail||editDetail||addDetail)">
+    <article Id="mainConfigPage">
+        <template [ngIf]="showFilters">
+            <accordion [title]="'Filters'">
+                <accordionBodyContent>
+                    <template ngFor let-filterRow [ngForOf]="filterForDataTable">
+                        <template [ngIf]="filterRow.filterable">
+                            <div class="form-group row">
+                                <template [ngIf]="filterRow.filterable">
+                                    <div class="col-md-12 col-lg-9 col-xl-6">
+                                        <div class="col-md-4">
+                                            <strong>{{filterRow.val}}</strong>
+                                        </div>
+                                        <!--<div class="col-md-1" *ngIf="filterRow.htmlControlType.indexOf('date') >= 0">
+                                            From
+                                            <br/>
+                                            To
+                                        </div>-->
+                                        <div *ngIf="filterRow.htmlControlType == 'text'" class="col-md-8">
+                                            <select [attr.Id]="'f' + filterRow.sequence" [(ngModel)]="filterRow.filterValue[0]" (change)="filterSelect($event)" class="full-width form-control-sm">
+                                                <option *ngFor="let opt of filterRow.options" [value]="opt.value">{{opt.label}}</option>
+                                            </select>
+                                        </div>
+                                        <template [ngIf]="filterRow.htmlControlType.indexOf('date') >= 0">
+                                            <div class="col-md-8">
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <!--From-->
+                                                        From
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="date" class="full-width form-control-sm" [attr.id]="'ff' + filterRow.sequence" [(ngModel)]="filterRow.filterValue[0]" (change)="filterDate($event)"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <!--To-->
+                                                    <div class="col-md-2">
+                                                        To
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="date" class="full-width form-control-sm" [attr.id]="'ft' + filterRow.sequence" [(ngModel)]="filterRow.filterValue[1]" (change)="filterDate($event)"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                    </template>
+                </accordionBodyContent>
+            </accordion>
+        </template>
+        <div id="dataGridAddButton" *ngIf="showAddButtonOnLoad">
+            <button class="button-standard " (click)="AddClicked()" *ngIf="!hideAddBtn && !(viewDetail||editDetail||addDetail)">
+                <span class="fa fa-plus-circle fa-lg"></span>
+                Add
+            </button>
+        </div>
+        <div class="dataGridBody-pane {{scrollableGridCss}}">
+            <table id="dataGridBody" *ngIf="showGridBody" class="table-striped table-hover table-bordered full-width">
+                <section Id="dataGridDynamicHeader" *ngIf="hasDynamicHeader" class="text-xs-center">
+                    <div class="row" *ngFor="let level of dynamicHeaders">
+                        <!-- dummy column to make room for buttons -->
+                        <div class="col-md-2"></div>
+                        <template ngFor let-header [ngForOf]="level">
+                            <div class="{{header.columnCss}}">
+                                <strong>{{header.displayName}}</strong>
+                            </div>
+                        </template>
+                    </div>
+                </section>
+                <thead Id="dataGridHeader">
+                <tr>
+                    <th id="dataGrid-buttons-header" class="dataGrid-header-cell" *ngIf="!hideLeftButtonsColumn">
+                        <template [ngIf]="rowSelectionMode==='Multi'">
+                            <input type="checkbox" (change)="AddRemoveAll($event)"> Select All
+                        </template>
+                    </th>
+                    <template ngFor let-headerRow [ngForOf]="headerForDataTable">
+                        <template [ngIf]="headerRow.isVisible">
+                            <th>
+                                <div (click)="sortRequested(headerRow.name, headerRow.sortCss)">
+                                    {{headerRow.val | LocalizationTranslate}}<span class="{{headerRow.sortCss}}"></span>
+                                </div>
+                            </th>
+                        </template>
+                    </template>
+                </tr>
+                </thead>
+                <tbody Id="dataGridLookups" *ngIf="!showNoData">
+                <template [ngIf]="showFilterRow">
+                    <tr>
+                        <td class="dataGridLookups-buttons">
+                            Filter
+                            <span *ngIf="rowSelectionMode==='Single' || rowSelectionMode==='Multi'">
+                                        <input type="checkbox" (change)="FilterSelectedRows($event)">
+                                    </span>
+                        </td>
+                        <template ngFor let-headerRow [ngForOf]="headerForDataTable">
+                            <template [ngIf]="headerRow.isVisible">
+                                <td class="dataGridLookups-cell">
+                                    <input [attr.Id]="headerRow.sequence" class="form-control-sm full-width" type="text" [(ngModel)]="headerRow.filter" (keyup)=filterValueEntered($event) (click)="filterBoxClicked(headerRow.sequence)">
+                                </td>
+                            </template>
+                        </template>
+                    </tr>
+                </template>
+                </tbody>
+                <template [ngIf]="!showNoData">
+                    <tbody Id="dataGrid-spreadSheet">
+                    <template ngFor let-row [ngForOf]="matrixForDataTable">
+                        <tr class="displayGrid-row">
+                            <td id="dataGrid-buttons" *ngIf="!hideLeftButtonsColumn">
+                                <template [ngIf]="customRowButtonsList.length > 0">
+                                    <template ngFor let-childRowbutton [ngForOf]="customRowButtonsList">
+                                        <button *ngIf="childRowbutton.visible != undefined ? childRowbutton.visible: true" type="button" class="button-standard " (click)="customRowButtonListClicked(childRowbutton, row)"
+                                                [disabled]="childRowbutton.disabled != undefined ? childRowbutton.disabled : false">
+                                            {{childRowbutton.name | LocalizationTranslate}}
+                                        </button>
+                                    </template>
+                                </template>
+                                <template [ngIf]="rowSelectionMode==='Single' || rowSelectionMode==='Multi'">
+                                    <input type="checkbox" [disabled]="row.checkBox.disabled"  [(ngModel)] = "row.checkBox.checked" value="row.checkBox.checked" (change)="AddRemoveSelected($event,row)">
+                                </template>
+                                <button *ngIf="showChildDetail" (click)="showChildViewClicked(row)" title="{{'View' | LocalizationTranslate}}" class="button-standard ">
+                                    <span class="fa fa-search fa-lg"></span>
+                                </button>
+                                <button *ngIf="childType === 'view'" (click)="editViewClicked(row)" title="{{'View' | LocalizationTranslate}}" class="button-standard " title="view">
+                                    <span class="fa fa-check fa-lg"></span>
+                                </button>
+                                <button *ngIf="childType.startsWith('edit')" (click)="editViewClicked(row)" title="{{'Edit' | LocalizationTranslate}}" class="button-standard ">
+                                    <span class="fa fa-pencil-square-o fa-lg"></span>
+                                </button>
+                                <button *ngIf="!hideDeleteBtn" (click)="DeleteClicked(row)" title="{{'Delete' | LocalizationTranslate}}" class="button-standard ">
+                                    <span class="fa fa-eraser fa-lg"></span>
+                                </button>
+                            </td>
+                            <template [ngIf]="isSpreadsheetGrid">
+                                <template ngFor let-col [ngForOf]="row.cells">
+                                    <template [ngIf]="col.isAllowGridLevelEdit">
+                                        <td>
+                                            <div class="cell-contents">
+                                                <template [ngIf]="!(col.htmlControlType ==='select' || col.htmlControlType === 'checkbox')">
+                                                    <template [ngIf]="col.isVisible">
+                                                        <ec-trigger *ngIf="col.isToggleable" [collapsed]="row.collapsed" [owner]="row" [columnName]="col.name"></ec-trigger>
+                                                        <input class="form-control-sm full-width" [attr.Id]="col.sequence" type={{col.htmlControlType}} [(ngModel)]="col.val" (click)="inputClicked(row,col)">
+                                                    </template>
+                                                </template>
+                                                <template [ngIf]="col.htmlControlType ==='checkbox'">
+                                                    <template [ngIf]="col.isVisible">
+                                                        <ec-trigger *ngIf="col.isToggleable" [collapsed]="row.collapsed" [owner]="row" [columnName]="col.name" class="toggleItem"></ec-trigger>
+                                                        <input class="form-control-sm full-width" [attr.Id]="col.sequence" type='checkbox' [(ngModel)]="col.val" (click)="inputClicked(row,col)">
+                                                    </template>
+                                                </template>
+                                                <template [ngIf]="col.htmlControlType === 'select'">
+                                                    <ec-trigger *ngIf="col.isToggleable" [collapsed]="row.collapsed" [owner]="row" [columnName]="col.name"></ec-trigger>
+                                                    <select [(ngModel)]="col.val" [attr.Id]="col.sequence">
+                                                        <option *ngFor="let itemOption of col.dataSource" value="{{itemOption}}">{{itemOption}}</option>
+                                                    </select>
+                                                </template>
+                                            </div>
+                                            <template *ngIf="col.isVisible" ngFor let-er [ngForOf]="col.errors">
+                                                <div class="alert alert-danger">
+                                                    {{er | LocalizationTranslate}}
+                                                </div>
+                                            </template>
+                                        </td>
+                                    </template>
+                                    <template [ngIf]="!col.isAllowGridLevelEdit">
+                                        <td *ngIf="col.isVisible">
+                                            <div class="cell-contents">
+                                                {{col.val}}
+                                                <ec-trigger *ngIf="col.isToggleable" [collapsed]="row.collapsed" [owner]="row" [columnName]="col.name" class="toggleItem"></ec-trigger>
+                                            </div>
+                                        </td>
+                                    </template>
+                                </template>
+                            </template>
+                            <template [ngIf]="!isSpreadsheetGrid">
+                                <template ngFor let-col [ngForOf]="row.cells">
+                                    <template [ngIf]="col.isVisible">
+                                        <td class="{{col.columnCss}}" [ngClass]="{'text-xs-right' : col.htmlControlType == 'number' || col.htmlControlType == 'currency', 'text-xs-center' : col.columnFormat.format == 'font-awesome'}">
+                                            <div class="cell-contents">
+                                                <template [ngIf]="col.dataSourceAddress != undefined">
+                                                    <ec-trigger *ngIf="col.isToggleable" [collapsed]="row.collapsed" [owner]="row" [columnName]="col.name" class="toggleItem"></ec-trigger>
+                                                    {{col.displayDescription | formatGridColumn : col.columnFormat}}
+                                                </template>
+                                                <template [ngIf]="col.dataSourceAddress == undefined">
+                                                    <ec-trigger *ngIf="col.isToggleable" [collapsed]="row.collapsed" [owner]="row" [columnName]="col.name" class="toggleItem"></ec-trigger>
+                                                    <span [ngSwitch]="col.columnFormat.format">
+                                                        <span *ngSwitchCase="'font-awesome'" class="{{col.val | formatGridColumn : col.columnFormat}}" [ngClass]="col.val == true ? 'text-success' : 'text-danger'"></span>
+                                                        <span *ngSwitchDefault>{{col.val | formatGridColumn : col.columnFormat}}</span>
+                                                    </span>
+                                                </template>
+                                            </div>
+                                        </td>
+                                    </template>
+                                </template>
+                            </template>
+                        </tr>
+                        <!-- inline edit -->
+                        <template [ngIf]="childType==='editInline'">
+                            <template [ngIf]="row.inlineEditEnabled">
+                                <tr>
+                                    <td colspan="100000">
+                                        <inlineEditForm [handler]="recordSaveHandler" [columns]="editViewRowDataTable" [selectedRow]="row" [httpProxy]="httpProxy" [gridSettings]="gridSettings" [pageName]="pageName"></inlineEditForm>
+                                    </td>
+                                </tr>
+                            </template>
+                        </template>
+                        <template [ngIf]="!row.collapsed">
+                            <tr>
+                                <td class="expanded-cell" colspan="100000">
+                                    <div class="expand-content">
+                                        <template [ngIf]="childGridType === 'miniGrid'">
+                                            <strong>Expand/Collapse Content</strong>
+                                            <br><br>
+                                            <miniGrid [selectedRow]="row"></miniGrid>
+                                        </template>
+                                        <template [ngIf]="childGridType === 'displayGrid'">
+                                            <displayGrid [inputPageName]="getChildPageName(row)" [parentRow]="row" [inputGridSettings]="getChildGridSettings(row)"
+                                                         [inputHttpProxy]="httpProxy" [pluginInput]="row.childData"
+                                                         (displayGridNotifier)="customButtonChildGridClicked($event, row)"></displayGrid>
+                                        </template>
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+                    </template>
+                    <template [ngIf]="!showNoData">
+                        <template [ngIf]="showFooterRow">
+                            <tr>
+                                <template ngFor let-col [ngForOf]="footerForDataTable">
+                                    <template [ngIf]="col.isVisible">
+                                        <td class="{{col.columnCss}}" [ngClass]="col.htmlControlType == 'number' || col.htmlControlType == 'currency' ? 'text-xs-right' : ''">
+                                            <div *ngIf="col.isTotalVisible"><strong>{{col.val | formatGridColumn : col.columnFormat}}</strong></div>
+                                        </td>
+                                    </template>
+                                </template>
+                            </tr>
+                        </template>
+                    </template>
+                    </tbody>
+                </template>
+            </table>
+        </div>
+        <template [ngIf]="showNoData">
+            {{"NoDataToDisplay" | LocalizationTranslate}}.
+        </template>
+        <template [ngIf]="IsChildPage">
+            <br/>
+            <button (click)="ReturnToParent()" class="button-standard ">
+                <span class="fa fa-arrow-left fa-lg">
+                </span>
+                {{"Back" | LocalizationTranslate}}
+            </button>
+        </template>
+        <template [ngIf]="customButtonsList.length > 0">
+            <template ngFor let-childbutton [ngForOf]="customButtonsList">
+                <button *ngIf="childbutton.visible != undefined ? childbutton.visible: true" type="button" class="button-standard " (click)="customButtonClicked(childbutton)"
+                        [disabled]="childbutton.disabled != undefined ? childbutton.disabled : false">
+                    {{childbutton.name | LocalizationTranslate}}
+                </button>
+            </template>
+        </template>
+        <template [ngIf]="!showNoData">
+            <div *ngIf="IsPagination" class="col-md-12 col-lg-6">
+                <pagination [totalItems]="totalItems"
+                            [itemsPerPage]="itemsPerPage"
+                            [(ngModel)]="currentPage"
+                            [boundaryLinks]="true"
+                            [maxSize]="5"
+                            [IsChildPage]="IsChildPage"
+                            [rotate]="false"
+                            (pageChanged)="pageChanged($event)" ngDefaultControl></pagination>
+            </div>
+        </template>
+    </article>
+</template>
+<template [ngIf]="(viewDetail||editDetail||addDetail)">
+    <div class="col-sm-12 col-md-6">
+        <div class="card card-block">
+            <formBuilder [pluginInput]="editViewRowDataTable" [gridSettings]="gridSettings"
+                         [PageType]="operationType" [pageName]="pageName" [httpProxy]="httpProxy" (formBuilderNotifier)="RefreshDataFromFormBuilder($event)"></formBuilder>
+        </div>
+    </div>
+</template>

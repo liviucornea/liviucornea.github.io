@@ -1,0 +1,23 @@
+#typeahead-list {
+
+  border-bottom-left-radius: $border-radius-base;
+  border-bottom-right-radius: $border-radius-base;
+  border-left: 1px solid;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+  margin-left: 10px;
+  margin-right: 10px;
+  max-height: 300px;
+  overflow: auto;
+
+  .list-group-item {
+
+    &:first-child {
+      @include border-top-radius(0px);
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

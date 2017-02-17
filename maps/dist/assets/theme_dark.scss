@@ -1,0 +1,696 @@
+@import "variables";
+@import "mixins";
+
+/****************************************
+*   Dark theme - Colors
+*****************************************/
+
+$primary: #1a5336;
+$primary-dark: #0e3e26;
+$primary-medium: #9dc2b1;
+$primary-light: #f9f9fb;
+
+$secondary: #00A221;
+$secondary-dark: #008000;
+
+$tertiary: #555555;
+$tertiary-medium: #bdbdbd;
+
+// -------------------------
+// Global
+// -------------------------
+$body-bg: $black !default;
+$text-color: $white !default;
+$link-color: $white;
+
+// -------------------------
+// Accordions
+// -------------------------
+$accordion-link-active-color: $text-color;
+$accordion-link-hover-color: $secondary;
+
+// -------------------------
+// Bootstrap (overrides)
+// -------------------------
+
+$bootstrap-card-bg-color: inherit;
+$bootstrap-card-border-color: $tertiary;
+$bootstrap-card-header-bg-color: $tertiary;
+
+$bootstrap-tab-active-bg-color: $primary;
+$bootstrap-tab-active-border-color: $black;
+$bootstrap-tab-active-text-color: $white;
+
+// -------------------------
+// Breadcrumb
+// -------------------------
+
+$breadcrumb-bg-color: $body-bg;
+$breadcrumb-item-bg-color: $body-bg;
+$breadcrumb-text-color: white;
+
+// -------------------------
+// Buttons
+// -------------------------
+
+$btn-standard-bg-color: yellow !default;
+$btn-standard-text-color: black !default;
+
+// -------------------------
+// Calendar
+// -------------------------
+
+$cal-badge-bg-color: #b94a48;
+$cal-badge-fatal-bg-color: #8d2709;
+$cal-badge-future-bg-color: #191597;
+$cal-badge-ok-bg-color: #187826;
+$cal-badge-text-color: $white;
+
+$cal-month-row-hover-bg-color: $tertiary;
+$cal-month-cell-hover-bg-color: darken($cal-month-row-hover-bg-color, 10%);
+$cal-month-today-bg-color: #e8fde7;
+$cal-month-weekend-day-number-color: $bright-green;
+$cal-month-cell-border-color: #e1e1e1;
+$cal-month-event-title-color: $white;
+$cal-month-open-events-bg-color: $tertiary;
+$cal-month-open-events-color: $white;
+
+$cal-week-dayheaders-border-color: #e1e1e1;
+$cal-week-dayheaders-hover-bg-color: #ededed;
+$cal-week-dayheaders-today-bg-color: #e8fde7;
+$cal-week-dayheaders-weekend-color: $cal-month-weekend-day-number-color;
+
+$cal-day-hour-bg-odd-color: #fafafa;
+$cal-day-hour-row-dashed-border-color: #e1e1e1;
+$cal-day-hour-row-bg-color: #e1e1e1;
+$cal-day-hour-segment-hover-bg-color: #ededed;
+
+// -------------------------
+// Callout colors
+// -------------------------
+
+$primary-border: $tertiary;
+/*$primary-border-hover: #3f7e61;*/
+$primary-border-hover: darken(saturate(adjust-hue($primary-border, 0), 10), 32);
+/*$primary-bg-gradient-color: #dbe9e2;*/
+$primary-bg-gradient-color: lighten(saturate(adjust-hue($primary-border, -2.5), 1), 20);
+
+// -------------------------
+// CheckBoxList
+// -------------------------
+
+$checkboxlist-hover-bg-color: $primary-light;
+$checkboxlist-border-color: $tertiary-medium;
+
+// -------------------------
+// DataGrid
+// -------------------------
+
+$datagrid-body-border-color: $tertiary-medium;
+$datagrid-cell-border-color: $tertiary-medium;
+$datagrid-dynamicheader-bg-color: black;
+$datagrid-filters-bg-color: $tertiary;
+$datagrid-filters-border-color: $tertiary-medium;
+$datagrid-header-bg-color: $tertiary;
+$datagrid-header-border-color: $tertiary-medium;
+$datagrid-row-alt-bg-color: $tertiary;
+$datagrid-row-bg-color: $black;
+$datagrid-row-bg-hover-color: $tertiary;
+$datagrid-row-border-color: $tertiary-medium;
+
+/* DataGrid Spreadsheet */
+$datagrid-expandcontent-bg-color: $primary-medium;
+$datagrid-toggleitem-color: $tertiary-medium;
+
+// -------------------------
+// Form Elements
+// -------------------------
+
+$input-bg: $white !default;
+$input-bg-disabled: $tertiary !default;
+$input-color: $white !default;
+$input-border-color: $tertiary-medium !default;
+$input-border-focus: $secondary-dark !default;
+$input-text-border-color: $black;
+
+// -------------------------
+// Links
+// -------------------------
+
+$link-color: $dark-green !default;
+
+// -------------------------
+// ng directives
+// -------------------------
+
+$ng-valid-border-color: $green;
+$ng-invalid-border-color: $red;
+
+// -------------------------
+// Navbar (top)
+// -------------------------
+
+$navbar-alerts-bg-color: $primary-light;
+$navbar-alerts-border-color: $black;
+$navbar-bg-color: $primary-dark;
+$navbar-dropdown-hover-text-color: $black;
+$navbar-link-active-bg-color: $secondary;
+$navbar-link-color: $white;
+$navbar-link-hover-color: $white;
+$navbar-link-hover-bg-color: $tertiary;
+
+// -------------------------
+// SubNav
+// -------------------------
+
+$subnav-bg-color: #2D6716;
+
+// -------------------------
+// Pagination
+// -------------------------
+
+$pagination-active-bg-color: $dark-green !default;
+$pagination-active-border-color: $white !default;
+$pagination-active-color: $white !default;
+$pagination-bg-color: $dark-gray !default;
+$pagination-border-color: $gray !default;
+$pagination-disabled-bg-color: $tertiary !default;
+$pagination-disabled-border-color: $light-gray !default;
+$pagination-disabled-color: $gray !default;
+$pagination-hover-bg-color: $tertiary-medium !default;
+$pagination-hover-border-color: $light-gray !default;
+$pagination-text-color: $text-color;
+
+// -------------------------
+// Spinner
+// -------------------------
+
+// opacity must be defined through rgba so that the child spinner-wrapper can have a greater opacity than its parent
+$spinner-background: rgba(85, 85, 85, 1);
+$spinner-global-background: rgba(128, 128, 128, 0.75);
+$spinner-color: $tertiary-medium;
+$spinner-wedge-color: $secondary;
+
+// -------------------------
+// Tileview
+// -------------------------
+
+$tileview-bg-color: $primary;
+$tileview-hover-bg-color: $tertiary;
+$tileview-text-color: $white;
+
+// -------------------------
+// Typeahead
+// ------------------------
+
+$typeahead-border-color: $secondary-dark;
+$typeahead-hover-bg-color: $tertiary-medium;
+
+/****************************************
+*   TDAM dark theme - Styling rules (general)
+*****************************************/
+
+// -------------------------
+// Accordions
+// -------------------------
+
+.accordion {
+  .card-header {
+    a:active,
+    a:focus {
+      color: $accordion-link-active-color;
+    }
+    a:hover {
+      color: $accordion-link-hover-color;
+    }
+  }
+}
+
+// -------------------------
+// Buttons
+// -------------------------
+
+.button-standard {
+  @include button-gradient-coloring($btn-standard-bg-color, $btn-standard-text-color);
+}
+
+// -------------------------
+// Calendar
+// -------------------------
+
+/* Badges */
+.cal-day-badge {
+  background-color: $cal-badge-bg-color;
+  color: $cal-badge-text-color;
+}
+
+.cal-day-badge-fatal {
+  background-color: $cal-badge-fatal-bg-color;
+  color: $cal-badge-text-color;
+}
+
+.cal-day-badge-future {
+  background-color: $cal-badge-future-bg-color;
+  color: $cal-badge-text-color;
+}
+
+.cal-day-badge-ok {
+  background-color: $cal-badge-ok-bg-color;
+  color: $cal-badge-text-color;
+}
+
+/* Month View */
+.cal-month-view {
+
+  .cal-cell-row {
+
+    &:hover {
+      background-color: $cal-month-row-hover-bg-color;
+    }
+  }
+
+  .cal-cell-row .cal-cell:hover,
+  .cal-cell.cal-has-events.cal-open {
+    background-color: $cal-month-cell-hover-bg-color;
+  }
+
+  .cal-day-cell {
+
+    &.cal-today {
+      background-color: $cal-month-today-bg-color;
+    }
+
+    &.cal-weekend .cal-day-number {
+      color: $cal-month-weekend-day-number-color;
+    }
+
+    &:not(:last-child) {
+      border-right-color: $cal-month-cell-border-color;
+    }
+  }
+
+  .cal-days {
+    border-color: $cal-month-cell-border-color;
+
+    .cal-cell-row {
+      border-color: $cal-month-cell-border-color;
+    }
+  }
+
+  .cal-event-title {
+    color: $cal-month-event-title-color;
+  }
+
+  .cal-day-open-events {
+    background-color: $cal-month-open-events-bg-color;
+    color: $cal-month-open-events-color;
+  }
+}
+
+/* Week view */
+.cal-week-view {
+
+  .cal-day-headers {
+    border-color: $cal-week-dayheaders-border-color;
+  }
+
+  .cal-header {
+
+    &:hover {
+      background-color: $cal-week-dayheaders-hover-bg-color;
+    }
+
+    &:not(:last-child) {
+      border-color: $cal-week-dayheaders-border-color;
+    }
+
+    &.cal-today {
+      background-color: $cal-week-dayheaders-today-bg-color;
+    }
+
+    &.cal-weekend span {
+      color: $cal-week-dayheaders-weekend-color;
+    }
+
+  }
+}
+
+/* Day view */
+.cal-day-view {
+
+  .cal-hour {
+
+    &:nth-child(odd) {
+      background-color: $cal-day-hour-bg-odd-color;
+    }
+
+    &:not(:last-child) .cal-hour-segment,
+    &:last-child :not(:last-child) .cal-hour-segment {
+      border-bottom-color: $cal-day-hour-row-dashed-border-color;
+    }
+  }
+
+  .cal-hour-rows {
+    border-color: $cal-day-hour-row-bg-color;
+  }
+
+  .cal-hour-segment {
+    &:hover {
+      background-color: $cal-day-hour-segment-hover-bg-color;
+    }
+  }
+}
+
+// -------------------------
+// CheckBoxList
+// -------------------------
+.check-box-list {
+  #check-box-list-checkboxes {
+    border-color: $checkboxlist-border-color;
+
+    label:hover {
+      background-color: $checkboxlist-hover-bg-color;
+    }
+  }
+}
+
+// -------------------------
+// Form Elements
+// -------------------------
+
+input,
+select {
+  background-color: $body-bg;
+  color: $text-color;
+}
+
+input[type="text"] {
+
+  &:hover,
+  &:active,
+  &:focus {
+    border-color: $input-text-border-color;
+    border-bottom-color: $input-border-focus;
+  }
+
+  &[disabled],
+  .form-control[readonly] {
+    background-color: $input-bg-disabled !important;
+    color: $input-color;
+  }
+}
+
+textarea, .form-control {
+  background-color: $body-bg !important;
+  border-color: $input-border-color;
+  border-bottom-color: $dark-gray;
+  color: $text-color !important;
+
+  &:hover,
+  &:focus {
+    border-color: $black;
+    border-bottom-color: $input-border-focus;
+  }
+
+  fieldset[disabled] & {
+    background-color: $input-bg-disabled;
+    border-bottom-color: $input-border-focus;
+  }
+}
+
+// -------------------------
+// Scaffolding
+// -------------------------
+
+body {
+  background: $body-bg;
+  color: $text-color;
+}
+
+a {
+  color: $link-color;
+}
+
+// -------------------------
+// Tileview
+// -------------------------
+
+#tileview-options {
+
+  .card {
+    background-color: $tileview-bg-color !important;
+    color: $tileview-text-color;
+
+    &:hover {
+      background-color: $tileview-hover-bg-color !important;
+    }
+  }
+}
+
+/****************************************
+*   TDAM standard theme - Styling rules (components)
+*****************************************/
+
+// -------------------------
+// Breadcrumb
+// -------------------------
+
+.breadcrumb {
+  background-color: $breadcrumb-bg-color;
+
+  .breadcrumb-item {
+
+    a {
+      color: $breadcrumb-text-color !important;
+    }
+  }
+}
+
+// -------------------------
+// Displaygrid
+// -------------------------
+
+.ng-valid[required] {
+  border-left-color: $ng-valid-border-color;
+}
+
+.ng-invalid {
+  border-left-color: $ng-invalid-border-color;
+}
+
+#dataGridBody {
+  border-color: $datagrid-body-border-color;
+}
+
+#dataGridDynamicHeader {
+
+  [class^="col-"] {
+    background-color: $datagrid-dynamicheader-bg-color;
+  }
+}
+
+#dataGridHeader {
+
+  tr {
+    background: none;
+    background-color: $datagrid-header-bg-color;
+  }
+
+  th {
+    border-bottom-color: $datagrid-header-border-color;
+    border-right-color: $datagrid-header-border-color;
+  }
+}
+
+#dataGridLookups {
+  background: transparent;
+}
+
+#dataGrid-spreadSheet {
+
+  > .displayGrid-row:nth-child(odd) {
+    background-color: $datagrid-row-alt-bg-color;
+  }
+}
+
+/* Expand and collapse icons */
+.toggleItem {
+  color: $datagrid-toggleitem-color;
+}
+
+#dataGrid-buttons {
+  border-right-color: $datagrid-cell-border-color;
+
+}
+
+// -------------------------
+// Navbar
+// -------------------------
+
+#main-nav {
+  background-color: $navbar-bg-color;
+}
+
+.nav {
+
+  a {
+    &:hover,
+    &:focus {
+      color: $navbar-link-hover-color;
+    }
+  }
+
+  .nav-item {
+
+    &:hover {
+      background-color: $navbar-link-hover-bg-color;
+    }
+  }
+}
+
+.nav-link {
+  color: $navbar-link-color !important;
+
+  &.list-group-item-info {
+    background-color: $navbar-link-active-bg-color !important;
+  }
+}
+
+#navbar-alerts {
+  background-color: $navbar-alerts-bg-color;
+  border-color: $navbar-alerts-border-color;
+}
+
+.right-menu-item:hover {
+  background-color: inherit !important;
+}
+
+.navbar-toggler {
+  color: $navbar-link-color;
+}
+
+.dropdown-menu {
+  a:hover {
+    color: $navbar-dropdown-hover-text-color;
+  }
+}
+
+// -------------------------
+// Notifications
+// -------------------------
+
+.standard-callout-background {
+  background-color: $tertiary;
+}
+
+// -------------------------
+// Pagination
+// -------------------------
+
+.pagination {
+
+  .page-item {
+    border-color: $pagination-border-color !important;
+
+    .page-link {
+      background-color: $pagination-bg-color !important;
+      color: $pagination-text-color !important;
+    }
+
+    &:hover,
+    &:focus {
+      background-color: $pagination-hover-bg-color !important;
+      border-color: $pagination-hover-border-color !important;
+
+      .page-link {
+        color: $pagination-text-color !important;
+      }
+    }
+
+    &.active {
+      &,
+      &:hover,
+      &:focus {
+
+        .page-link {
+          background-color: $pagination-active-bg-color !important;
+          border-color: $pagination-active-border-color !important;
+          color: $pagination-active-color !important;
+        }
+      }
+    }
+
+    &.disabled {
+      a,
+      a:hover,
+      a:focus {
+        color: $pagination-disabled-color;
+        background-color: $pagination-disabled-bg-color !important;
+        border-color: $pagination-disabled-border-color !important;
+      }
+    }
+  }
+}
+
+// -------------------------
+// Spinner
+// -------------------------
+
+.global-spinner {
+  background: $spinner-global-background;
+
+  .spinner-wrapper {
+    background: $spinner-background;
+  }
+}
+
+.standard-spinner {
+  border-color: $spinner-color;
+  border-top-color: $spinner-wedge-color;
+}
+
+// -------------------------
+// Subnav
+// -------------------------
+
+#sub-nav {
+  background-color: $subnav-bg-color !important;
+}
+
+// -------------------------
+// Typeahead
+// -------------------------
+
+#typeahead-list {
+
+  border-color: $typeahead-border-color;
+
+  .list-group-item:hover {
+    background-color: $typeahead-hover-bg-color;
+  }
+}
+
+// -------------------------
+// Bootstrap
+// -------------------------
+
+.card {
+  background-color: $bootstrap-card-bg-color;
+  border-color: $bootstrap-card-border-color;
+
+  .card-header {
+    background-color: $bootstrap-card-header-bg-color;
+  }
+}
+
+.nav-tabs {
+  .nav-item {
+    a.active,
+    a:hover,
+    .nav-link.active:hover {
+      background-color: $bootstrap-tab-active-bg-color;
+      border-color: $bootstrap-tab-active-border-color;
+      color: $bootstrap-tab-active-text-color;
+    }
+  }
+}

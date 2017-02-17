@@ -1,0 +1,241 @@
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#processes" role="tab">Processes status</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#systemInfo" role="tab">System information</a>
+    </li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div class="tab-pane active" id="processes" role="tabpanel">
+        <div class="card-block">
+            <div class="row">
+                <div class="col-sm-12 col-lg-4">
+                    <accordion [title]="'Pipeline and Schematics'">
+                        <accordionBodyContent>
+                            <pipelineSchematics-chart></pipelineSchematics-chart>
+                        </accordionBodyContent>
+                    </accordion>
+                </div>
+                <div class="col-sm-12 col-lg-8">
+                    <accordion [title]="'Running Processes'">
+                        <accordionBodyContent>
+                            <running-list></running-list>
+                        </accordionBodyContent>
+                    </accordion>
+                </div>
+                <div class="col-sm-12">
+                    <displayGrid></displayGrid>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="systemInfo" role="tabpanel">
+            <system-info></system-info>
+    </div>
+</div>
+
+
+<!--
+
+<div class="row">
+   <div class="col-md-4">
+       <pipelineSchematics-chart></pipelineSchematics-chart>
+   </div>
+   <div class="col-md-8">
+       <running-list></running-list>
+       <hr>
+       <displayGrid></displayGrid>
+   </div>
+
+</div>
+
+
+    <system-info></system-info>
+
+<div class="row">
+    <chartist-js></chartist-js>
+</div>
+
+
+<div class="row">
+    <pie-chart></pie-chart>
+</div>
+
+
+
+<div class="row">
+    <ba-card class="col-xlg-8 col-xl-12 col-lg-12 col-md-7 col-sm-12 col-xs-12"
+             title="Pipelines and schematics" baCardClass="medium-card">
+        <traffic-chart></traffic-chart>
+    </ba-card>
+</div>
+
+
+
+
+
+<div class="row">
+    <ba-card class="col-xlg-8 col-xl-12 col-lg-12 col-md-7 col-sm-12 col-xs-12"
+             title="Revenue" baCardClass="medium-card">
+        <traffic-chart></traffic-chart>
+    </ba-card>
+</div>
+<div class="row">
+    <chartist-js></chartist-js>
+</div>
+
+
+
+
+<div class="row">
+    <chartist-js></chartist-js>
+</div>
+
+
+<div class="row">
+    <pie-chart></pie-chart>
+</div>
+
+
+<div class="row">
+    <ba-card class="col-xlg-8 col-xl-12 col-lg-12 col-md-7 col-sm-12 col-xs-12"
+             title="Revenue" baCardClass="medium-card">
+        <traffic-chart></traffic-chart>
+    </ba-card>
+</div>
+
+
+<div class="row">
+    <pie-chart></pie-chart>
+</div>
+
+<div class="row">
+    <chartist-js></chartist-js>
+</div>
+
+
+<div class="row">
+    <ba-card class="col-xlg-8 col-xl-12 col-lg-12 col-md-7 col-sm-12 col-xs-12"
+             title="Revenue" baCardClass="medium-card">
+        <traffic-chart></traffic-chart>
+    </ba-card>
+</div>
+
+
+
+<div class="row">
+    <ba-card class="col-xlg-8 col-xl-12 col-lg-12 col-md-7 col-sm-12 col-xs-12"
+             title="Revenue" baCardClass="medium-card">
+        <traffic-chart></traffic-chart>
+    </ba-card>
+</div>
+
+<div class="row">
+    <chartist-js></chartist-js>
+</div>
+
+
+<div class="row">
+<pie-chart></pie-chart>
+</div>
+
+------------------
+
+<div class="row">
+    <ba-card class="col-xlg-8 col-xl-12 col-lg-12 col-md-7 col-sm-12 col-xs-12"
+             title="Revenue" baCardClass="medium-card">
+        <traffic-chart></traffic-chart>
+    </ba-card>
+</div>
+
+<div class="row">
+    <ba-card class="col-xlg-8 col-xl-12 col-lg-12 col-md-7 col-sm-12 col-xs-12"
+             title="Revenue" baCardClass="medium-card">
+        <traffic-chart></traffic-chart>
+    </ba-card>
+</div>
+
+
+
+<div class="row">
+    <chartist-js></chartist-js>
+</div>
+
+<!--
+<chartist-js></chartist-js>
+
+
+<line-chart></line-chart>
+
+<div class="row">
+         <ba-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
+                 title="Pipelines and schematics running status" baCardClass="traffic-panel medium-card">
+
+        </ba-card>
+</div>
+
+<div class="row">
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+Pie Chart :
+    <pie-chart></pie-chart>
+
+  </div>
+</div>
+<hr>
+
+-->
+
+
+<!--   code form source
+
+
+<div class="row">
+  <ba-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
+                     title="Acquisition Channels" baCardClass="traffic-panel medium-card">
+    <traffic-chart></traffic-chart>
+  </ba-card>
+
+  <ba-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
+           title="Users by Country" baCardClass="medium-card">
+    <users-map></users-map>
+  </ba-card>
+</div>
+
+<div class="row">
+  <div class="col-xlg-9 col-xl-6 col-lg-6  col-md-12 col-sm-12 col-xs-12">
+    <div class="row">
+      <ba-card class="col-xlg-8 col-xl-12 col-lg-12 col-md-7 col-sm-12 col-xs-12"
+               title="Revenue" baCardClass="medium-card">
+        <line-chart></line-chart>
+      </ba-card>
+      <ba-card class="col-xlg-4 col-xl-12 col-lg-12 col-md-5 col-sm-12 col-xs-12"
+               baCardClass="popular-app medium-card">
+        <popular-app></popular-app>
+      </ba-card>
+    </div>
+  </div>
+
+  <div class="col-xlg-3 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+    <ba-card title="Feed"
+             baCardClass="large-card with-scroll feed-panel">
+      <feed></feed>
+    </ba-card>
+  </div>
+
+</div>
+
+<div class="row shift-up">
+  <ba-card class="col-xlg-3 col-lg-6 col-md-12 col-sm-12 col-xs-12" title="To Do List"
+           baCardClass="xmedium-card feed-comply-panel with-scroll todo-panel">
+    <todo></todo>
+  </ba-card>
+  <ba-card class="col-xlg-6 col-lg-6 col-md-12 col-sm-12 col-xs-12" title="Calendar"
+           baCardClass="xmedium-card feed-comply-panel with-scroll calendar-panel">
+    <calendar></calendar>
+  </ba-card>
+</div>
+--->
