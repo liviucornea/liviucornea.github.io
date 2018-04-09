@@ -1,1 +1,0 @@
-{"version":3,"file":"ruleConfiguration.js","sourceRoot":"","sources":["ruleConfiguration.ts"],"names":[],"mappings":";;;QACW,UAAU;;;;YAAV,wBAAA,UAAU,GAAC,CAAC;oBACpB,UAAU,EAAE,OAAO;oBAClB,SAAS,EAAE,OAAO;oBAClB,gBAAgB,EAAE,CAAC,OAAO,EAAC,WAAW,CAAC;oBACvC,WAAW,EAAC,SAAS;iBACxB,CAAC,CAAA,CAAA"}

@@ -1,9 +1,0 @@
-<div><input type="text" [(ngModel)]="itemDescription" placeholder="Start typing the value you search for here ..." type="text" autocomplete="off">
-    <div *ngIf="listCmp.length > 0">
-        <ul *ngFor="#item of listCmp" >
-            <li >
-                <a (click)="selectItem(item)">{{item.id}} - {{item.text}}</a>
-            </li>
-        </ul>
-    </div>
-</div>

@@ -1,7 +1,0 @@
-<nav id="sub-nav" class="navbar">
-    <ul class="nav navbar-nav">
-        <li *ngFor="let item of items" (click)="activate(item)" class="nav-item float-xs-none float-md-left">
-            <a [routerLink]="item.RouteLink" [routerLinkActive]="['list-group-item-info']" class="nav-link">{{item.Title}}</a>
-        </li>
-    </ul>
-</nav>

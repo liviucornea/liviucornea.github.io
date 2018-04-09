@@ -1,1 +1,0 @@
-{"version":3,"file":"applicationBuilder.routing.js","sourceRoot":"","sources":["applicationBuilder.routing.ts"],"names":[],"mappings":";AACA,uBAAoC,iBAAiB,CAAC,CAAA;AACtD,mCAAiC,sBAAsB,CAAC,CAAA;AACxD,0BAAwB,wCAAwC,CAAC,CAAA;AAEpD,iCAAyB,GAAwB,qBAAY,CAAC,QAAQ,CAAC;IAChF,EAAE,IAAI,EAAE,kCAAkC,EAAE,SAAS,EAAE,uCAAkB,EAAE,WAAW,EAAC,CAAC,qBAAS,CAAC,EAAC;CACtG,CAAC,CAAC"}

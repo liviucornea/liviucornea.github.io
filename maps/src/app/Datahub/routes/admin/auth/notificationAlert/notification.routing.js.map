@@ -1,1 +1,0 @@
-{"version":3,"file":"notification.routing.js","sourceRoot":"","sources":["notification.routing.ts"],"names":[],"mappings":";AACA,uBAAoC,iBAAiB,CAAC,CAAA;AACtD,kCAAgC,qBAAqB,CAAC,CAAA;AACtD,0BAAwB,2CAA2C,CAAC,CAAA;AAIvD,2BAAmB,GAAwB,qBAAY,CAAC,QAAQ,CAAC;IAC1E,EAAE,IAAI,EAAE,sCAAsC,EAAE,SAAS,EAAE,qCAAiB,EAAE,WAAW,EAAC,CAAC,qBAAS,CAAC,EAAC;CACzG,CAAC,CAAC"}

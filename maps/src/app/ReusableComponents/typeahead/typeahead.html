@@ -1,8 +1,0 @@
-<input #theInput type="text" id="itemDescription" [(ngModel)]="itemDescription" placeholder="{{placeholderText}}" type="text" autocomplete="off" (focus)="this.focused.next(true);" (blur)="this.focused.next(false)" (input)="this.itemDescriptionChanged.next(this.itemDescription)">
-<template [ngIf]="listCmp.length > 0">
-    <ul id="typeahead-list" class="list-group">
-        <li class="list-group-item" (click)="selectItem(item)" *ngFor="let item of listCmp">
-            <a><strong>{{item.id}}</strong> - {{item.text}}</a>
-        </li>
-    </ul>
-</template>
